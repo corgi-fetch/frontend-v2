@@ -85,6 +85,7 @@ class PostView extends Component {
   });
 
 	render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.columnContainer}>
 				<View style = {styles.contentContainer}>
@@ -153,7 +154,7 @@ class PostView extends Component {
           })
           .then( (response) => {
             console.log(response);
-            this.fetchData();
+            //this.fetchData();
             navigate('Home');
              //do something awesome that makes the world a better place
           });
