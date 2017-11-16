@@ -83,24 +83,36 @@ class Timeline extends React.Component {
 
   componentDidMount() {
     this.fetchData();
-    //this.fetchUser();
     this.makeRemoteRequest();
   }
 
+  fetchUser = () => {
+    const urlBase = "https://corgoapi-v2.azurewebsites.net";
+    const url = urlBase + '/api/' + global.id + '/user?userId=' + global.id;
+    fetch(url)
+      .then((response) => response.json())
+      .then((responseData) => {
+        global.user = responseData;
+        console.log(global.user);
+      })
+      .done();
+  }
+
   fetchData = () => {
-    const urlBase = "http://192.168.1.4:8080";
+    const urlBase = "https://corgoapi-v2.azurewebsites.net";
     const url = urlBase + '/api/master/principal';
     fetch(url)
       .then((response) => response.json())
       .then((responseData) => {
         global.id = responseData;
+        this.fetchUser();
         //console.log(global.id);
       })
       .done();
   }
 
   makeRemoteRequest = () => {
-    const urlBase = "http://192.168.1.4:8080";
+    const urlBase = "https://corgoapi-v2.azurewebsites.net";
     //const { page, seed } = this.state;
     const url = urlBase + '/api/' + global.id + '/post';
     //const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;

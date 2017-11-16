@@ -21,7 +21,7 @@ class HomeScreen extends React.Component {
     title: 'Login',
   };
   render() {
-    const urlBase = "http://192.168.1.4:8080";
+    const urlBase = "https://corgoapi-v2.azurewebsites.net";
     const { navigate } = this.props.navigation;
     return (
       <WebView
@@ -29,6 +29,7 @@ class HomeScreen extends React.Component {
         source={{uri: urlBase + '/login/facebook'}}
         style={{marginTop: 20}}
         onNavigationStateChange={(e) => {
+          console.log(e);
           const end_url = urlBase + '/success';
            if(e.url.indexOf(end_url) > -1) {
              navigate('Timeline')

@@ -109,7 +109,7 @@ class PostView extends Component {
 				<View style = {styles.buttonContainer}>
 					<Button style={styles.button} textStyle={{fontSize: 16}}
           onPress = {() => {
-            const urlBase = "http://192.168.1.4:8080";
+            const urlBase = "https://corgoapi-v2.azurewebsites.net";
             console.log('user object' + global.user.id);
             let userStub = {
               "id" : global.user.id,
