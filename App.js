@@ -1,6 +1,20 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, WebView } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import Timeline from './Timeline';
+import RatingStar from './RatingStar';
+import AddPostView from './AddPostView';
+import UserProfile from './UserProfile';
+import ModalExample from './ModalExample';
+import Login from './Login';
+import PostView from './PostView';
+import FlatListDemo from './FlatListDemo';
+import PostInterested from './PostInterested';
+import ConfirmJobView from './ConfirmJobView';
+import ConfirmPaymentView from './ConfirmPaymentView';
+import AcceptPaymentView from './AcceptPaymentView';
+import DemoFBLogin from './DemoFBLogin';
+//import SimpleApp from './Timeline';
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -17,7 +31,7 @@ class HomeScreen extends React.Component {
         onNavigationStateChange={(e) => {
           const end_url = urlBase + '/success';
            if(e.url.indexOf(end_url) > -1) {
-             navigate('Chat')
+             navigate('Timeline')
            }
           /** put your comdition here based here and close webview.
           Like if(e.url.indexOf("end_url") > -1)
@@ -32,22 +46,25 @@ class HomeScreen extends React.Component {
 
 
 
-class ChatScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Chat with Lucy',
-  };
-  render() {
-    return (
-      <View>
-        <Text>Chat with Lucy</Text>
-      </View>
-    );
-  }
-}
+
+
+
+// class ChatScreen extends React.Component {
+//   static navigationOptions = {
+//     title: 'Chat with Lucy',
+//   };
+//   render() {
+//     return (
+//       <View>
+//         <Text>Chat with Lucy</Text>
+//       </View>
+//     );
+//   }
+// }
 
 const SimpleApp = StackNavigator({
   Home: { screen: HomeScreen },
-  Chat: { screen: ChatScreen },
+  Timeline: { screen: Timeline },
 });
 
 export default class App extends React.Component {
