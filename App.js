@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, WebView } from 'react-native';
+import { StyleSheet, Text, View, Button, WebView, Platform, StatusBar } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Timeline from './Timeline';
 import RatingStar from './RatingStar';
@@ -21,7 +21,14 @@ import DrawerStack from './DrawerNavigation';
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    //title: 'Login',
+    headerStyle: {
+      paddingTop: StatusBar.currentHeight,
+      //backgroundColor: '#9FDDED',
+      //height: 75
+      height: 0
+
+    }
   };
 
   render() {
@@ -31,7 +38,7 @@ class HomeScreen extends React.Component {
       <WebView
         //const { navigate } = this.props.navigation;
         source={{uri: global.urlBase + '/login/facebook'}}
-        style={{marginTop: 20}}
+        //style={{marginTop: 20}}
         onNavigationStateChange={(e) => {
           console.log(e);
           const end_url = global.urlBase + '/success';
@@ -85,6 +92,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding: 0,
+
   }
 });

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { View, Text, FlatList, StyleSheet, Image, AppRegistry, Button, TouchableOpacity, Alert} from "react-native";
+
+import { View, Text, FlatList, StyleSheet, Image, AppRegistry, Button, TouchableOpacity, Alert, Platform, StatusBar } from "react-native";
 import {StackNavigator, DrawerNavigator} from 'react-navigation';
+
 import { List, ListItem } from "react-native-elements";
 import RatingStar from './RatingStar';
 import AddPostView from './AddPostView';
@@ -13,7 +15,15 @@ import UserPosts from './UserPosts';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //padding: 2,
+    //padding: 50,
+    // ...Platform.select({
+    //   android: {
+    //     paddingTop: StatusBar.currentHeight
+    //   }
+    //  })
+
+    //backgroundColor: FFFFFF
+    //backgroundColor: '#ffffff'
   },
   priceContainer: {
     flex: 1,
@@ -45,23 +55,49 @@ const styles = StyleSheet.create({
     width: 40,
     borderRadius: 20,
     padding: 10,
+    margin: 5
   },
   separator: {
     flex: 1,
-    height: StyleSheet.hairlineWidth,
-    backgroundColor: '#8E8E8E',
+    //height: StyleSheet.hairlineWidth,
+    //backgroundColor: '#8E8E8E',
   },
   buttonContainer: {
     flexDirection : 'row',
   },
+  item: {
+    backgroundColor: '#ffffff'
+  },
+
+  FlatList: {
+    backgroundColor: '#ffffff',
+    borderTopWidth: 0,
+    borderBottomWidth: 0
+  }
+  //backgroundColor: 'blue'
+
 });
 
 class Timeline extends React.Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
-      // headerStyle: {
-      //   backgroundColor: '#9FDDED',
-      // },
-    title: "Timeline",
+      headerStyle: {
+        paddingTop: StatusBar.currentHeight,
+        //backgroundColor: '#9FDDED',
+        height: 85,
+        borderBottomWidth: 0,
+        backgroundColor: '#fff',
+        elevation: 0,
+
+
+      },
+      headerTitleStyle: {
+        alignSelf: 'center',
+        fontFamily: 'Roboto',
+        fontWeight: 'normal',
+        color: '#4f4e4e'
+      },
+
+    title: "TIMELINE",
     headerRight: <Button title ="Add Post" onPress={() =>{ navigation.navigate('AddPost'); }} />,
     //headerLeft: <Image source={require("./menu-icon.png")} onPress={() => navigate('DrawerOpen')} />,
     headerLeft: <Button title = "Menu" onPress= {() => {navigation.navigate('DrawerOpen'); }}/>,
@@ -88,19 +124,22 @@ class Timeline extends React.Component {
 
   fetchUser = () => {
     //const urlBase = "https://corgoapi-v2.azurewebsites.net";
+
     const url = global.urlBase + '/api/' + global.id + '/user?userId=' + global.id;
     fetch(url)
       .then((response) => response.json())
       .then((responseData) => {
         global.user = responseData;
-        console.log(global.user);
+        //console.log(global.user);
       })
       .done();
   }
 
   fetchData = () => {
     //const urlBase = "https://corgoapi-v2.azurewebsites.net";
+
     const url = global.urlBase + '/api/master/principal';
+
     fetch(url)
       .then((response) => response.json())
       .then((responseData) => {
@@ -135,76 +174,129 @@ class Timeline extends React.Component {
       });
   };
 
-  renderSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 1,
-          width: "86%",
-          backgroundColor: "#CED0CE",
-          marginLeft: "14%"
-        }}
-      />
-    );
-  };
+
 
   render() {
     const { navigate } = this.props.navigation;
     //console.log(this.state.data);
     return (
         <FlatList
-          style={{ margin: 0 }}
+          style={styles.FlatList}
           data={this.state.data}
-          renderItem={({ item }) =>
-              <ListItem
-                subtitle={
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigate('Post', {
-                        item: item,
-                        // name : item.owner.name,
-                        // starCount : item.owner.rating,
-                        // price : item.payment,
-                        // postTitle : item.title,
-                        // postDescription : item.description,
-                      })
-                    }
-                    underlayColor='black'
-                  >
-                    <View style = {styles.columnContainer}>
-                      <View style={styles.rowContainer}>
-                        <Image source={{uri: source= 'https://s-media-cache-ak0.pinimg.com/736x/60/aa/e4/60aae45858ab6ce9dc5b33cc2e69baf7--martin-schoeller-character-inspiration.jpg'}} style={styles.photo} />
-                        <Text style={styles.text}>
-                           {`${item.owner.name}`}
-                        </Text>
-                        <RatingStar starCount = {item.owner.rating}
-                                    starSize = {25}/>
-                      </View>
-                      <View style={styles.rowContainer} >
-                        <Text style = {styles.titleText}>
-                          {`${item.title}`}
-                        </Text>
-                        <View style = {styles.priceContainer} >
-                          <Text style= {styles.text}>
-                            {`${item.payment}`}
-                          </Text>
-                        </View>
-                      </View>
-                      <View style = {styles.container}>
-                        <Text style = {styles.text}>
-                          {`${item.description}`}
-                        </Text>
-                      </View>
+          renderItem={({ item }) => {
+            return(
+              <TouchableOpacity onPress={() =>
+                    navigate('Post', {
+                      item: item,
+                      name : item.owner.name,
+                      starCount : item.owner.rating,
+                      price : item.payment,
+                      postTitle : item.title,
+                      postDescription : item.description,
+                    })
+                  }
+                  underlayColor='black'
+              >
+
+                <ListItem
+                  //roundAvatar
+
+                  title={
+                    <View style={{}}>
+
+                      <Text style={{paddingLeft: 10}}>{item.title}</Text>
                     </View>
-                  </TouchableOpacity>
-                }
-              />
-           }
-        keyExtractor={item => item.id}
-        />
-    );
+                  }
+                  subtitle={
+                    <View style={{float: 'left'}}>
+
+                      <Text style={{paddingLeft: 10, color: 'grey'}}>{item.owner.name}</Text>
+                      <Text style={{paddingLeft: 10, color: 'grey'}}>{item.payment}</Text>
+                    </View>
+                  }
+                  avatar = {
+
+                    <Image source={{ uri: 'https://s-media-cache-ak0.pinimg.com/736x/60/aa/e4/60aae45858ab6ce9dc5b33cc2e69baf7--martin-schoeller-character-inspiration.jpg' }}
+                      style={{borderRadius:50, height:50, width:50 }}
+                    />
+                    // {
+                    //   uri: 'https://s-media-cache-ak0.pinimg.com/736x/60/aa/e4/60aae45858ab6ce9dc5b33cc2e69baf7--martin-schoeller-character-inspiration.jpg',
+                    //   //rounded: true,
+                    //
+                    //   //padding: 100,
+                    //
+                    //
+                    // }
+
+                  }
+                  // avatarStyle = {
+                  //   {
+                  //     rounded: true
+                  //   }
+                  // }
+                  //
+                  // avatarStyle={{  }}
+                  containerStyle={{borderBottomWidth: 0}}
+  // FROM HERE TO BOTTOM COMMENT OUT
+                  />
+
+                </TouchableOpacity>
+
+              )}
+            }
+          keyExtractor={item => item.id}
+          />
+      );
+    }
   }
-}
+                // subtitle={
+                //   <TouchableOpacity
+                //     onPress={() =>
+                //       navigate('Post', {
+                //         item: item,
+                //         name : item.owner.name,
+                //         starCount : item.owner.rating,
+                //         price : item.payment,
+                //         postTitle : item.title,
+                //         postDescription : item.description,
+                //       })
+                //     }
+                //     underlayColor='black'
+                //   >
+                //     <View style = {styles.columnContainer}>
+                //       <View style={styles.rowContainer}>
+                //         <Image source={{uri: source= 'https://s-media-cache-ak0.pinimg.com/736x/60/aa/e4/60aae45858ab6ce9dc5b33cc2e69baf7--martin-schoeller-character-inspiration.jpg'}} style={styles.photo} />
+                //         <Text style={styles.text}>
+                //            {`${item.owner.name}`}
+                //         </Text>
+                //         <RatingStar starCount = {item.owner.rating}
+                //                     starSize = {25}/>
+                //       </View>
+                //       <View style={styles.rowContainer} >
+                //         <Text style = {styles.titleText}>
+                //           {`${item.title}`}
+                //         </Text>
+                //         <View style = {styles.priceContainer} >
+                //           <Text style= {styles.text}>
+                //             {`${item.payment}`}
+                //           </Text>
+                //         </View>
+                //       </View>
+                //       <View style = {styles.container}>
+                //         <Text style = {styles.text}>
+                //           {`${item.description}`}
+                //         </Text>
+                //       </View>
+                //     </View>
+                //   </TouchableOpacity>
+                // }
+//               />
+//           }
+//         keyExtractor={item => item.id}
+//         />
+//     );
+//   }
+// }
 
 const SimpleApp = StackNavigator({
   Home: {screen: Timeline},
