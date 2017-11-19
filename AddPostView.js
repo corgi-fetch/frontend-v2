@@ -66,8 +66,8 @@ class AddPostView extends Component {
   	}
 
 		fetchData = () => {
-			const urlBase = "https://corgoapi-v2.azurewebsites.net";
-	    const url = urlBase + '/api/' + global.id + '/user?userId=' + global.id;
+			//const urlBase = "https://corgoapi-v2.azurewebsites.net";
+	    const url = global.urlBase + '/api/' + global.id + '/user?userId=' + global.id;
 	    fetch(url)
 	      .then((response) => response.json())
 	      .then((responseData) => {
@@ -102,8 +102,8 @@ class AddPostView extends Component {
 				<View style = {styles.buttonContainer}>
 					<Button style={styles.button} textStyle={{fontSize: 16}}
 							onPress = {() => {
-								const urlBase = "http://corgoapi-v2.azurewebsites.net";
-								fetch(urlBase + '/api/' + global.id + '/post', {
+								//const urlBase = "http://corgoapi-v2.azurewebsites.net";
+								fetch(global.urlBase + '/api/' + global.id + '/post', {
 							  method: "post",
 								credentials: 'include',
 							  headers: {

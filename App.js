@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, WebView } from 'react-native';
+import { StyleSheet, Text, View, Button, WebView, Platform, StatusBar } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Timeline from './Timeline';
 import RatingStar from './RatingStar';
@@ -18,19 +18,26 @@ import DemoFBLogin from './DemoFBLogin';
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Login',
+    //title: 'Login',
+    headerStyle: {
+      paddingTop: StatusBar.currentHeight,
+      //backgroundColor: '#9FDDED',
+      //height: 75
+      height: 0
+
+    }
   };
   render() {
-    const urlBase = "https://corgoapi-v2.azurewebsites.net";
+    global.urlBase = "https://corgoapi-v2.azurewebsites.net";
     const { navigate } = this.props.navigation;
     return (
       <WebView
         //const { navigate } = this.props.navigation;
-        source={{uri: urlBase + '/login/facebook'}}
-        style={{marginTop: 20}}
+        source={{uri: global.urlBase + '/login/facebook'}}
+        //style={{marginTop: 20}}
         onNavigationStateChange={(e) => {
           console.log(e);
-          const end_url = urlBase + '/success';
+          const end_url = global.urlBase + '/success';
            if(e.url.indexOf(end_url) > -1) {
              navigate('Timeline')
            }
@@ -79,6 +86,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding: 0,
+
   }
 });

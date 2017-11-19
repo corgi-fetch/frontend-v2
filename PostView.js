@@ -110,7 +110,7 @@ class PostView extends Component {
 				<View style = {styles.buttonContainer}>
 					<Button style={styles.button} textStyle={{fontSize: 16}}
           onPress = {() => {
-            const urlBase = "https://corgoapi-v2.azurewebsites.net";
+            //const urlBase = "https://corgoapi-v2.azurewebsites.net";
             console.log('user object' + global.user.id);
             let userStub = {
               "id" : global.user.id,
@@ -121,7 +121,7 @@ class PostView extends Component {
             if(this.state.post.interestedQueue == null) {
               this.state.post.interestedQueue = [];
             }
-            fetch(urlBase + '/api/' + global.id + '/post/' + this.state.post.id, {
+            fetch(global.urlBase + '/api/' + global.id + '/post/' + this.state.post.id, {
             method: "put",
             credentials: 'include',
             headers: {
