@@ -14,27 +14,32 @@ import ConfirmJobView from './ConfirmJobView';
 import ConfirmPaymentView from './ConfirmPaymentView';
 import AcceptPaymentView from './AcceptPaymentView';
 import DemoFBLogin from './DemoFBLogin';
+import DrawerStack from './DrawerNavigation';
+//import SideBar from './Timeline';
 //import SimpleApp from './Timeline';
+
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Login',
+    header: null,
   };
+
   render() {
-    const urlBase = "https://corgoapi-v2.azurewebsites.net";
+    global.urlBase = "https://corgoapi-v2.azurewebsites.net";
     const { navigate } = this.props.navigation;
     return (
       <WebView
         //const { navigate } = this.props.navigation;
-        source={{uri: urlBase + '/login/facebook'}}
+        source={{uri: global.urlBase + '/login/facebook'}}
         style={{marginTop: 20}}
         onNavigationStateChange={(e) => {
           console.log(e);
-          const end_url = urlBase + '/success';
+          const end_url = global.urlBase + '/success';
            if(e.url.indexOf(end_url) > -1) {
-             navigate('Timeline')
+             console.log('gothere');
+             navigate('Timeline');
            }
-          /** put your comdition here based here and close webview.
+          /** put y our comdition here based here and close webview.
           Like if(e.url.indexOf("end_url") > -1)
           Then close webview
            */
@@ -71,6 +76,7 @@ const SimpleApp = StackNavigator({
 export default class App extends React.Component {
   render() {
     return <SimpleApp />;
+    //return <DrawerStack />;
   }
 }
 

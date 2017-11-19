@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { View, Text, FlatList, StyleSheet, Image, AppRegistry, Button, TouchableOpacity, Alert} from "react-native";
-import {StackNavigator} from 'react-navigation';
+import {StackNavigator, DrawerNavigator} from 'react-navigation';
 import { List, ListItem } from "react-native-elements";
 import RatingStar from './RatingStar';
 import AddPostView from './AddPostView';
 import UserProfile from './UserProfile';
 import PostView from './PostView';
-
+import UserPosts from './UserPosts';
 //Home: { screen: Timeline},
 
 
@@ -57,14 +57,14 @@ const styles = StyleSheet.create({
 });
 
 class Timeline extends React.Component {
-
   static navigationOptions = ({ navigation, screenProps }) => ({
       // headerStyle: {
       //   backgroundColor: '#9FDDED',
       // },
     title: "Timeline",
     headerRight: <Button title ="Add Post" onPress={() =>{ navigation.navigate('AddPost'); }} />,
-    headerLeft: <Button title = "User" onPress= {() => {navigation.navigate('UserProfile'); }}/>,
+    //headerLeft: <Image source={require("./menu-icon.png")} onPress={() => navigate('DrawerOpen')} />,
+    headerLeft: <Button title = "Menu" onPress= {() => {navigation.navigate('DrawerOpen'); }}/>,
   });
 
 
@@ -87,8 +87,8 @@ class Timeline extends React.Component {
   }
 
   fetchUser = () => {
-    const urlBase = "https://corgoapi-v2.azurewebsites.net";
-    const url = urlBase + '/api/' + global.id + '/user?userId=' + global.id;
+    //const urlBase = "https://corgoapi-v2.azurewebsites.net";
+    const url = global.urlBase + '/api/' + global.id + '/user?userId=' + global.id;
     fetch(url)
       .then((response) => response.json())
       .then((responseData) => {
@@ -99,8 +99,8 @@ class Timeline extends React.Component {
   }
 
   fetchData = () => {
-    const urlBase = "https://corgoapi-v2.azurewebsites.net";
-    const url = urlBase + '/api/master/principal';
+    //const urlBase = "https://corgoapi-v2.azurewebsites.net";
+    const url = global.urlBase + '/api/master/principal';
     fetch(url)
       .then((response) => response.json())
       .then((responseData) => {
@@ -112,9 +112,9 @@ class Timeline extends React.Component {
   }
 
   makeRemoteRequest = () => {
-    const urlBase = "https://corgoapi-v2.azurewebsites.net";
+    //const urlBase = "https://corgoapi-v2.azurewebsites.net";
     //const { page, seed } = this.state;
-    const url = urlBase + '/api/' + global.id + '/post';
+    const url = global.urlBase + '/api/' + global.id + '/post';
     //const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;
     this.setState({ loading: true });
     fetch(url)
@@ -162,11 +162,11 @@ class Timeline extends React.Component {
                     onPress={() =>
                       navigate('Post', {
                         item: item,
-                        name : item.owner.name,
-                        starCount : item.owner.rating,
-                        price : item.payment,
-                        postTitle : item.title,
-                        postDescription : item.description,
+                        // name : item.owner.name,
+                        // starCount : item.owner.rating,
+                        // price : item.payment,
+                        // postTitle : item.title,
+                        // postDescription : item.description,
                       })
                     }
                     underlayColor='black'
@@ -215,5 +215,23 @@ const SimpleApp = StackNavigator({
   {headerMode : 'none'}
 );
 
-AppRegistry.registerComponent('Corgo', () => SimpleApp);
-export default SimpleApp;
+const SideBar = DrawerNavigator ({
+    SimpleApp: {
+      screen: SimpleApp
+    },
+    UserProfile: {
+      screen: UserProfile
+    },
+    UserPosts: {
+      screen: UserPosts
+    },
+  //   {
+  //    drawerPosition: 'right',
+  //    contentOptions: {
+  //      activeTintColor: '#000',
+  //    },
+  //  },
+});
+
+AppRegistry.registerComponent('Corgo', () => SideBar);
+export default SideBar;

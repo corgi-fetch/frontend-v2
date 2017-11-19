@@ -69,11 +69,11 @@ class PostView extends Component {
   constructor(props) {
       super(props);
       this.state = {
-        name: props.navigation.state.params.name,
-        starCount: props.navigation.state.params.starCount,
-        price: props.navigation.state.params.price,
-        postTitle: props.navigation.state.params.postTitle,
-        postInfo: props.navigation.state.params.postDescription,
+        // name: props.navigation.state.params.name,
+        // starCount: props.navigation.state.params.starCount,
+        // price: props.navigation.state.params.price,
+        // postTitle: props.navigation.state.params.postTitle,
+        // postInfo: props.navigation.state.params.postDescription,
         post: props.navigation.state.params.item,
 
       };
@@ -92,25 +92,25 @@ class PostView extends Component {
 	        <View style = {styles.rowContainer}>
 	          <Image source={{uri: source= 'https://s-media-cache-ak0.pinimg.com/736x/60/aa/e4/60aae45858ab6ce9dc5b33cc2e69baf7--martin-schoeller-character-inspiration.jpg'}} style={styles.photo} />
 	      	  <Text style = {styles.text}>
-	            {this.state.name}
+	            {this.state.post.owner.name}
 	          </Text>
-	          <RatingStar starCount = {this.state.starCount}
+	          <RatingStar starCount = {this.state.post.owner.rating}
                         starSize = {25} />
 	        </View>
 	        <Text style = {styles.titleText}>
-	          {this.state.postTitle}
+	          {this.state.post.title}
 	        </Text>
 	        <Text style = {styles.text}>
-	          {this.state.postInfo}
+	          {this.state.post.description}
 	        </Text>
 	        <Text style = {styles.priceText}>
-	          {this.state.price}
+	          {this.state.post.payment}
 	        </Text>
 				</View>
 				<View style = {styles.buttonContainer}>
 					<Button style={styles.button} textStyle={{fontSize: 16}}
           onPress = {() => {
-            const urlBase = "https://corgoapi-v2.azurewebsites.net";
+            //const urlBase = "https://corgoapi-v2.azurewebsites.net";
             console.log('user object' + global.user.id);
             let userStub = {
               "id" : global.user.id,
@@ -121,7 +121,7 @@ class PostView extends Component {
             if(this.state.post.interestedQueue == null) {
               this.state.post.interestedQueue = [];
             }
-            fetch(urlBase + '/api/' + global.id + '/post/' + this.state.post.id, {
+            fetch(global.urlBase + '/api/' + global.id + '/post/' + this.state.post.id, {
             method: "put",
             credentials: 'include',
             headers: {
