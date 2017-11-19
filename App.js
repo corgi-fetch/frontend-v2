@@ -14,7 +14,10 @@ import ConfirmJobView from './ConfirmJobView';
 import ConfirmPaymentView from './ConfirmPaymentView';
 import AcceptPaymentView from './AcceptPaymentView';
 import DemoFBLogin from './DemoFBLogin';
+import DrawerStack from './DrawerNavigation';
+//import SideBar from './Timeline';
 //import SimpleApp from './Timeline';
+
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -27,6 +30,7 @@ class HomeScreen extends React.Component {
 
     }
   };
+
   render() {
     global.urlBase = "https://corgoapi-v2.azurewebsites.net";
     const { navigate } = this.props.navigation;
@@ -39,9 +43,10 @@ class HomeScreen extends React.Component {
           console.log(e);
           const end_url = global.urlBase + '/success';
            if(e.url.indexOf(end_url) > -1) {
-             navigate('Timeline')
+             console.log('gothere');
+             navigate('Timeline');
            }
-          /** put your comdition here based here and close webview.
+          /** put y our comdition here based here and close webview.
           Like if(e.url.indexOf("end_url") > -1)
           Then close webview
            */
@@ -78,6 +83,7 @@ const SimpleApp = StackNavigator({
 export default class App extends React.Component {
   render() {
     return <SimpleApp />;
+    //return <DrawerStack />;
   }
 }
 

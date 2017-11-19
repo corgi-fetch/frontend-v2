@@ -88,9 +88,9 @@ const styles = StyleSheet.create({
     },
 });
 
-class UserProfile extends React.Component {
+class UserPosts extends React.Component {
 	static navigationOptions = {
-    	title: 'User Profile',
+    	title: 'My Posts',
   	};
 
 	constructor(props) {
@@ -157,16 +157,63 @@ class UserProfile extends React.Component {
 	render() {
     const { navigate } = this.props.navigation;
 		return (
-      <View style = {styles.container}>
-        <View style = {styles.userContainer}>
-          <Image style={styles.image} source={{uri: 'https://s-media-cache-ak0.pinimg.com/736x/60/aa/e4/60aae45858ab6ce9dc5b33cc2e69baf7--martin-schoeller-character-inspiration.jpg'}}/>
-          <Text style = {styles.text}> {`${global.user.name}`}</Text>
-          <RatingStar starCount = {global.user.rating}
-                      starSize = {25}/>
-        </View>
-      </View>
+      <FlatList
+          style={{ margin: 0 }}
+          data={global.user.currentPosts}
+          renderItem={({ item }) => (
+          <ListItem
+          subtitle={
+            <TouchableOpacity
+              onPress={() =>
+                navigate('Post', {
+                  item: item,
+                })
+              }
+              underlayColor='black'
+            >
+              <View style = {styles.columnContainer}>
+                <Text style = {styles.titleText}>
+                  {`${item.title}`}
+                </Text>
+                <View style = {styles.rowContainer}>
+                  <Text style = {styles.postText}>
+                    {`${item.description}`}
+                  </Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          }
+          />
+          )}
+      keyExtractor={item => item.email}
+      />
 	   );
 	  }
 }
 
-export default UserProfile;
+export default UserPosts;
+
+// roundAvatar
+//   title={`${item.title}`}
+//   subtitle={
+//     // `${item.description}`
+//     // <TouchableOpacity
+//     //   onPress={() =>
+//     //     navigate('Post', {
+//     //       item: item,
+//     //       // name : item.owner.name,
+//     //       // starCount : item.owner.rating,
+//     //       // price : item.payment,
+//     //       // postTitle : item.title,
+//     //       // postDescription : item.description,
+//     //     })
+//     //   }
+//     //   underlayColor='black'
+//     // />
+//     <View style = styles.rowContainer>
+//       <Text style = styles.postText>
+//         {`${item.description}`}
+//       </Text>
+//     </View>
+//   }
+//   //avatar={{ uri: item.picture.thumbnail }}
