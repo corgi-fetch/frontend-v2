@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-<<<<<<< HEAD
+
 import { View, Text, FlatList, StyleSheet, Image, AppRegistry, Button, TouchableOpacity, Alert, Platform, StatusBar } from "react-native";
-import {StackNavigator} from 'react-navigation';
-=======
-import { View, Text, FlatList, StyleSheet, Image, AppRegistry, Button, TouchableOpacity, Alert} from "react-native";
 import {StackNavigator, DrawerNavigator} from 'react-navigation';
->>>>>>> 018d95a9dc3fbbf07799f2e597ea9181916b4b6c
+
 import { List, ListItem } from "react-native-elements";
 import RatingStar from './RatingStar';
 import AddPostView from './AddPostView';
@@ -127,11 +124,8 @@ class Timeline extends React.Component {
 
   fetchUser = () => {
     //const urlBase = "https://corgoapi-v2.azurewebsites.net";
-<<<<<<< HEAD
-    const url = urlBase + '/api/' + global.id + '/user?userId=' + global.id;
-=======
+
     const url = global.urlBase + '/api/' + global.id + '/user?userId=' + global.id;
->>>>>>> 018d95a9dc3fbbf07799f2e597ea9181916b4b6c
     fetch(url)
       .then((response) => response.json())
       .then((responseData) => {
@@ -143,11 +137,9 @@ class Timeline extends React.Component {
 
   fetchData = () => {
     //const urlBase = "https://corgoapi-v2.azurewebsites.net";
-<<<<<<< HEAD
-    const url = urlBase + '/api/master/principal';
-=======
+
     const url = global.urlBase + '/api/master/principal';
->>>>>>> 018d95a9dc3fbbf07799f2e597ea9181916b4b6c
+
     fetch(url)
       .then((response) => response.json())
       .then((responseData) => {
