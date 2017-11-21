@@ -9,6 +9,7 @@ import AddPostView from './AddPostView';
 import UserProfile from './UserProfile';
 import PostView from './PostView';
 import UserPosts from './UserPosts';
+import PostInterested from './PostInterested';
 //Home: { screen: Timeline},
 
 
@@ -92,7 +93,7 @@ class Timeline extends React.Component {
       },
       headerTitleStyle: {
         alignSelf: 'center',
-        fontFamily: 'Roboto',
+        //fontFamily: 'Roboto',
         fontWeight: 'normal',
         color: '#4f4e4e'
       },
@@ -303,6 +304,7 @@ const SimpleApp = StackNavigator({
   AddPost: { screen: AddPostView },
   UserProfile: {screen: UserProfile},
   Post: {screen: PostView},
+  PostInterested: {screen: PostInterested},
 },
   {headerMode : 'none'}
 );

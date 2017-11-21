@@ -110,8 +110,11 @@ class UserPosts extends React.Component {
     this.makeRemoteRequest();
   	}
 
-  	_onPressButton() {
-    	Alert.alert('You tapped the button!')
+  	_onPressItem(item) {
+    	if(item.selectedUserId == null && item.selectedUserId == null && item.owner.userId == global.user.userId)
+     {
+        this.props.navigation.navigate('PostInterested', {item: item,});
+      }
   	}
 
     // _onPressesButton() {
@@ -156,6 +159,7 @@ class UserPosts extends React.Component {
 
 	render() {
     const { navigate } = this.props.navigation;
+    console.log(global.user.currentPosts);
 		return (
       <FlatList
           style={{ margin: 0 }}
@@ -165,9 +169,9 @@ class UserPosts extends React.Component {
           subtitle={
             <TouchableOpacity
               onPress={() =>
-                navigate('Post', {
-                  item: item,
-                })
+                this._onPressItem(item)
+                //this.props.navigation.navigate('Post', {item: item,})
+                //navigate('Post', {item: item,})
               }
               underlayColor='black'
             >

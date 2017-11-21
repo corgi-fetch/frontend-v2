@@ -82,6 +82,7 @@ const SimpleApp = StackNavigator({
 
 export default class App extends React.Component {
   render() {
+    //return <PostInterested />;
     return <SimpleApp />;
     //return <DrawerStack />;
   }
