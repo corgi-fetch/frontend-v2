@@ -97,7 +97,36 @@ class PostInterested extends Component {
   }
 
   _onPressButton(item) {
+    console.log('pressed yes');
+    fetch(global.urlBase + '/api/' + global.id + '/interestedpost/' + this.state.post.id, {
+        method: "put",
+        credentials: 'include',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
 
+        //make sure to serialize your JSON body
+        body: JSON.stringify({
+          id: item.id,
+          rating: item.rating,
+          name: item.name,
+          email: item.email,
+          userId: item.userId,
+          postHistory: item.postHistory,
+          currentPosts: item.currentPosts,
+          currentJobs: item.currentJobs,
+          creditCardNumber: item.creditCardNumber,
+          bankAccount: item.bankAccount,
+          groups: null,
+        })
+      })
+      .then( (response) => {
+        console.log(response);
+        //this.fetchData();
+        //navigate('Home');
+         //do something awesome that makes the world a better place
+      });
   }
 
   static navigationOptions = ({navigation}) => ({
@@ -134,7 +163,28 @@ class PostInterested extends Component {
              Three people are interested
              </Text>
   				</View>
+<<<<<<< HEAD
 
+=======
+          <View>
+            <List>
+              <FlatList
+                  data={this.state.post.interestedQueue}
+                  renderItem={({ item }) =>
+                    <View style = {styles.listContainer}>
+                      <Text style = {styles.listElem}>{item.name}</Text>
+                      <View style = {styles.buttonContainer}>
+                        <TouchableOpacity onPress = {() => this._onPressButton(item)}>
+                          <Text style = {{paddingRight: 35}}>Yes</Text>
+                        </TouchableOpacity>
+                        <Text>No</Text>
+                      </View>
+                    </View>
+                  }
+              />
+            </List>
+          </View>
+>>>>>>> bd5fe7962ddcb6ef0d58deaca962b9063809c587
         </View>
       </View>
     );

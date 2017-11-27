@@ -199,6 +199,11 @@ class Timeline extends Component {
         this.props.navigation.navigate('PostInterested', {item: item,});
       }
     } else {
+      if(item.selectedUserId != null) {
+        if(global.user.userId == item.selectedUserId) {
+          this.props.navigation.navigate('ConfirmJob', {item: item,});
+        }
+      }
       this.props.navigation.navigate('Post', {item: item,});
     }
   }
@@ -215,14 +220,7 @@ class Timeline extends Component {
           renderItem={({ item }) => {
             return(
               <TouchableOpacity onPress={() =>
-                this._onPressItem(item)
-                    // navigate('Post', {
-                    //   item: item,
-                    // })
-                  }
-                  underlayColor='black'
-              >
-
+                this._onPressItem(item)} underlayColor='black' >
                 <ListItem
                   title={
                     <View style={{ flexDirection: 'row', flex: 1}}>
