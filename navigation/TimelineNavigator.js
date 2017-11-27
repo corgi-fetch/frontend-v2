@@ -10,6 +10,7 @@ import UserProfile from '../screens/UserProfile';
 //import Login from '../Login';
 import PostView from '../screens/PostView';
 import PostInterested from '../screens/PostInterested';
+import AddGroupView from '../screens/AddGroupView';
 //import FlatListDemo from '../FlatListDemo';
 //import PostInterested from '../PostInterested';
 //import ConfirmJobView from '../ConfirmJobView';
@@ -34,6 +35,7 @@ const TimelineNavigator = StackNavigator({
   UserProfile: {screen: UserProfile},
   Post: {screen: PostView},
   PostInterested: {screen: PostInterested},
+  AddGroup: {screen: AddGroupView},
   // Drawer: {screen: SideBar}
   },
   {

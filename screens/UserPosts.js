@@ -111,7 +111,7 @@ class UserPosts extends React.Component {
   	}
 
   	_onPressItem(item) {
-    	if(item.selectedUserId == null && item.selectedUserId == null && item.owner.userId == global.user.userId)
+    	if(item.selectedUserId == null && item.owner.userId == global.user.userId)
      {
         this.props.navigation.navigate('PostInterested', {item: item,});
       }

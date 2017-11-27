@@ -96,6 +96,10 @@ class PostInterested extends Component {
       };
   }
 
+  _onPressButton(item) {
+    
+  }
+
   static navigationOptions = ({navigation}) => ({
     //title: navigation.state.params.name,
     //PostView.setPostInfo(navigation.state.params.name);
@@ -138,7 +142,9 @@ class PostInterested extends Component {
                     <View style = {styles.listContainer}>
                       <Text style = {styles.listElem}>{item.name}</Text>
                       <View style = {styles.buttonContainer}>
-                        <Text style = {{paddingRight: 35}}>Yes</Text>
+                        <TouchableOpacity onPress = this._onPressButton(item)>
+                          <Text style = {{paddingRight: 35}}>Yes</Text>
+                        </TouchableOpacity>
                         <Text>No</Text>
                       </View>
                     </View>
