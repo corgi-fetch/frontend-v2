@@ -87,6 +87,7 @@ class PostInterested extends Component {
         seed: 1,
         error: null,
         refreshing: false,
+        post: props.navigation.state.params.item,
       //   name: props.navigation.state.params.name,
       //   starCount: props.navigation.state.params.starCount,
       //   price: props.navigation.state.params.price,
@@ -108,20 +109,20 @@ class PostInterested extends Component {
   	        <View style = {styles.rowContainer}>
   	          <Image source={{uri: source= 'https://s-media-cache-ak0.pinimg.com/736x/60/aa/e4/60aae45858ab6ce9dc5b33cc2e69baf7--martin-schoeller-character-inspiration.jpg'}} style={styles.photo} />
   	      	  <Text style = {styles.text}>
-  	            Daniel Zhang
+  	            {this.state.post.owner.name}
   	          </Text>
-  	          <RatingStar starCount = {5}
+  	          <RatingStar starCount = {this.state.post.owner.rating}
                           starSize = {25}
               />
   	        </View>
   	        <Text style = {styles.titleText}>
-  	          Can someone get me food?
+  	          {this.state.post.title}
   	        </Text>
   	        <Text style = {styles.text}>
-              Hey Im stuck on campus and Im really hungry. Can anyone get me food, and bring it to Wheeler Hall between 1 and 3?
+              {this.state.post.description}
   	        </Text>
   	        <Text style = {styles.priceText}>
-  	          5
+  	          {this.state.post.payment}
   	        </Text>
   				</View>
   				<View style = {styles.updateContainer}>
@@ -132,10 +133,10 @@ class PostInterested extends Component {
           <View>
             <List>
               <FlatList
-                  data={[{key: 'Jason Choi'}, {key: 'Isaac Huang'}, {key: 'Rhea Srivats'}]}
+                  data={this.state.post.interestedQueue}
                   renderItem={({ item }) =>
                     <View style = {styles.listContainer}>
-                      <Text style = {styles.listElem}>{item.key}</Text>
+                      <Text style = {styles.listElem}>{item.name}</Text>
                       <View style = {styles.buttonContainer}>
                         <Text style = {{paddingRight: 35}}>Yes</Text>
                         <Text>No</Text>
