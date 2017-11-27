@@ -254,7 +254,7 @@ class Timeline extends Component {
             <ActionButton.Item buttonColor='#9FDDED' title="New Post" onPress={() => navigate('AddPost')}>
               <Icon name="md-create" style={styles.actionButtonIcon} />
             </ActionButton.Item>
-            <ActionButton.Item buttonColor='#9FDDED' title="New Group" onPress={() => {}}>
+            <ActionButton.Item buttonColor='#9FDDED' title="New Group" onPress={() => navigate('AddGroup')}>
               <Icon name="md-people" style={styles.actionButtonIcon} />
             </ActionButton.Item>
           </ActionButton>
