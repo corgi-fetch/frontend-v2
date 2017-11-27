@@ -20,30 +20,30 @@ import AppNavigator from './navigation/AppNavigator'
 //import SideBar from './Timeline';
 //import SimpleApp from './Timeline';
 
-  render() {
-    global.urlBase = "http://corgoapi-v2.azurewebsites.net/";
-    const { navigate } = this.props.navigation;
-    return (
-      <WebView
-        //const { navigate } = this.props.navigation;
-        source={{uri: global.urlBase + '/login/facebook'}}
-        //style={{marginTop: 20}}
-        onNavigationStateChange={(e) => {
-          console.log(e);
-          const end_url = global.urlBase + '/success';
-           if(e.url.indexOf(end_url) > -1) {
-             console.log('gothere');
-             navigate('Timeline');
-           }
-          /** put y our comdition here based here and close webview.
-          Like if(e.url.indexOf("end_url") > -1)
-          Then close webview
-           */
-        }}
-      />
-    );
-  }
-}
+//   render() {
+//     global.urlBase = "http://corgoapi-v2.azurewebsites.net/";
+//     const { navigate } = this.props.navigation;
+//     return (
+//       <WebView
+//         //const { navigate } = this.props.navigation;
+//         source={{uri: global.urlBase + '/login/facebook'}}
+//         //style={{marginTop: 20}}
+//         onNavigationStateChange={(e) => {
+//           console.log(e);
+//           const end_url = global.urlBase + '/success';
+//            if(e.url.indexOf(end_url) > -1) {
+//              console.log('gothere');
+//              navigate('Timeline');
+//            }
+//           /** put y our comdition here based here and close webview.
+//           Like if(e.url.indexOf("end_url") > -1)
+//           Then close webview
+//            */
+//         }}
+//       />
+//     );
+//   }
+// }
 
 
 
