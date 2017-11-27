@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, Image, Alert, TouchableOpacity} from 'react-native';
-import { StackNavigator } from 'react-navigation';
-import RatingStar from './RatingStar';
+//import { StackNavigator } from 'react-navigation';
+//import RatingStar from './RatingStar';
 import Button from 'apsl-react-native-button';
 
 const styles = StyleSheet.create ({

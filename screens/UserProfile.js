@@ -11,8 +11,10 @@ import {
   Alert,
   FlatList,
 } from 'react-native';
-import RatingStar from './RatingStar';
-import {StackNavigator} from 'react-navigation';
+
+//import RatingStar from './RatingStar';
+
+//import {StackNavigator} from 'react-navigation';
 import { List, ListItem } from "react-native-elements";
 import Button from 'apsl-react-native-button';
 //import CircleButton from 'react-native-circle-button';
@@ -88,9 +90,9 @@ const styles = StyleSheet.create({
     },
 });
 
-class UserPosts extends React.Component {
+class UserProfile extends React.Component {
 	static navigationOptions = {
-    	title: 'My Posts',
+    	title: 'User Profile',
   	};
 
 	constructor(props) {
@@ -110,11 +112,8 @@ class UserPosts extends React.Component {
     this.makeRemoteRequest();
   	}
 
-  	_onPressItem(item) {
-    	if(item.selectedUserId == null && item.selectedUserId == null && item.owner.userId == global.user.userId)
-     {
-        this.props.navigation.navigate('PostInterested', {item: item,});
-      }
+  	_onPressButton() {
+    	Alert.alert('You tapped the button!')
   	}
 
     // _onPressesButton() {
@@ -159,65 +158,17 @@ class UserPosts extends React.Component {
 
 	render() {
     const { navigate } = this.props.navigation;
-    console.log(global.user.currentPosts);
 		return (
-      <FlatList
-          style={{ margin: 0 }}
-          data={global.user.currentPosts}
-          renderItem={({ item }) => (
-          <ListItem
-          subtitle={
-            <TouchableOpacity
-              onPress={() =>
-                this._onPressItem(item)
-                //this.props.navigation.navigate('Post', {item: item,})
-                //navigate('Post', {item: item,})
-              }
-              underlayColor='black'
-            >
-              <View style = {styles.columnContainer}>
-                <Text style = {styles.titleText}>
-                  {`${item.title}`}
-                </Text>
-                <View style = {styles.rowContainer}>
-                  <Text style = {styles.postText}>
-                    {`${item.description}`}
-                  </Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          }
-          />
-          )}
-      keyExtractor={item => item.email}
-      />
+      <View style = {styles.container}>
+        <View style = {styles.userContainer}>
+          <Image style={styles.image} source={{uri: 'https://s-media-cache-ak0.pinimg.com/736x/60/aa/e4/60aae45858ab6ce9dc5b33cc2e69baf7--martin-schoeller-character-inspiration.jpg'}}/>
+          <Text style = {styles.text}> {`${global.user.name}`}</Text>
+          <RatingStar starCount = {global.user.rating}
+                      starSize = {25}/>
+        </View>
+      </View>
 	   );
 	  }
 }
 
-export default UserPosts;
-
-// roundAvatar
-//   title={`${item.title}`}
-//   subtitle={
-//     // `${item.description}`
-//     // <TouchableOpacity
-//     //   onPress={() =>
-//     //     navigate('Post', {
-//     //       item: item,
-//     //       // name : item.owner.name,
-//     //       // starCount : item.owner.rating,
-//     //       // price : item.payment,
-//     //       // postTitle : item.title,
-//     //       // postDescription : item.description,
-//     //     })
-//     //   }
-//     //   underlayColor='black'
-//     // />
-//     <View style = styles.rowContainer>
-//       <Text style = styles.postText>
-//         {`${item.description}`}
-//       </Text>
-//     </View>
-//   }
-//   //avatar={{ uri: item.picture.thumbnail }}
+export default UserProfile;

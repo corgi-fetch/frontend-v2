@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, Image, Alert, TouchableOpacity, FlatList} from 'react-native';
-import { StackNavigator } from 'react-navigation';
-import RatingStar from './RatingStar';
+//import { StackNavigator } from 'react-navigation';
+
+//import RatingStar from './RatingStar';
+
 import Button from 'apsl-react-native-button';
 import { List, ListItem } from "react-native-elements";
 
