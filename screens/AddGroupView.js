@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, TextInput, StatusBar, KeyboardAvoidingView, Tou
 class AddGroupView extends Component {
   render() {
     return (
-      <View>
+      <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'white'}}>
       </View>
     )
   }

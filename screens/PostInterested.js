@@ -97,7 +97,7 @@ class PostInterested extends Component {
   }
 
   _onPressButton(item) {
-    
+
   }
 
   static navigationOptions = ({navigation}) => ({
@@ -134,24 +134,7 @@ class PostInterested extends Component {
              Three people are interested
              </Text>
   				</View>
-          <View>
-            <List>
-              <FlatList
-                  data={this.state.post.interestedQueue}
-                  renderItem={({ item }) =>
-                    <View style = {styles.listContainer}>
-                      <Text style = {styles.listElem}>{item.name}</Text>
-                      <View style = {styles.buttonContainer}>
-                        <TouchableOpacity onPress = this._onPressButton(item)>
-                          <Text style = {{paddingRight: 35}}>Yes</Text>
-                        </TouchableOpacity>
-                        <Text>No</Text>
-                      </View>
-                    </View>
-                  }
-              />
-            </List>
-          </View>
+
         </View>
       </View>
     );
@@ -159,3 +142,22 @@ class PostInterested extends Component {
 }
 
 export default PostInterested;
+
+// <View>
+//   <List>
+//     <FlatList
+//         data={this.state.post.interestedQueue}
+//         renderItem={({ item }) =>
+//           <View style = {styles.listContainer}>
+//             <Text style = {styles.listElem}>{item.name}</Text>
+//             <View style = {styles.buttonContainer}>
+//               <TouchableOpacity onPress = this._onPressButton(item)>
+//                 <Text style = {{paddingRight: 35}}>Yes</Text>
+//               </TouchableOpacity>
+//               <Text>No</Text>
+//             </View>
+//           </View>
+//         }
+//     />
+//   </List>
+// </View>
