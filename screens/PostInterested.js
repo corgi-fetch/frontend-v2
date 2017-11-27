@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, Image, Alert, TouchableOpacity} from 'react-native';
-import { StackNavigator } from 'react-navigation';
-import RatingStar from './RatingStar';
+import { StyleSheet, View, Text, TextInput, Image, Alert, TouchableOpacity, FlatList} from 'react-native';
+//import { StackNavigator } from 'react-navigation';
+
+//import RatingStar from './RatingStar';
+
 import Button from 'apsl-react-native-button';
+import { List, ListItem } from "react-native-elements";
 
 const styles = StyleSheet.create ({
   columnContainer: {
@@ -51,14 +54,20 @@ const styles = StyleSheet.create ({
     borderRadius: 20,
     padding: 10,
   },
-  topButtonContainer: {
-    alignSelf: 'flex-end',
-    paddingTop: 10,
-  },
-
-  buttonContainer: {
-		alignSelf: 'flex-end'
+	buttonContainer: {
+    marginLeft: 125,
+    flexDirection: 'row',
+		alignSelf: "flex-end"
 	},
+  listContainer: {
+    width: 355,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  listElem: {
+    paddingLeft: 10,
+    width: 100,
+  },
 	button: {
 		height: 30,
 		width: 120,
@@ -67,7 +76,7 @@ const styles = StyleSheet.create ({
     borderColor: '#fff'
 	},
 });
-class ConfirmJobView extends Component {
+class PostInterested extends Component {
 
   constructor(props) {
       super(props);
@@ -102,7 +111,8 @@ class ConfirmJobView extends Component {
   	            Daniel Zhang
   	          </Text>
   	          <RatingStar starCount = {5}
-                          starSize = {25}/>
+                          starSize = {25}
+              />
   	        </View>
   	        <Text style = {styles.titleText}>
   	          Can someone get me food?
@@ -119,25 +129,26 @@ class ConfirmJobView extends Component {
              Three people are interested
              </Text>
   				</View>
-          <View style = {styles.updateContainer}>
-            <Text style = {{paddingLeft: 10}}>
-            Daniel Zhang chose you!
-            </Text>
+          <View>
+            <List>
+              <FlatList
+                  data={[{key: 'Jason Choi'}, {key: 'Isaac Huang'}, {key: 'Rhea Srivats'}]}
+                  renderItem={({ item }) =>
+                    <View style = {styles.listContainer}>
+                      <Text style = {styles.listElem}>{item.key}</Text>
+                      <View style = {styles.buttonContainer}>
+                        <Text style = {{paddingRight: 35}}>Yes</Text>
+                        <Text>No</Text>
+                      </View>
+                    </View>
+                  }
+              />
+            </List>
           </View>
-          <View style = {styles.topButtonContainer}>
-  					<Button style={styles.button} textStyle={{fontSize: 16}}>
-  	  					Confirm Job
-  					</Button>
-  				</View>
-          <View style = {styles.buttonContainer}>
-  					<Button style={styles.button} textStyle={{fontSize: 16}}>
-  	  				   Reject Job
-  					</Button>
-  				</View>
         </View>
       </View>
     );
   }
 }
 
-export default ConfirmJobView;
+export default PostInterested;

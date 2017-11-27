@@ -4,11 +4,17 @@ import { View, Text, FlatList, StyleSheet, Image, AppRegistry, Button, Touchable
 import {StackNavigator, DrawerNavigator} from 'react-navigation';
 
 import { List, ListItem } from "react-native-elements";
-import RatingStar from './RatingStar';
+
+//import RatingStar from './RatingStar';
+
 import AddPostView from './AddPostView';
 import UserProfile from './UserProfile';
 import PostView from './PostView';
 import UserPosts from './UserPosts';
+import ActionButton from 'react-native-action-button';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Hamburger from 'react-native-hamburger';
+//import TimelineNavigator from './navigation/TimelineNavigator'
 //Home: { screen: Timeline},
 
 
@@ -73,36 +79,46 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderTopWidth: 0,
     borderBottomWidth: 0
-  }
+  },
+
+  actionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: 'white',
+  },
   //backgroundColor: 'blue'
 
 });
 
-class Timeline extends React.Component {
+class Timeline extends Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
-      headerStyle: {
-        paddingTop: StatusBar.currentHeight,
-        //backgroundColor: '#9FDDED',
-        height: 85,
-        borderBottomWidth: 0,
-        backgroundColor: '#fff',
-        elevation: 0,
-
-
-      },
-      headerTitleStyle: {
-        alignSelf: 'center',
-        fontFamily: 'Roboto',
-        fontWeight: 'normal',
-        color: '#4f4e4e'
-      },
+      // headerStyle: {
+      //   paddingTop: StatusBar.currentHeight,
+      //   //backgroundColor: '#9FDDED',
+      //   height: 85,
+      //   borderBottomWidth: 0,
+      //   backgroundColor: '#fff',
+      //   elevation: 0,
+      //   justifyContent: 'center'
+      //
+      //
+      //
+      // },
+      // headerTitleStyle: {
+      //   //alignSelf: 'center',
+      //   fontFamily: 'Roboto',
+      //   fontWeight: 'normal',
+      //   color: '#4f4e4e'
+      // },
 
     title: "TIMELINE",
-    headerRight: <Button title ="Add Post" onPress={() =>{ navigation.navigate('AddPost'); }} />,
+
+    //headerRight: <Button title ="Add Post" onPress={() =>{ navigation.navigate('AddPost'); }} />,
     //headerLeft: <Image source={require("./menu-icon.png")} onPress={() => navigate('DrawerOpen')} />,
-    headerLeft: <Button title = "Menu" onPress= {() => {navigation.navigate('DrawerOpen'); }}/>,
+
   });
 
+  _listViewOffset = 0
 
   constructor(props) {
     super(props);
@@ -114,6 +130,8 @@ class Timeline extends React.Component {
       //seed: 1,
       error: null,
       refreshing: false,
+      isActionButtonVisible: true,
+      active: true
     };
   }
 
@@ -180,6 +198,7 @@ class Timeline extends React.Component {
     const { navigate } = this.props.navigation;
     //console.log(this.state.data);
     return (
+      <View>
         <FlatList
           style={styles.FlatList}
           data={this.state.data}
@@ -199,45 +218,30 @@ class Timeline extends React.Component {
               >
 
                 <ListItem
-                  //roundAvatar
-
                   title={
-                    <View style={{}}>
-
-                      <Text style={{paddingLeft: 10}}>{item.title}</Text>
+                    <View style={{ flexDirection: 'row', flex: 1}}>
+                      <View style={{flex: 3}}>
+                        <Text style={{paddingLeft: 10}}>{item.title}</Text>
+                      </View>
+                      <View style={{flex: 1}}>
+                        <Text style={{textAlign: 'right'}}>${item.payment}</Text>
+                      </View>
                     </View>
                   }
                   subtitle={
-                    <View style={{float: 'left'}}>
-
-                      <Text style={{paddingLeft: 10, color: 'grey'}}>{item.owner.name}</Text>
-                      <Text style={{paddingLeft: 10, color: 'grey'}}>{item.payment}</Text>
+                    <View style={{ flexDirection: 'row', flex: 1 }}>
+                      <View style={{flex: 7}}>
+                        <Text numberOfLines={1} style={{paddingLeft: 10, color: 'grey' }}>{item.description != null && item.description}</Text>
+                      </View>
+                      <View style={{flex: 1}} />
                     </View>
                   }
                   avatar = {
-
-                    <Image source={{ uri: 'https://s-media-cache-ak0.pinimg.com/736x/60/aa/e4/60aae45858ab6ce9dc5b33cc2e69baf7--martin-schoeller-character-inspiration.jpg' }}
+                    <Image source={{ uri: 'http://graph.facebook.com/' + item.owner.userId + '/picture?type=square' }}
                       style={{borderRadius:50, height:50, width:50 }}
                     />
-                    // {
-                    //   uri: 'https://s-media-cache-ak0.pinimg.com/736x/60/aa/e4/60aae45858ab6ce9dc5b33cc2e69baf7--martin-schoeller-character-inspiration.jpg',
-                    //   //rounded: true,
-                    //
-                    //   //padding: 100,
-                    //
-                    //
-                    // }
-
                   }
-                  // avatarStyle = {
-                  //   {
-                  //     rounded: true
-                  //   }
-                  // }
-                  //
-                  // avatarStyle={{  }}
                   containerStyle={{borderBottomWidth: 0}}
-  // FROM HERE TO BOTTOM COMMENT OUT
                   />
 
                 </TouchableOpacity>
@@ -246,84 +250,25 @@ class Timeline extends React.Component {
             }
           keyExtractor={item => item.id}
           />
+          <ActionButton fixNativeFeedbackRadius={true} buttonColor='#9FDDED'>
+            <ActionButton.Item buttonColor='#9FDDED' title="New Post" onPress={() => navigate('AddPost')}>
+              <Icon name="md-create" style={styles.actionButtonIcon} />
+            </ActionButton.Item>
+            <ActionButton.Item buttonColor='#9FDDED' title="New Group" onPress={() => {}}>
+              <Icon name="md-people" style={styles.actionButtonIcon} />
+            </ActionButton.Item>
+          </ActionButton>
+
+        </View>
+
       );
     }
   }
-                // subtitle={
-                //   <TouchableOpacity
-                //     onPress={() =>
-                //       navigate('Post', {
-                //         item: item,
-                //         name : item.owner.name,
-                //         starCount : item.owner.rating,
-                //         price : item.payment,
-                //         postTitle : item.title,
-                //         postDescription : item.description,
-                //       })
-                //     }
-                //     underlayColor='black'
-                //   >
-                //     <View style = {styles.columnContainer}>
-                //       <View style={styles.rowContainer}>
-                //         <Image source={{uri: source= 'https://s-media-cache-ak0.pinimg.com/736x/60/aa/e4/60aae45858ab6ce9dc5b33cc2e69baf7--martin-schoeller-character-inspiration.jpg'}} style={styles.photo} />
-                //         <Text style={styles.text}>
-                //            {`${item.owner.name}`}
-                //         </Text>
-                //         <RatingStar starCount = {item.owner.rating}
-                //                     starSize = {25}/>
-                //       </View>
-                //       <View style={styles.rowContainer} >
-                //         <Text style = {styles.titleText}>
-                //           {`${item.title}`}
-                //         </Text>
-                //         <View style = {styles.priceContainer} >
-                //           <Text style= {styles.text}>
-                //             {`${item.payment}`}
-                //           </Text>
-                //         </View>
-                //       </View>
-                //       <View style = {styles.container}>
-                //         <Text style = {styles.text}>
-                //           {`${item.description}`}
-                //         </Text>
-                //       </View>
-                //     </View>
-                //   </TouchableOpacity>
-                // }
-//               />
-//           }
-//         keyExtractor={item => item.id}
-//         />
-//     );
-//   }
-// }
 
-const SimpleApp = StackNavigator({
-  Home: {screen: Timeline},
-  AddPost: { screen: AddPostView },
-  UserProfile: {screen: UserProfile},
-  Post: {screen: PostView},
-},
-  {headerMode : 'none'}
-);
 
-const SideBar = DrawerNavigator ({
-    SimpleApp: {
-      screen: SimpleApp
-    },
-    UserProfile: {
-      screen: UserProfile
-    },
-    UserPosts: {
-      screen: UserPosts
-    },
-  //   {
-  //    drawerPosition: 'right',
-  //    contentOptions: {
-  //      activeTintColor: '#000',
-  //    },
-  //  },
-});
 
-AppRegistry.registerComponent('Corgo', () => SideBar);
-export default SideBar;
+
+
+
+//AppRegistry.registerComponent('Corgo', () => Timeline);
+export default Timeline;

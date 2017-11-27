@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, Image, Alert, TouchableOpacity} from 'react-native';
-import { StackNavigator } from 'react-navigation';
-import RatingStar from './RatingStar';
+//import { StackNavigator } from 'react-navigation';
+//import RatingStar from './RatingStar';
 import Button from 'apsl-react-native-button';
 
 const styles = StyleSheet.create ({
@@ -55,12 +55,7 @@ const styles = StyleSheet.create ({
     alignSelf: 'flex-end',
     paddingTop: 10,
   },
-  ratingsContainer: {
-    flex: 1,
-    marginTop : 50,
-    alignSelf: 'center',
-    marginBottom: 170,
-  },
+
   buttonContainer: {
 		alignSelf: 'flex-end'
 	},
@@ -72,7 +67,7 @@ const styles = StyleSheet.create ({
     borderColor: '#fff'
 	},
 });
-class AcceptPaymentView extends Component {
+class ConfirmJobView extends Component {
 
   constructor(props) {
       super(props);
@@ -107,8 +102,7 @@ class AcceptPaymentView extends Component {
   	            Daniel Zhang
   	          </Text>
   	          <RatingStar starCount = {5}
-                          starSize = {25}
-                          />
+                          starSize = {25}/>
   	        </View>
   	        <Text style = {styles.titleText}>
   	          Can someone get me food?
@@ -130,24 +124,20 @@ class AcceptPaymentView extends Component {
             Daniel Zhang chose you!
             </Text>
           </View>
-          <View style = {styles.updateContainer}>
-            <Text style = {{paddingLeft: 10}}>
-            Daniel Zhang paid you!
-            </Text>
-          </View>
           <View style = {styles.topButtonContainer}>
-  					<Button style={styles.button} textStyle={{fontSize: 14}}>
-  	  					Accept Payment
+  					<Button style={styles.button} textStyle={{fontSize: 16}}>
+  	  					Confirm Job
   					</Button>
   				</View>
-          <View style = {styles.ratingsContainer}>
-            <RatingStar starSize = {50}/>
-            <Text style = {{fontSize: 14}}>  Rate Daniel for this Transaction!</Text>
-          </View>
+          <View style = {styles.buttonContainer}>
+  					<Button style={styles.button} textStyle={{fontSize: 16}}>
+  	  				   Reject Job
+  					</Button>
+  				</View>
         </View>
       </View>
     );
   }
 }
 
-export default AcceptPaymentView;
+export default ConfirmJobView;

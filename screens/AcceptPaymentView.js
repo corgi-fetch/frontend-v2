@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, Image, Alert, TouchableOpacity, FlatList} from 'react-native';
-import { StackNavigator } from 'react-navigation';
-import RatingStar from './RatingStar';
+import { StyleSheet, View, Text, TextInput, Image, Alert, TouchableOpacity} from 'react-native';
+//import { StackNavigator } from 'react-navigation';
+//import RatingStar from './RatingStar';
 import Button from 'apsl-react-native-button';
-import { List, ListItem } from "react-native-elements";
 
 const styles = StyleSheet.create ({
   columnContainer: {
@@ -52,20 +51,19 @@ const styles = StyleSheet.create ({
     borderRadius: 20,
     padding: 10,
   },
-	buttonContainer: {
-    marginLeft: 125,
-    flexDirection: 'row',
-		alignSelf: "flex-end"
+  topButtonContainer: {
+    alignSelf: 'flex-end',
+    paddingTop: 10,
+  },
+  ratingsContainer: {
+    flex: 1,
+    marginTop : 50,
+    alignSelf: 'center',
+    marginBottom: 170,
+  },
+  buttonContainer: {
+		alignSelf: 'flex-end'
 	},
-  listContainer: {
-    width: 355,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-  },
-  listElem: {
-    paddingLeft: 10,
-    width: 100,
-  },
 	button: {
 		height: 30,
 		width: 120,
@@ -74,7 +72,7 @@ const styles = StyleSheet.create ({
     borderColor: '#fff'
 	},
 });
-class PostInterested extends Component {
+class AcceptPaymentView extends Component {
 
   constructor(props) {
       super(props);
@@ -110,7 +108,7 @@ class PostInterested extends Component {
   	          </Text>
   	          <RatingStar starCount = {5}
                           starSize = {25}
-              />
+                          />
   	        </View>
   	        <Text style = {styles.titleText}>
   	          Can someone get me food?
@@ -127,21 +125,24 @@ class PostInterested extends Component {
              Three people are interested
              </Text>
   				</View>
-          <View>
-            <List>
-              <FlatList
-                  data={[{key: 'Jason Choi'}, {key: 'Isaac Huang'}, {key: 'Rhea Srivats'}]}
-                  renderItem={({ item }) =>
-                    <View style = {styles.listContainer}>
-                      <Text style = {styles.listElem}>{item.key}</Text>
-                      <View style = {styles.buttonContainer}>
-                        <Text style = {{paddingRight: 35}}>Yes</Text>
-                        <Text>No</Text>
-                      </View>
-                    </View>
-                  }
-              />
-            </List>
+          <View style = {styles.updateContainer}>
+            <Text style = {{paddingLeft: 10}}>
+            Daniel Zhang chose you!
+            </Text>
+          </View>
+          <View style = {styles.updateContainer}>
+            <Text style = {{paddingLeft: 10}}>
+            Daniel Zhang paid you!
+            </Text>
+          </View>
+          <View style = {styles.topButtonContainer}>
+  					<Button style={styles.button} textStyle={{fontSize: 14}}>
+  	  					Accept Payment
+  					</Button>
+  				</View>
+          <View style = {styles.ratingsContainer}>
+            <RatingStar starSize = {50}/>
+            <Text style = {{fontSize: 14}}>  Rate Daniel for this Transaction!</Text>
           </View>
         </View>
       </View>
@@ -149,4 +150,4 @@ class PostInterested extends Component {
   }
 }
 
-export default PostInterested;
+export default AcceptPaymentView;
