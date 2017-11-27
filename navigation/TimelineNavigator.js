@@ -9,6 +9,7 @@ import UserProfile from '../screens/UserProfile';
 //import ModalExample from '../ModalExample';
 //import Login from '../Login';
 import PostView from '../screens/PostView';
+import PostInterested from '../screens/PostInterested';
 //import FlatListDemo from '../FlatListDemo';
 //import PostInterested from '../PostInterested';
 //import ConfirmJobView from '../ConfirmJobView';
@@ -32,6 +33,7 @@ const TimelineNavigator = StackNavigator({
   AddPost: { screen: AddPostView },
   UserProfile: {screen: UserProfile},
   Post: {screen: PostView},
+  PostInterested: {screen: PostInterested},
   // Drawer: {screen: SideBar}
   },
   {
@@ -53,7 +55,7 @@ const TimelineNavigator = StackNavigator({
          },
      headerTitleStyle: {
        //alignSelf: 'center',
-       fontFamily: 'Roboto',
+       //fontFamily: 'Roboto',
        fontWeight: 'normal',
        color: '#4f4e4e'
      },

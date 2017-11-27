@@ -12,7 +12,7 @@ import {
   FlatList,
 } from 'react-native';
 
-//import RatingStar from './RatingStar';
+import RatingStar from '../RatingStar';
 
 //import {StackNavigator} from 'react-navigation';
 import { List, ListItem } from "react-native-elements";

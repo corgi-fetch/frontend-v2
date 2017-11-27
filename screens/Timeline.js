@@ -192,6 +192,16 @@ class Timeline extends Component {
       });
   };
 
+  _onPressItem(item) {
+    if(item.owner.userId == global.user.userId) {
+      if(item.selectedUserId == null)
+      {
+        this.props.navigation.navigate('PostInterested', {item: item,});
+      }
+    } else {
+      this.props.navigation.navigate('Post', {item: item,});
+    }
+  }
 
 
   render() {
@@ -205,14 +215,10 @@ class Timeline extends Component {
           renderItem={({ item }) => {
             return(
               <TouchableOpacity onPress={() =>
-                    navigate('Post', {
-                      item: item,
-                      name : item.owner.name,
-                      starCount : item.owner.rating,
-                      price : item.payment,
-                      postTitle : item.title,
-                      postDescription : item.description,
-                    })
+                this._onPressItem(item)
+                    // navigate('Post', {
+                    //   item: item,
+                    // })
                   }
                   underlayColor='black'
               >
