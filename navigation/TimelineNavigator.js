@@ -20,6 +20,7 @@ import ConfirmJobView from '../screens/ConfirmJobView';
 //import DemoFBLogin from '../DemoFBLogin';
 //import SideBar from './SideBarNavigator';
 //import Homescreen from '../screens/Homescreen';
+import SampleApp from '../screens/SearchBarExample'
 
 
 
@@ -38,6 +39,7 @@ const TimelineNavigator = StackNavigator({
   PostInterested: {screen: PostInterested},
   AddGroup: {screen: AddGroupView},
   ConfirmJob: {screen: ConfirmJobView},
+  SearchBar: {screen: SampleApp}
   // Drawer: {screen: SideBar}
   },
   {

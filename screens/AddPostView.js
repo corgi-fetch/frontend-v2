@@ -68,24 +68,7 @@ class AddPostView extends Component {
   static navigationOptions = ({navigation}) => ({
     title: 'NEW POST',
 		headerLeft: <Icon name="md-arrow-back" size={35} style={{padding: 20, color: '#9FDDED'}} onPress= {() => {navigation.navigate('Home');}}/>,
-		// headerStyle: {
-		// 	paddingTop: StatusBar.currentHeight,
-		// 	//backgroundColor: '#9FDDED',
-		// 	height: 85,
-		// 	borderBottomWidth: 0,
-		// 	backgroundColor: '#fff',
-		// 	elevation: 0,
-		// 	justifyContent: 'center'
-    //
-    //
-    //
-		// },
-		// headerTitleStyle: {
-		// 	//alignSelf: 'center',
-		// 	fontFamily: 'Roboto',
-		// 	fontWeight: 'normal',
-		// 	color: '#4f4e4e'
-		// },
+
   });
 
 	constructor(props) {

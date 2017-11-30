@@ -163,9 +163,7 @@ class PostInterested extends Component {
              Three people are interested
              </Text>
   				</View>
-<<<<<<< HEAD
 
-=======
           <View>
             <List>
               <FlatList
@@ -184,7 +182,7 @@ class PostInterested extends Component {
               />
             </List>
           </View>
->>>>>>> bd5fe7962ddcb6ef0d58deaca962b9063809c587
+
         </View>
       </View>
     );

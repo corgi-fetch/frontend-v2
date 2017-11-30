@@ -201,10 +201,13 @@ class Timeline extends Component {
     } else {
       if(item.selectedUserId != null) {
         if(global.user.userId == item.selectedUserId) {
-          this.props.navigation.navigate('ConfirmJob', {item: item,});
+          console.log('we are in the correct place');
+          this.props.navigation.navigate('ConfirmJob');
+        } else {
+          this.props.navigation.navigate('Post', {item: item,});
         }
       }
-      this.props.navigation.navigate('Post', {item: item,});
+
     }
   }
 
@@ -259,6 +262,9 @@ class Timeline extends Component {
               <Icon name="md-create" style={styles.actionButtonIcon} />
             </ActionButton.Item>
             <ActionButton.Item buttonColor='#9FDDED' title="New Group" onPress={() => navigate('AddGroup')}>
+              <Icon name="md-people" style={styles.actionButtonIcon} />
+            </ActionButton.Item>
+            <ActionButton.Item buttonColor='#9FDDED' title="SearchBar" onPress={() => navigate('SearchBar')}>
               <Icon name="md-people" style={styles.actionButtonIcon} />
             </ActionButton.Item>
           </ActionButton>

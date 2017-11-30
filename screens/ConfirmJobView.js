@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, Image, Alert, TouchableOpacity} from 'react-native';
 //import { StackNavigator } from 'react-navigation';
-//import RatingStar from './RatingStar';
+import RatingStar from '../RatingStar';
 import Button from 'apsl-react-native-button';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const styles = StyleSheet.create ({
   columnContainer: {
@@ -87,8 +88,9 @@ class ConfirmJobView extends Component {
   }
 
   static navigationOptions = ({navigation}) => ({
-    //title: navigation.state.params.name,
-    //PostView.setPostInfo(navigation.state.params.name);
+    title: 'NEW POST',
+		headerLeft: <Icon name="md-arrow-back" size={35} style={{padding: 20, color: '#9FDDED'}} onPress= {() => {navigation.navigate('Home');}}/>,
+
   });
 
 	render() {
