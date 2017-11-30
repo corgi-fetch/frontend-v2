@@ -148,7 +148,7 @@ class Timeline extends Component {
       .then((response) => response.json())
       .then((responseData) => {
         global.user = responseData;
-        //console.log(global.user);
+        console.log(global.user);
       })
       .done();
   }
@@ -263,10 +263,7 @@ class Timeline extends Component {
             </ActionButton.Item>
             <ActionButton.Item buttonColor='#9FDDED' title="New Group" onPress={() => navigate('AddGroup')}>
               <Icon name="md-people" style={styles.actionButtonIcon} />
-            </ActionButton.Item>
-            <ActionButton.Item buttonColor='#9FDDED' title="SearchBar" onPress={() => navigate('SearchBar')}>
-              <Icon name="md-people" style={styles.actionButtonIcon} />
-            </ActionButton.Item>
+            </ActionButton.Item>        
           </ActionButton>
 
         </View>

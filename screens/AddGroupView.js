@@ -240,6 +240,8 @@ class AddGroupView extends Component {
 
 
   render() {
+    const { navigate } = this.props.navigation;
+
     return (
       <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'white'}}>
         <View style={{backgroundColor: 'white', flex: 1, flexDirection: 'column', /*borderBottomColor: 'lightgray', borderBottomWidth: 1,*/}}>
@@ -271,6 +273,19 @@ class AddGroupView extends Component {
 						fixNativeFeedbackRadius={true}
             onPress = {() => {
 							//const urlBase = "http://corgoapi-v2.azurewebsites.net";
+              var fullUsers = [];
+              var url = global.urlBase + '/api/' + global.id + '/user/'
+
+              for (x in this.state.selectedUsers) {
+                fetch(url + x)
+                  .then((response) => response.json())
+                  .then((responseData) => {
+                    fullUsers.push(responseData);
+                    //console.log();
+                  })
+                  .done();
+              }
+
 							fetch(global.urlBase + '/api/' + global.id + '/group', {
 						  method: "post",
 							credentials: 'include',
@@ -281,16 +296,16 @@ class AddGroupView extends Component {
 
 						  //make sure to serialize your JSON body
 						  body: JSON.stringify({
-						    name: 7,
-								users: global.user,
-						    posts: this.state.titleText,
-								invited: this.state.postText,
-								description: this.state.priceText,
+						    name: this.state.titleText,
+								users: fullUsers,
+						    posts: [],
+								invited: [],
+								description: null,
 						  })
 						})
 						.then( (response) => {
 							console.log(response);
-							this.fetchData();
+							//this.fetchData();
 							navigate('Home');
 						   //do something awesome that makes the world a better place
 						});
