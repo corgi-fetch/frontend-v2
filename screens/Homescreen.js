@@ -33,8 +33,9 @@ class HomeScreen extends React.Component {
   };
 
   render() {
+    global.urlBase = "http://192.168.0.12:8080";
     //global.urlBase = "http://127.0.0.1:8080";
-    global.urlBase = "https://corgoapi-v2.azurewebsites.net";
+    //global.urlBase = "https://corgoapi-v2.azurewebsites.net";
     const { navigate } = this.props.navigation;
     return (
       <WebView

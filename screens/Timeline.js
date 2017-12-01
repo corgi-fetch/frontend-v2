@@ -14,6 +14,7 @@ import UserPosts from './UserPosts';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Hamburger from 'react-native-hamburger';
+//import Button from 'apsl-react-native-button';
 //import TimelineNavigator from './navigation/TimelineNavigator'
 //Home: { screen: Timeline},
 
@@ -113,9 +114,7 @@ class Timeline extends Component {
 
     title: "TIMELINE",
 
-    //headerRight: <Button title ="Add Post" onPress={() =>{ navigation.navigate('AddPost'); }} />,
     //headerLeft: <Image source={require("./menu-icon.png")} onPress={() => navigate('DrawerOpen')} />,
-
   });
 
   _listViewOffset = 0
@@ -197,17 +196,26 @@ class Timeline extends Component {
       if(item.selectedUserId == null)
       {
         this.props.navigation.navigate('PostInterested', {item: item,});
+      } else if(item.selectedUserId != null && item.responderUserId != null) {
+        this.props.navigation.navigate('ConfirmPayment', {item: item,});
+        if(item.serviceReceived == true) {
+          console.log("i think it worked!");
+        }
       }
     } else {
       if(item.selectedUserId != null) {
         if(global.user.userId == item.selectedUserId) {
-          console.log('we are in the correct place');
-          this.props.navigation.navigate('ConfirmJob');
+          if(item.serviceReceived == true) {
+            this.props.navigation.navigate('AcceptPayment', {item: item,});
+          } else {
+            this.props.navigation.navigate('ConfirmJob', {item: item,});
+          }
         } else {
           this.props.navigation.navigate('Post', {item: item,});
         }
+      } else {
+        this.props.navigation.navigate('Post', {item: item,});
       }
-
     }
   }
 
@@ -263,7 +271,10 @@ class Timeline extends Component {
             </ActionButton.Item>
             <ActionButton.Item buttonColor='#9FDDED' title="New Group" onPress={() => navigate('AddGroup')}>
               <Icon name="md-people" style={styles.actionButtonIcon} />
-            </ActionButton.Item>        
+            </ActionButton.Item>
+            <ActionButton.Item buttonColor='#9FDDED' title="Logout" onPress={() => navigate('Logout')}>
+              <Icon name="md-people" style={styles.actionButtonIcon} />
+            </ActionButton.Item>
           </ActionButton>
 
         </View>
