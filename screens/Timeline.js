@@ -226,6 +226,7 @@ class Timeline extends Component {
     return (
       <View>
         <FlatList
+          inverted
           style={styles.FlatList}
           data={this.state.data}
           renderItem={({ item }) => {
@@ -253,7 +254,7 @@ class Timeline extends Component {
                   }
                   avatar = {
                     <Image source={{ uri: 'http://graph.facebook.com/' + item.owner.userId + '/picture?type=square' }}
-                      style={{borderRadius:50, height:50, width:50 }}
+                      style={{borderRadius:25, height:50, width:50 }}
                     />
                   }
                   containerStyle={{borderBottomWidth: 0}}

@@ -197,7 +197,7 @@ class AddGroupView extends Component {
                     }
                     avatar = {
                       <Image source={{ uri: 'http://graph.facebook.com/' + item.userId + '/picture?type=square' }}
-                        style={{borderRadius:50, height:50, width:50 }}
+                        style={{borderRadius:25, height:50, width:50 }}
                       />
                     }
                   />
