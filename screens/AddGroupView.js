@@ -36,6 +36,7 @@ var contains = function(needle) {
     return indexOf.call(this, needle);
 };
 
+
 const styles = StyleSheet.create({
   button: {
     borderColor: '#9FDDED',
@@ -66,10 +67,34 @@ class AddGroupView extends Component {
         data: [],
         searchResults: [],
         pressStatus: false,
-        selectedUsers: [],
+        selectedUsers: [global.id],
         renderResults: false
       };
   }
+
+  getFullUsers() {
+      return new Promise((resolve, reject) => {
+        var url = global.urlBase + '/api/' + global.id + '/user/'
+        let fetches = [];
+        let arr = [];
+
+        for (let x = 0; x < this.state.selectedUsers.length; x++) {
+          fetches.push(
+            fetch(url + this.state.selectedUsers[x])
+              .then((response) => response.json())
+              .then((responseData) => {
+                arr[x] = responseData;
+                //console.log();
+            })
+          )
+        }
+
+        Promise.all(fetches).then(() => {
+          resolve(arr);
+        })
+      });
+    }
+
 
   _onHideUnderlay(){
     this.setState({ pressStatus: false });
@@ -273,42 +298,50 @@ class AddGroupView extends Component {
 						fixNativeFeedbackRadius={true}
             onPress = {() => {
 							//const urlBase = "http://corgoapi-v2.azurewebsites.net";
-              var fullUsers = [];
-              var url = global.urlBase + '/api/' + global.id + '/user/'
+              // var fullUsers = [];
+              // var url = global.urlBase + '/api/' + global.id + '/user/'
+              //
+              // for (var x in this.state.selectedUsers) {
+              //
+              //   fetch(url + this.state.selectedUsers[x])
+              //     .then((response) => response.json())
+              //     .then((responseData) => {
+              //       fullUsers.push(responseData);
+              //       //console.log();
+              //     })
+              //     .done();
+              // }
 
-              for (x in this.state.selectedUsers) {
-                fetch(url + x)
-                  .then((response) => response.json())
-                  .then((responseData) => {
-                    fullUsers.push(responseData);
-                    //console.log();
-                  })
-                  .done();
-              }
+              this.getFullUsers().then((data) => {
+                fetch(global.urlBase + '/api/' + global.id + '/group', {
+    						  method: "post",
+    							credentials: 'include',
+    						  headers: {
+    						    'Accept': 'application/json',
+    						    'Content-Type': 'application/json'
+    						  },
 
-							fetch(global.urlBase + '/api/' + global.id + '/group', {
-						  method: "post",
-							credentials: 'include',
-						  headers: {
-						    'Accept': 'application/json',
-						    'Content-Type': 'application/json'
-						  },
+    						  //make sure to serialize your JSON body
+    						  body: JSON.stringify({
+    						    name: this.state.titleText,
+    								users: data,
+    						    posts: [],
+    								invited: [],
+    								description: null,
+    						  })
+    						})
+    						.then( (response) => {
+    							console.log('this is data ' + data);
+                  console.log(response);
+    							//this.fetchData();
+    							navigate('Home');
+    						   //do something awesome that makes the world a better place
+    						});
+              })
 
-						  //make sure to serialize your JSON body
-						  body: JSON.stringify({
-						    name: this.state.titleText,
-								users: fullUsers,
-						    posts: [],
-								invited: [],
-								description: null,
-						  })
-						})
-						.then( (response) => {
-							console.log(response);
-							//this.fetchData();
-							navigate('Home');
-						   //do something awesome that makes the world a better place
-						});
+              //console.log(fullUsers);
+
+
 					}}
         />
       </View>

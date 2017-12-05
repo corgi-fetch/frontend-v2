@@ -4,7 +4,10 @@ import { StyleSheet, View, Text, TextInput, Image, Alert, TouchableOpacity, Flat
 
 import RatingStar from '../RatingStar';
 
+
 import Button from 'apsl-react-native-button';
+import Icon from 'react-native-vector-icons/Ionicons';
+import ActionButton from 'react-native-action-button';
 import { List, ListItem } from "react-native-elements";
 
 const styles = StyleSheet.create ({
@@ -19,14 +22,14 @@ const styles = StyleSheet.create ({
 	contentContainer: {
 		padding: 10,
 		width: 335,
-		borderColor: 'black',
-		borderWidth: 2,
+		//borderColor: 'black',
+		//borderWidth: 2,
 	},
   updateContainer: {
     marginLeft: 15,
     width: 320,
     height: 23,
-    backgroundColor: 'blue',
+    //backgroundColor: 'blue',
   },
   rowContainer: {
     flexDirection: 'row',
@@ -72,8 +75,8 @@ const styles = StyleSheet.create ({
 		height: 30,
 		width: 120,
     backgroundColor:'#00BCD4',
-    borderWidth: 1,
-    borderColor: '#fff'
+    //borderWidth: 1,
+    //borderColor: '#fff'
 	},
 });
 class PostInterested extends Component {
@@ -132,11 +135,12 @@ class PostInterested extends Component {
   static navigationOptions = ({navigation}) => ({
     //title: navigation.state.params.name,
     //PostView.setPostInfo(navigation.state.params.name);
+    headerLeft: <Icon name="md-arrow-back" size={35} style={{padding: 20, color: '#9FDDED'}} onPress= {() => {navigation.navigate('Home');}}/>,
   });
 
 	render() {
     return (
-      <View style = {{flex: 1}}>
+      <View style = {{flex: 1, backgroundColor: 'white'}}>
         <View style={styles.columnContainer}>
   				<View style = {styles.contentContainer}>
   	        <View style = {styles.rowContainer}>
@@ -160,7 +164,7 @@ class PostInterested extends Component {
   				</View>
   				<View style = {styles.updateContainer}>
   	         <Text style = {{paddingLeft: 10}}>
-             Three people are interested
+             {this.state.post.interestedQueue.length} people are interested
              </Text>
   				</View>
 

@@ -34,7 +34,8 @@ class HomeScreen extends React.Component {
 
   render() {
     //global.urlBase = "http://127.0.0.1:8080";
-    global.urlBase = "https://corgoapi-v2.azurewebsites.net";
+    //global.urlBase = "https://corgoapi-v2.azurewebsites.net";
+    global.urlBase = "http://192.168.1.4:8080";
     const { navigate } = this.props.navigation;
     return (
       <WebView
@@ -44,9 +45,13 @@ class HomeScreen extends React.Component {
         onNavigationStateChange={(e) => {
           console.log(e);
           const end_url = global.urlBase + '/success';
+          const other_url = global.urlBase + '/newuser';
            if(e.url.indexOf(end_url) > -1) {
              console.log('gothere');
-             navigate('TimelineNavigator');
+             navigate('MainSideBarNavigator');
+           } else if (e.url.indexOf(other_url) > -1) {
+             console.log('create new user');
+             navigate('CreateUser');
            }
           /** put y our comdition here based here and close webview.
           Like if(e.url.indexOf("end_url") > -1)

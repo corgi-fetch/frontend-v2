@@ -78,20 +78,24 @@ class AddPostView extends Component {
         postText: '',
         priceText: '',
 				height: 40,
+				groupId: ''
       };
+
+			//console.log("we're in add new post " + JSON.stringify(this.props.screenProps.groups['id']));
+			//console.log("new post group id " + JSON.parse(this.props.screenProps.groups).id);
   	}
 
-		fetchData = () => {
-			//const urlBase = "https://corgoapi-v2.azurewebsites.net";
-	    const url = global.urlBase + '/api/' + global.id + '/user?userId=' + global.id;
-	    fetch(url)
-	      .then((response) => response.json())
-	      .then((responseData) => {
-	        global.user = responseData;
-	        //console.log(global.user);
-	      })
-	      .done();
-	  }
+		// fetchData = () => {
+		// 	//const urlBase = "https://corgoapi-v2.azurewebsites.net";
+	  //   const url = global.urlBase + '/api/' + global.id + '/user?userId=' + global.id;
+	  //   fetch(url)
+	  //     .then((response) => response.json())
+	  //     .then((responseData) => {
+	  //       global.user = responseData;
+	  //       //console.log(global.user);
+	  //     })
+	  //     .done();
+	  // }
 
 		updateSize = (height) => {
 			console.log('this is the height ' + height);
@@ -101,6 +105,11 @@ class AddPostView extends Component {
 	render() {
 		const { navigate } = this.props.navigation;
 		const { height } = this.state.height;
+		console.log("this is the navigation " + navigate);
+		var groupId = "";
+		if (this.props.screenProps) {
+			groupId = JSON.parse(this.props.screenProps.groups).id.toString();
+		}
 		console.log('this is the height in render ' + this.state.height);
 		let newStyle = {
       height: this.state.height,
@@ -108,7 +117,7 @@ class AddPostView extends Component {
 			paddingRight: 20,
 			paddingTop: 20
     }
-		this.fetchData();
+		//this.fetchData();
 		return (
 			<View style={{backgroundColor: 'white', flex: 1, flexDirection: 'column'}}>
 				<View style={{backgroundColor: 'white', flex: 1, flexDirection: 'column', borderBottomColor: 'lightgray', borderBottomWidth: 1,}}>
@@ -166,7 +175,7 @@ class AddPostView extends Component {
 						  //make sure to serialize your JSON body
 						  body: JSON.stringify({
 						    date: 7,
-								owner: global.user,
+								owner: global.id,
 						    title: this.state.titleText,
 								description: this.state.postText,
 								payment: this.state.priceText,
@@ -174,11 +183,13 @@ class AddPostView extends Component {
 								//set group to the group currently on? or add group field
 								serviceGiven: false,
 								serviceReceived: false,
+								groupId: groupId,
 						  })
 						})
 						.then( (response) => {
 							console.log(response);
-							this.fetchData();
+							console.log('this is response group id ' + this.state.groupId);
+							//this.fetchData();
 							navigate('Home');
 						   //do something awesome that makes the world a better place
 						});

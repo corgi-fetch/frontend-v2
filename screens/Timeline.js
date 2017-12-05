@@ -17,6 +17,8 @@ import Hamburger from 'react-native-hamburger';
 //import TimelineNavigator from './navigation/TimelineNavigator'
 //Home: { screen: Timeline},
 
+import DropdownMenu from 'react-native-dropdown-menu';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -136,8 +138,27 @@ class Timeline extends Component {
   }
 
   componentDidMount() {
-    this.fetchData();
+    // this.fetchData();
+    // if (this.props.screenProps && this.props.screenProps.groups) {
+    //
+    //   console.log("we're here looking at groups" + JSON.parse(this.props.screenProps.groups).posts);
+    //   if (this.props.screenProps.groups.posts == null) {
+    //     //this.props.screenProps.groups.posts = [];
+    //     console.log("we're in the null check");
+    //   } else {
+    //     this.setState({
+    //       data: [...this.state.data, ...this.props.screenProps.groups.posts]
+    //     });
+    //   }
+    // }
+    console.log("We're look at screenProps " + this.props.screenProps);
+
+
     this.makeRemoteRequest();
+
+    console.log("this is user " + global.user);
+    console.log("this is id " + global.id);
+    //console.log("this is group prop " + JSON.stringify(this.props));
   }
 
   fetchUser = () => {
@@ -171,15 +192,22 @@ class Timeline extends Component {
   makeRemoteRequest = () => {
     //const urlBase = "https://corgoapi-v2.azurewebsites.net";
     //const { page, seed } = this.state;
-    const url = global.urlBase + '/api/' + global.id + '/post';
+    var group = this.props.screenProps;
+
+    var url = global.urlBase + '/api/' + global.id + '/post';
+    if (group) {
+      console.log("this is in the if statement " + JSON.parse(group.groups).id);
+      url = global.urlBase + '/api/' + global.id + '/group/' + JSON.parse(group.groups).id;
+    }
+    //const url = global.urlBase + '/api/' + global.id + '/post';
     //const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;
     this.setState({ loading: true });
     fetch(url)
       .then(res => res.json())
       .then(res => {
-        //console.log(res);
+        //console.log("We're fetching here " + JSON.stringify(res));
         this.setState({
-          data: [...this.state.data, ...res],
+          data: (group) ? [...this.state.data, ...res.posts] : [...this.state.data, ...res],
           //data: page === 1 ? res.results : [...this.state.data, ...res.results],
           error: res.error || null,
           loading: false,
@@ -188,20 +216,50 @@ class Timeline extends Component {
       })
       .catch(error => {
         this.setState({ error, loading: false });
-        console.log(error);
+        //console.log("we're in data " + this.state.data);
+      });
+  };
+
+  makeNewRemoteRequest = (group) => {
+    var url = global.urlBase + '/api/' + global.id + '/post';
+    if (group) {
+      //console.log("this is in the if statement " + JSON.parse(group.groups).id);
+      url = global.urlBase + '/api/' + global.id + '/group/' + group;
+    }
+
+    //const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;
+    this.setState({ loading: true });
+    fetch(url)
+      .then(res => res.json())
+      .then(res => {
+        //console.log("We're fetching here " + JSON.stringify(res));
+        this.setState({
+          data: []
+        });
+        this.setState({
+          data: (group) ? [...this.state.data, ...res.posts] : [...this.state.data, ...res],
+          //data: page === 1 ? res.results : [...this.state.data, ...res.results],
+          error: res.error || null,
+          loading: false,
+          refreshing: false,
+        });
+      })
+      .catch(error => {
+        this.setState({ error, loading: false });
+        console.log("we're in new data " + this.state.data);
       });
   };
 
   _onPressItem(item) {
-    if(item.owner.userId == global.user.userId) {
+    if(item.owner == global.id) {
       if(item.selectedUserId == null)
       {
         this.props.navigation.navigate('PostInterested', {item: item,});
       }
     } else {
       if(item.selectedUserId != null) {
-        if(global.user.userId == item.selectedUserId) {
-          console.log('we are in the correct place');
+        if(global.id == item.selectedUserId) {
+          //console.log('we are in the correct place');
           this.props.navigation.navigate('ConfirmJob');
         } else {
           this.props.navigation.navigate('Post', {item: item,});
@@ -212,63 +270,99 @@ class Timeline extends Component {
   }
 
 
+
+
   render() {
     const { navigate } = this.props.navigation;
-    //console.log(this.state.data);
-    return (
-      <View>
-        <FlatList
-          style={styles.FlatList}
-          data={this.state.data}
-          renderItem={({ item }) => {
-            return(
-              <TouchableOpacity onPress={() =>
-                this._onPressItem(item)} underlayColor='black' >
-                <ListItem
-                  title={
-                    <View style={{ flexDirection: 'row', flex: 1}}>
-                      <View style={{flex: 3}}>
-                        <Text style={{paddingLeft: 10}}>{item.title}</Text>
-                      </View>
-                      <View style={{flex: 1}}>
-                        <Text style={{textAlign: 'right'}}>${item.payment}</Text>
-                      </View>
-                    </View>
+    //console.log("this is the navigation " + navigate);
+    var data = [['TIMELINE']];
+    var ids = [];
+    console.log('these are groups ' + JSON.stringify(global.user.groups[0].name));
+    for (var i = 0; i < global.user.groups.length; i++) {
+      data[0].push(global.user.groups[i].name);
+      ids[global.user.groups[i].name] = global.user.groups[i].id;
+      console.log(ids[global.user.groups[i].name]);
+    }
+
+    console.log('take this for data ' + JSON.stringify(data));
+
+    //console.log("We are in the data getting owner " + JSON.stringify(this.state.data));
+    if (this.state.data) {
+      console.log("we're in the not null render" + navigate);
+      return (
+          <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'white'}}>
+            <DropdownMenu style={{flex: 1}}
+              data={data}
+              handler={(selection, row) => this.makeNewRemoteRequest(ids[data[selection][row]])}
+              >
+              <FlatList
+                style={styles.FlatList}
+                data={this.state.data}
+                renderItem={({ item }) => {
+                  return(
+                    <TouchableOpacity onPress={() =>
+                      this._onPressItem(item)} underlayColor='black' >
+                      <ListItem
+                        title={
+                          <View style={{ flexDirection: 'row', flex: 1}}>
+                            <View style={{flex: 3}}>
+                              <Text style={{paddingLeft: 10}}>{item.title}</Text>
+                            </View>
+                            <View style={{flex: 1}}>
+                              <Text style={{textAlign: 'right'}}>${item.payment}</Text>
+                            </View>
+                          </View>
+                        }
+                        subtitle={
+                          <View style={{ flexDirection: 'row', flex: 1 }}>
+                            <View style={{flex: 7}}>
+                              <Text numberOfLines={1} style={{paddingLeft: 10, color: 'grey' }}>{item.description != null && item.description}</Text>
+                            </View>
+                            <View style={{flex: 1}} />
+                          </View>
+                        }
+                        avatar = {
+                          <Image source={{ uri: 'http://graph.facebook.com/' + item.owner + '/picture?type=square' }}
+                            style={{borderRadius:50, height:50, width:50 }}
+                          />
+                        }
+                        containerStyle={{borderBottomWidth: 0}}
+                        />
+
+                      </TouchableOpacity>
+
+                    )}
                   }
-                  subtitle={
-                    <View style={{ flexDirection: 'row', flex: 1 }}>
-                      <View style={{flex: 7}}>
-                        <Text numberOfLines={1} style={{paddingLeft: 10, color: 'grey' }}>{item.description != null && item.description}</Text>
-                      </View>
-                      <View style={{flex: 1}} />
-                    </View>
-                  }
-                  avatar = {
-                    <Image source={{ uri: 'http://graph.facebook.com/' + item.owner.userId + '/picture?type=square' }}
-                      style={{borderRadius:50, height:50, width:50 }}
-                    />
-                  }
-                  containerStyle={{borderBottomWidth: 0}}
-                  />
+                keyExtractor={item => item.id}
+                />
+                <ActionButton fixNativeFeedbackRadius={true} buttonColor='#9FDDED'>
+                  <ActionButton.Item buttonColor='#9FDDED' title="New Post" onPress={() => navigate('AddPost')}>
+                    <Icon name="md-create" style={styles.actionButtonIcon} />
+                  </ActionButton.Item>
+                  <ActionButton.Item buttonColor='#9FDDED' title="New Group" onPress={() => navigate('AddGroup')}>
+                    <Icon name="md-people" style={styles.actionButtonIcon} />
+                  </ActionButton.Item>
+                </ActionButton>
+              </DropdownMenu>
 
-                </TouchableOpacity>
+            </View>
 
-              )}
-            }
-          keyExtractor={item => item.id}
-          />
-          <ActionButton fixNativeFeedbackRadius={true} buttonColor='#9FDDED'>
-            <ActionButton.Item buttonColor='#9FDDED' title="New Post" onPress={() => navigate('AddPost')}>
-              <Icon name="md-create" style={styles.actionButtonIcon} />
-            </ActionButton.Item>
-            <ActionButton.Item buttonColor='#9FDDED' title="New Group" onPress={() => navigate('AddGroup')}>
-              <Icon name="md-people" style={styles.actionButtonIcon} />
-            </ActionButton.Item>        
-          </ActionButton>
-
-        </View>
-
-      );
+          );
+      } else {
+        console.log("we're in the null render" + navigate);
+        return (
+            <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'white'}}>
+              <ActionButton fixNativeFeedbackRadius={true} buttonColor='#9FDDED'>
+                <ActionButton.Item buttonColor='#9FDDED' title="New Post" onPress={() => navigate('AddPost')}>
+                  <Icon name="md-create" style={styles.actionButtonIcon} />
+                </ActionButton.Item>
+                <ActionButton.Item buttonColor='#9FDDED' title="New Group" onPress={() => navigate('AddGroup')}>
+                  <Icon name="md-people" style={styles.actionButtonIcon} />
+                </ActionButton.Item>
+              </ActionButton>
+            </View>
+        );
+      }
     }
   }
 

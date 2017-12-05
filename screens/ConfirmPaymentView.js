@@ -3,6 +3,8 @@ import { StyleSheet, View, Text, TextInput, Image, Alert, TouchableOpacity} from
 //import { StackNavigator } from 'react-navigation';
 //import RatingStar from './RatingStar';
 import Button from 'apsl-react-native-button';
+import Icon from 'react-native-vector-icons/Ionicons';
+import ActionButton from 'react-native-action-button';
 
 const styles = StyleSheet.create ({
   columnContainer: {
@@ -94,6 +96,7 @@ class ConfirmPaymentView extends Component {
   static navigationOptions = ({navigation}) => ({
     //title: navigation.state.params.name,
     //PostView.setPostInfo(navigation.state.params.name);
+    headerLeft: <Icon name="md-arrow-back" size={35} style={{padding: 20, color: '#9FDDED'}} onPress= {() => {navigation.navigate('Home');}}/>,
   });
 
 	render() {
