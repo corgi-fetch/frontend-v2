@@ -14,6 +14,7 @@ import UserPosts from './UserPosts';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Hamburger from 'react-native-hamburger';
+//import Button from 'apsl-react-native-button';
 //import TimelineNavigator from './navigation/TimelineNavigator'
 //Home: { screen: Timeline},
 
@@ -115,9 +116,7 @@ class Timeline extends Component {
 
     title: "TIMELINE",
 
-    //headerRight: <Button title ="Add Post" onPress={() =>{ navigation.navigate('AddPost'); }} />,
     //headerLeft: <Image source={require("./menu-icon.png")} onPress={() => navigate('DrawerOpen')} />,
-
   });
 
   _listViewOffset = 0
@@ -133,11 +132,12 @@ class Timeline extends Component {
       error: null,
       refreshing: false,
       isActionButtonVisible: true,
-      active: true
+      active: true,
+      groups: []
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     // this.fetchData();
     // if (this.props.screenProps && this.props.screenProps.groups) {
     //
@@ -255,17 +255,26 @@ class Timeline extends Component {
       if(item.selectedUserId == null)
       {
         this.props.navigation.navigate('PostInterested', {item: item,});
+      } else if(item.selectedUserId != null && item.responderUserId != null) {
+        this.props.navigation.navigate('ConfirmPayment', {item: item,});
+        if(item.serviceReceived == true) {
+          console.log("i think it worked!");
+        }
       }
     } else {
       if(item.selectedUserId != null) {
-        if(global.id == item.selectedUserId) {
-          //console.log('we are in the correct place');
-          this.props.navigation.navigate('ConfirmJob');
+        if(global.user.userId == item.selectedUserId) {
+          if(item.serviceReceived == true) {
+            this.props.navigation.navigate('AcceptPayment', {item: item,});
+          } else {
+            this.props.navigation.navigate('ConfirmJob', {item: item,});
+          }
         } else {
           this.props.navigation.navigate('Post', {item: item,});
         }
+      } else {
+        this.props.navigation.navigate('Post', {item: item,});
       }
-
     }
   }
 
@@ -273,16 +282,20 @@ class Timeline extends Component {
 
 
   render() {
+    //this.forceUpdate();
     const { navigate } = this.props.navigation;
     //console.log("this is the navigation " + navigate);
     var data = [['TIMELINE']];
     var ids = [];
+    this.fetchUser();
     console.log('these are groups ' + JSON.stringify(global.user.groups[0].name));
     for (var i = 0; i < global.user.groups.length; i++) {
       data[0].push(global.user.groups[i].name);
       ids[global.user.groups[i].name] = global.user.groups[i].id;
       console.log(ids[global.user.groups[i].name]);
     }
+
+
 
     console.log('take this for data ' + JSON.stringify(data));
 
@@ -323,7 +336,7 @@ class Timeline extends Component {
                         }
                         avatar = {
                           <Image source={{ uri: 'http://graph.facebook.com/' + item.owner + '/picture?type=square' }}
-                            style={{borderRadius:50, height:50, width:50 }}
+                            style={{borderRadius:25, height:50, width:50 }}
                           />
                         }
                         containerStyle={{borderBottomWidth: 0}}
@@ -357,6 +370,9 @@ class Timeline extends Component {
                   <Icon name="md-create" style={styles.actionButtonIcon} />
                 </ActionButton.Item>
                 <ActionButton.Item buttonColor='#9FDDED' title="New Group" onPress={() => navigate('AddGroup')}>
+                  <Icon name="md-people" style={styles.actionButtonIcon} />
+                </ActionButton.Item>
+                <ActionButton.Item buttonColor='#9FDDED' title="Logout" onPress={() => navigate('Logout')}>
                   <Icon name="md-people" style={styles.actionButtonIcon} />
                 </ActionButton.Item>
               </ActionButton>

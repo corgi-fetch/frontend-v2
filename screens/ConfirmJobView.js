@@ -79,6 +79,7 @@ class ConfirmJobView extends Component {
         seed: 1,
         error: null,
         refreshing: false,
+        post: props.navigation.state.params.item,
       //   name: props.navigation.state.params.name,
       //   starCount: props.navigation.state.params.starCount,
       //   price: props.navigation.state.params.price,
@@ -93,6 +94,39 @@ class ConfirmJobView extends Component {
 
   });
 
+  _onPress() {
+    console.log("look it worked!");
+    fetch(global.urlBase + '/api/' + global.id + '/interestedpost/' + this.state.post.id, {
+        method: "post",
+        credentials: 'include',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+
+        //make sure to serialize your JSON body
+        body: JSON.stringify({
+          id: global.user.id,
+          rating: global.user.rating,
+          name: global.user.name,
+          email: global.user.email,
+          userId: global.user.userId,
+          postHistory: global.user.postHistory,
+          currentPosts: global.user.currentPosts,
+          currentJobs: global.user.currentJobs,
+          creditCardNumber: global.user.creditCardNumber,
+          bankAccount: global.user.bankAccount,
+          groups: null,
+        })
+      })
+      .then( (response) => {
+        console.log(response);
+        //this.fetchData();
+        //navigate('Home');
+         //do something awesome that makes the world a better place
+      });
+  }
+
 	render() {
     return (
       <View style = {{flex: 1}}>
@@ -101,19 +135,19 @@ class ConfirmJobView extends Component {
   	        <View style = {styles.rowContainer}>
   	          <Image source={{uri: source= 'https://s-media-cache-ak0.pinimg.com/736x/60/aa/e4/60aae45858ab6ce9dc5b33cc2e69baf7--martin-schoeller-character-inspiration.jpg'}} style={styles.photo} />
   	      	  <Text style = {styles.text}>
-  	            Daniel Zhang
+  	            {this.state.post.owner.name}
   	          </Text>
-  	          <RatingStar starCount = {5}
+  	          <RatingStar starCount = {this.state.post.owner.rating}
                           starSize = {25}/>
   	        </View>
   	        <Text style = {styles.titleText}>
-  	          Can someone get me food?
+  	          {this.state.post.title}
   	        </Text>
   	        <Text style = {styles.text}>
-              Hey Im stuck on campus and Im really hungry. Can anyone get me food, and bring it to Wheeler Hall between 1 and 3?
+              {this.state.post.description}
   	        </Text>
   	        <Text style = {styles.priceText}>
-  	          5
+  	          {this.state.post.payment}
   	        </Text>
   				</View>
   				<View style = {styles.updateContainer}>
@@ -127,7 +161,7 @@ class ConfirmJobView extends Component {
             </Text>
           </View>
           <View style = {styles.topButtonContainer}>
-  					<Button style={styles.button} textStyle={{fontSize: 16}}>
+  					<Button style={styles.button} textStyle={{fontSize: 16}} onPress = {() => this._onPress()}>
   	  					Confirm Job
   					</Button>
   				</View>

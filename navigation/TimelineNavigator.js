@@ -15,12 +15,14 @@ import ConfirmJobView from '../screens/ConfirmJobView';
 //import FlatListDemo from '../FlatListDemo';
 //import PostInterested from '../PostInterested';
 //import ConfirmJobView from '../ConfirmJobView';
-//import ConfirmPaymentView from '../ConfirmPaymentView';
-//import AcceptPaymentView from '../AcceptPaymentView';
+import ConfirmPaymentView from '../screens/ConfirmPaymentView';
+import AcceptPaymentView from '../screens/AcceptPaymentView';
 //import DemoFBLogin from '../DemoFBLogin';
 //import SideBar from './SideBarNavigator';
 //import Homescreen from '../screens/Homescreen';
 import SampleApp from '../screens/SearchBarExample';
+import Logout from '../screens/Logout';
+
 
 import MainSideBarNavigator from './MainSideBarNavigator';
 
@@ -39,8 +41,11 @@ const TimelineNavigator = StackNavigator({
   PostInterested: {screen: PostInterested},
   AddGroup: {screen: AddGroupView},
   ConfirmJob: {screen: ConfirmJobView},
+  ConfirmPayment: {screen: ConfirmPaymentView},
+  MainSideBarNavigator: {screen: MainSideBarNavigator},
+  AcceptPayment: {screen: AcceptPaymentView},
   SearchBar: {screen: SampleApp},
-  MainSideBarNavigator: {screen: MainSideBarNavigator}
+  Logout: {screen: Logout}
   // Drawer: {screen: SideBar}
   },
   {
