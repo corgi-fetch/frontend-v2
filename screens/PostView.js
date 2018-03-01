@@ -83,7 +83,7 @@ class PostView extends Component {
   }
 
   static navigationOptions = ({navigation}) => ({
-    title: (navigation.state.params.item.owner.name + "'" + (navigation.state.params.item.owner.name.substring(navigation.state.params.item.owner.name.length - 1) != 's' && 's' || '') + ' Post').toUpperCase(),
+    // title: (navigation.state.params.item.owner.name + "'" + (navigation.state.params.item.owner.name.substring(navigation.state.params.item.owner.name.length - 1) != 's' && 's' || '') + ' Post').toUpperCase(),
     //PostView.setPostInfo(navigation.state.params.name);
     headerLeft: <Icon name="md-arrow-back" size={35} style={{padding: 20, color: '#9FDDED'}} onPress= {() => {navigation.navigate('Home');}}/>,
     // headerStyle: {

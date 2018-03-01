@@ -60,7 +60,7 @@ class MainSideBarNavigator extends Component {
     var routes = [{
       screen: TimelineNavigator/*this.getTimelineForGroup(null)*/,
       navigationOptions: {
-        title: 'TIMELINE'
+        title: 'Timeline'
       }
     }
     ];
@@ -102,6 +102,7 @@ class MainSideBarNavigator extends Component {
       //console.log(global.user)
       const { groups } = global.user.groups;
       //console.log('this here is a groups ' + JSON.stringify(global.user.groups));
+      console.log("this is my group" + global.user.groups);
       const Drawer = DrawerNavigator(this.timelines(global.user.groups), {
 
       });
@@ -111,10 +112,10 @@ class MainSideBarNavigator extends Component {
 
       //return <Text>"this has loaded"</Text>;
 
-      return <Drawer />
+      // return <Drawer />
 
       // const wrapper : React.SFC<{}> = () => (
-      //   <Drawer />
+      return <Drawer />
       // );
       //
       // const MainScreenNavigator = createNavigationContainer(createNavigator(wrapper)(Drawer));

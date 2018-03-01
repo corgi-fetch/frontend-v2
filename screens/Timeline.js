@@ -18,7 +18,7 @@ import Hamburger from 'react-native-hamburger';
 //import TimelineNavigator from './navigation/TimelineNavigator'
 //Home: { screen: Timeline},
 
-import DropdownMenu from 'react-native-dropdown-menu';
+// import DropdownMenu from 'react-native-dropdown-menu';
 
 
 const styles = StyleSheet.create({
@@ -153,8 +153,9 @@ class Timeline extends Component {
     // }
     console.log("We're look at screenProps " + this.props.screenProps);
 
-
-    this.makeRemoteRequest();
+    console.log("remote request made");
+    this.makeNewRemoteRequest('5a2605fdf1ad349fd0b95be3');
+    // this.makeRemoteRequest();
 
     console.log("this is user " + global.user);
     console.log("this is id " + global.id);
@@ -189,44 +190,45 @@ class Timeline extends Component {
       .done();
   }
 
-  makeRemoteRequest = () => {
-    //const urlBase = "https://corgoapi-v2.azurewebsites.net";
-    //const { page, seed } = this.state;
-    var group = this.props.screenProps;
-
-    var url = global.urlBase + '/api/' + global.id + '/post';
-    if (group) {
-      console.log("this is in the if statement " + JSON.parse(group.groups).id);
-      url = global.urlBase + '/api/' + global.id + '/group/' + JSON.parse(group.groups).id;
-    }
-    //const url = global.urlBase + '/api/' + global.id + '/post';
-    //const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;
-    this.setState({ loading: true });
-    fetch(url)
-      .then(res => res.json())
-      .then(res => {
-        //console.log("We're fetching here " + JSON.stringify(res));
-        this.setState({
-          data: (group) ? [...this.state.data, ...res.posts] : [...this.state.data, ...res],
-          //data: page === 1 ? res.results : [...this.state.data, ...res.results],
-          error: res.error || null,
-          loading: false,
-          refreshing: false,
-        });
-      })
-      .catch(error => {
-        this.setState({ error, loading: false });
-        //console.log("we're in data " + this.state.data);
-      });
-  };
+  // makeRemoteRequest = () => {
+  //   //const urlBase = "https://corgoapi-v2.azurewebsites.net";
+  //   //const { page, seed } = this.state;
+  //   var group = this.props.screenProps;
+  //
+  //   var url = global.urlBase + '/api/' + global.id + '/post';
+  //   if (group) {
+  //     console.log("this is in the if statement " + JSON.parse(group.groups).id);
+  //     url = global.urlBase + '/api/' + global.id + '/group/' + JSON.parse(group.groups).id;
+  //   }
+  //   //const url = global.urlBase + '/api/' + global.id + '/post';
+  //   //const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;
+  //   this.setState({ loading: true });
+  //   fetch(url)
+  //     .then(res => res.json())
+  //     .then(res => {
+  //       //console.log("We're fetching here " + JSON.stringify(res));
+  //       this.setState({
+  //         data: (group) ? [...this.state.data, ...res.posts] : [...this.state.data, ...res],
+  //         //data: page === 1 ? res.results : [...this.state.data, ...res.results],
+  //         error: res.error || null,
+  //         loading: false,
+  //         refreshing: false,
+  //       });
+  //     })
+  //     .catch(error => {
+  //       this.setState({ error, loading: false });
+  //       //console.log("we're in data " + this.state.data);
+  //     });
+  // };
 
   makeNewRemoteRequest = (group) => {
+    console.log("got to the groups request");
     var url = global.urlBase + '/api/' + global.id + '/post';
     if (group) {
       //console.log("this is in the if statement " + JSON.parse(group.groups).id);
       url = global.urlBase + '/api/' + global.id + '/group/' + group;
     }
-
+    console.log(url);
     //const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;
     this.setState({ loading: true });
     fetch(url)
@@ -289,11 +291,11 @@ class Timeline extends Component {
     var ids = [];
     this.fetchUser();
     console.log('these are groups ' + JSON.stringify(global.user.groups[0].name));
-    for (var i = 0; i < global.user.groups.length; i++) {
-      data[0].push(global.user.groups[i].name);
-      ids[global.user.groups[i].name] = global.user.groups[i].id;
-      console.log(ids[global.user.groups[i].name]);
-    }
+    // for (var i = 0; i < global.user.groups.length; i++) {
+    //   data[0].push(global.user.groups[i].name);
+    //   ids[global.user.groups[i].name] = global.user.groups[i].id;
+    //   console.log(ids[global.user.groups[i].name]);
+    // }
 
 
 
@@ -304,10 +306,6 @@ class Timeline extends Component {
       console.log("we're in the not null render" + navigate);
       return (
           <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'white'}}>
-            <DropdownMenu style={{flex: 1}}
-              data={data}
-              handler={(selection, row) => this.makeNewRemoteRequest(ids[data[selection][row]])}
-              >
               <FlatList
                 style={styles.FlatList}
                 data={this.state.data}
@@ -356,7 +354,6 @@ class Timeline extends Component {
                     <Icon name="md-people" style={styles.actionButtonIcon} />
                   </ActionButton.Item>
                 </ActionButton>
-              </DropdownMenu>
 
             </View>
 
@@ -383,9 +380,9 @@ class Timeline extends Component {
   }
 
 
-
-
-
-
+  // <DropdownMenu style={{flex: 1}}
+  //     data={data}
+  //     handler={(selection, row) => this.makeNewRemoteRequest(ids[data[selection][row]])}
+  // >
 //AppRegistry.registerComponent('Corgo', () => Timeline);
 export default Timeline;
