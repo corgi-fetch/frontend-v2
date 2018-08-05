@@ -10,7 +10,6 @@ import TouchableCustom from '../components/TouchableCustom'
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 var contains = function(needle) {
-    // Per spec, the way to identify NaN is that it is not equal to itself
     var findNaN = needle !== needle;
     var indexOf;
 
@@ -108,18 +107,14 @@ class AddGroupView extends Component {
   }
 
   makeRemoteRequest = () => {
-    //const urlBase = "https://corgoapi-v2.azurewebsites.net";
-    //const { page, seed } = this.state;
     const url = global.urlBase + '/api/master/user';
-    //const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;
+
     this.setState({ loading: true });
     fetch(url)
       .then(res => res.json())
       .then(res => {
-        //console.log(res);
         this.setState({
           data: [...this.state.data, ...res],
-          //data: page === 1 ? res.results : [...this.state.data, ...res.results],
           error: res.error || null,
           loading: false,
           refreshing: false,
@@ -137,7 +132,6 @@ class AddGroupView extends Component {
     var searchResults = this.state.data.filter(function(text) {
       return text.name.toLowerCase().indexOf(searchedText.toLowerCase()) > -1;
     });
-    //console.log(searchResults);
     this.setState({searchResults: searchResults});
   };
 
@@ -182,25 +176,11 @@ class AddGroupView extends Component {
     this.setState({selectedUsers: currentSelectedUsers});
   }
 
-  // renderResults = () => {
-  //   //console.log();
-  //   var pressStatus = this.state.pressStatus;
-  //   return this.state.searchResults.map((data) => {
-  //     return (
-  //       <Button key={data.userId} title={data.name} color={(contains.call(this.state.selectedUsers, data) > -1) ? 'white' : '#9FDDED' } onPress={() => this.pressed(data.userId)}>
-  //       </Button>
-  //     )}
-  //   );
-  // }
-
-
   static navigationOptions = ({navigation}) => ({
     title: 'NEW GROUP',
 		headerLeft: <Icon name="md-arrow-back" size={35} style={{padding: 20, color: '#9FDDED'}} onPress= {() => {navigation.navigate('Home');}}/>,
 
   });
-
-  //var toRender;
 
   renderResults = () => {
     if (this.state.searchResults.size != 0) {
@@ -269,7 +249,7 @@ class AddGroupView extends Component {
 
     return (
       <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'white'}}>
-        <View style={{backgroundColor: 'white', flex: 1, flexDirection: 'column', /*borderBottomColor: 'lightgray', borderBottomWidth: 1,*/}}>
+        <View style={{backgroundColor: 'white', flex: 1, flexDirection: 'column'}}>
           <FormLabel>Title</FormLabel>
           <FormInput value={this.state.titleText}
             placeholder="Give a name for your group!"
@@ -280,7 +260,6 @@ class AddGroupView extends Component {
             lightTheme={true}
             round={true}
             onChangeText={this.search}
-            //onClearText={this.setState({renderResults: false})}
             ref={searchBar => this.searchBar = searchBar}
             containerStyle={{padding: 5, backgroundColor: 'white', borderTopWidth: 0}}
             placeholder='Search friends...' />
@@ -294,24 +273,10 @@ class AddGroupView extends Component {
           }
         </View>
         <ActionButton buttonColor='#9FDDED'
-						icon={<Icon name="md-checkmark" style={styles.actionButtonIcon} />}
+						renderIcon={() => {<Icon name="md-checkmark" style={styles.actionButtonIcon} />}}
 						fixNativeFeedbackRadius={true}
             onPress = {() => {
-							//const urlBase = "http://corgoapi-v2.azurewebsites.net";
-              // var fullUsers = [];
-              // var url = global.urlBase + '/api/' + global.id + '/user/'
-              //
-              // for (var x in this.state.selectedUsers) {
-              //
-              //   fetch(url + this.state.selectedUsers[x])
-              //     .then((response) => response.json())
-              //     .then((responseData) => {
-              //       fullUsers.push(responseData);
-              //       //console.log();
-              //     })
-              //     .done();
-              // }
-
+							
               this.getFullUsers().then((data) => {
                 fetch(global.urlBase + '/api/' + global.id + '/group', {
     						  method: "post",
@@ -320,28 +285,19 @@ class AddGroupView extends Component {
     						    'Accept': 'application/json',
     						    'Content-Type': 'application/json'
     						  },
-
-    						  //make sure to serialize your JSON body
+    						  
     						  body: JSON.stringify({
-    						    name: this.state.titleText,
+    						    title: this.state.titleText,
     								users: data,
     						    posts: [],
     								invited: [],
     								description: null,
     						  })
     						})
-    						.then( (response) => {
-    							console.log('this is data ' + data);
-                  console.log(response);
-    							//this.fetchData();
+    						.then( (response) => {    							
     							navigate('Home');
-    						   //do something awesome that makes the world a better place
     						});
               })
-
-              //console.log(fullUsers);
-
-
 					}}
         />
       </View>
@@ -350,67 +306,3 @@ class AddGroupView extends Component {
 }
 
 export default AddGroupView;
-
-// <View style={{backgroundColor: 'white', flex: 1, flexDirection: 'row', /*borderBottomColor: 'lightgray', borderBottomWidth: 1,*/}}>
-//   {this.renderResults()}
-// </View>
-
-// <FlatList
-//   data={this.state.searchResults}
-//   keyExtractor={item => item.userId}
-//   renderItem={({item}) => {
-//     if(this.state.renderResults) {
-//       console.log("these are search results " + this.state.searchResults);
-//       return (
-//         <TouchableOpacity onPress={() =>
-//           this.pressed(item)} underlayColor='black' >
-//           <ListItem
-//             title={
-//               <View style={{ flexDirection: 'row', flex: 1}}>
-//                 <Text style={{paddingLeft: 10}}>{item.name}</Text>
-//               </View>
-//             }
-//             avatar = {
-//               <Image source={{ uri: 'http://graph.facebook.com/' + item.userId + '/picture?type=square' }}
-//                 style={{borderRadius:50, height:50, width:50 }}
-//               />
-//             }
-//           />
-//         </TouchableOpacity>
-//       );
-//     }
-//   }}
-//   />
-// <View style={{flex: 1 , flexDirection: 'row', backgroundColor: 'gray'}}>
-// </View>
-
-// else {
-//   console.log("are we here?");
-//   return (
-//     <View style={{flex: 1 , flexDirection: 'row', backgroundColor: 'gray'}}>
-//     </View>
-//   )
-// }
-
-// <View style={{flex: 1 , flexDirection: 'row', flexWrap: 'wrap', backgroundColor: 'gray'}}>
-//   <View style={{padding: 25, backgroundColor: 'blue', width: 30}}>
-//   </View>
-//   <View style={{padding: 25, backgroundColor: 'green', width: 30}}>
-//   </View>
-//   <View style={{padding: 25, backgroundColor: 'purple', width: 30}}>
-//   </View>
-//   <View style={{padding: 25, backgroundColor: 'red', width: 30}}>
-//   </View>
-//   <View style={{padding: 25, backgroundColor: 'yellow', width: 30}}>
-//   </View>
-//   <View style={{padding: 25, backgroundColor: 'blue', width: 30}}>
-//   </View>
-//   <View style={{padding: 25, backgroundColor: 'green', width: 30}}>
-//   </View>
-//   <View style={{padding: 25, backgroundColor: 'purple', width: 30}}>
-//   </View>
-//   <View style={{padding: 25, backgroundColor: 'red', width: 30}}>
-//   </View>
-//   <View style={{padding: 25, backgroundColor: 'yellow', width: 30}}>
-//   </View>
-// </View>

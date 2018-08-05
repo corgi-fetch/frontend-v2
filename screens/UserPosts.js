@@ -11,11 +11,8 @@ import {
   Alert,
   FlatList,
 } from 'react-native';
-//import RatingStar from '../RatingStar';
-//import {StackNavigator} from 'react-navigation';
 import { List, ListItem } from "react-native-elements";
 import Button from 'apsl-react-native-button';
-//import CircleButton from 'react-native-circle-button';
 
 const styles = StyleSheet.create({
 	container: {
@@ -106,7 +103,7 @@ class UserPosts extends React.Component {
   	}
 
   	componentDidMount() {
-    //this.fetchUser();
+    
     this.makeRemoteRequest();
   	}
 
@@ -117,25 +114,7 @@ class UserPosts extends React.Component {
       }
   	}
 
-    // _onPressesButton() {
-    //   fetch ('https://corgoapi-v2.azurewebsites.net/logout/', {
-    //     method: 'POST',
-    //   })
-    //}
-
-    // fetchUser = () => {
-    //   const userUrl = 'https://corgoapi-v2.azurewebsites.net/api/' + global.id + '/user?userId=' + global.id;
-    //   fetch(userUrl)
-    //     .then((response) => response.json())
-    //   	.then((responseData) => {
-    //   	  global.user = responseData;
-    //   	  console.log(global.user);
-    //   	})
-    //     .done();
-    // }
     static navigationOptions = ({navigation}) => ({
-      //title: navigation.state.params.name,
-      //PostView.setPostInfo(navigation.state.params.name);
     });
 
   	makeRemoteRequest = () => {
@@ -170,8 +149,6 @@ class UserPosts extends React.Component {
             <TouchableOpacity
               onPress={() =>
                 this._onPressItem(item)
-                //this.props.navigation.navigate('Post', {item: item,})
-                //navigate('Post', {item: item,})
               }
               underlayColor='black'
             >
@@ -196,28 +173,3 @@ class UserPosts extends React.Component {
 }
 
 export default UserPosts;
-
-// roundAvatar
-//   title={`${item.title}`}
-//   subtitle={
-//     // `${item.description}`
-//     // <TouchableOpacity
-//     //   onPress={() =>
-//     //     navigate('Post', {
-//     //       item: item,
-//     //       // name : item.owner.name,
-//     //       // starCount : item.owner.rating,
-//     //       // price : item.payment,
-//     //       // postTitle : item.title,
-//     //       // postDescription : item.description,
-//     //     })
-//     //   }
-//     //   underlayColor='black'
-//     // />
-//     <View style = styles.rowContainer>
-//       <Text style = styles.postText>
-//         {`${item.description}`}
-//       </Text>
-//     </View>
-//   }
-//   //avatar={{ uri: item.picture.thumbnail }}

@@ -1,0 +1,4 @@
+.TimelineItem {
+    flexDirection: 'row' 
+    flex: 1
+}

@@ -1,131 +1,97 @@
-import React, { Component } from "react";
+// import React, { Component } from "react";
 
-import {StackNavigator, DrawerNavigator, createNavigationContainer, createNavigator} from 'react-navigation';
-import { View, Text, FlatList, StyleSheet, Image, AppRegistry, Button, TouchableOpacity, Alert, Platform, StatusBar } from "react-native";
-//import {StackNavigator, DrawerNavigator} from 'react-navigation';
+// import {StackNavigator, DrawerNavigator, TabNavigator, createNavigationContainer, createNavigator} from 'react-navigation';
+// import { View, Text, FlatList, StyleSheet, Image, AppRegistry, Button, TouchableOpacity, Alert, Platform, StatusBar } from "react-native";
 
+// import TimelineNavigator from './TimelineNavigator'
+// import Timeline from '../screens/Timeline'
 
-import TimelineNavigator from './TimelineNavigator'
-import Timeline from '../screens/Timeline'
+// import CustomTabNavigator from './CustomTabNavigator'
 
-class MainSideBarNavigator extends Component {
+// class MainSideBarNavigator extends Component {
 
-  constructor(props) {
-    super(props);
+//   constructor(props) {
+//     super(props);
 
-    this.state = {
-      loading: false
-    };
-  }
+//     this.state = {
+//       loading: false
+//     };
+//   }
 
-  componentWillMount() {
-    this.fetchData();
-    //this.fetchUser();
-  }
+//   componentWillMount() {
+//     this.fetchData();
+//   }
 
-  fetchData = () => {
-    //const urlBase = "https://corgoapi-v2.azurewebsites.net";
+//   fetchData = () => {
+//     const url = global.urlBase + '/api/master/principal';
 
-    const url = global.urlBase + '/api/master/principal';
+//     fetch(url)
+//       .then((response) => response.json())
+//       .then((responseData) => {
+//         global.id = responseData;
+//         this.fetchUser();
+//       })
+//       .done();
+//   }
 
-    fetch(url)
-      .then((response) => response.json())
-      .then((responseData) => {
-        //console.log('hello we are here');
-        global.id = responseData;
-        //console.log(global.id);
-        this.fetchUser();
+//   fetchUser = () => {
+//     const url = global.urlBase + '/api/' + global.id + '/user?userId=' + global.id;
+//     fetch(url)
+//       .then((response) => response.json())
+//       .then((responseData) => {
+//         global.user = responseData;
+//         this.setState({
+//           loading: true
+//         });
+//       })
+//       .done();
+//   }
 
-      })
-      .done();
-  }
+//   timelines(groups) {
+//     var routes = [{
+//       screen: TimelineNavigator,
+//       navigationOptions: {
+//         title: 'Timeline'
+//       }
+//     }
+//     ];
 
-  fetchUser = () => {
-    //const urlBase = "https://corgoapi-v2.azurewebsites.net";
+//     return routes;
+//   }
 
-    const url = global.urlBase + '/api/' + global.id + '/user?userId=' + global.id;
-    fetch(url)
-      .then((response) => response.json())
-      .then((responseData) => {
-        global.user = responseData;
-        //console.log(global.user);
-        this.setState({
-          loading: true
-        });
-      })
-      .done();
-  }
+//   timeline(group) {
+//     const screen = this.getTimelineForGroup(group);
 
-  timelines(groups) {
-    var routes = [{
-      screen: TimelineNavigator/*this.getTimelineForGroup(null)*/,
-      navigationOptions: {
-        title: 'Timeline'
-      }
-    }
-    ];
+//     return {
+//       screen: screen,
+//       navigationOptions: {
+//         title: group.name
+//       }
+//     }
+//   }
 
-    // for (var group in groups) {
-    //   //console.log("here is one route " + JSON.stringify(this.timeline(groups[group])));
-    //   routes.push(this.timeline(groups[group]));
-    // }
-    //
-    // for (var i = 0; i < routes.length; i++) {
-    //   //console.log("here are the routes " + JSON.stringify(routes[i]));
-    // }
+//   getTimelineForGroup(group) {    
+//     if (group) {
+//       return ({navigation}) => (<TimelineNavigator navigation={navigation} screenProps={{groups: JSON.stringify(group)}} />);
+//     } else {
+//       return ({navigation}) => (<TimelineNavigator navigation={navigation} />);
+//     }
+//   }
 
-    return routes;
-  }
+//   render() {
+//     if (this.state.loading) {
+//       const { groups } = global.user.groups;
+//       // console.log("this is my group" + global.user.groups);
+//       // const Tab = TabNavigator(this.timelines(global.user.groups), {
+//       // });
 
-  timeline(group) {
-    const screen = this.getTimelineForGroup(group);
-
-    return {
-      screen: screen,
-      navigationOptions: {
-        title: group.name
-      }
-    }
-  }
-
-  getTimelineForGroup(group) {
-    //console.log("here in getTimelineForGroup " + JSON.stringify(group));
-    if (group) {
-      return ({navigation}) => (<TimelineNavigator navigation={navigation} screenProps={{groups: JSON.stringify(group)}} />);
-    } else {
-      return ({navigation}) => (<TimelineNavigator navigation={navigation} />);
-    }
-  }
-
-  render() {
-    if (this.state.loading) {
-      //console.log(global.user)
-      const { groups } = global.user.groups;
-      //console.log('this here is a groups ' + JSON.stringify(global.user.groups));
-      console.log("this is my group" + global.user.groups);
-      const Drawer = DrawerNavigator(this.timelines(global.user.groups), {
-
-      });
-
-      //const Drawer = this.timelines(global.user.groups);
-      //console.log("Drawer has been made");
-
-      //return <Text>"this has loaded"</Text>;
-
-      // return <Drawer />
-
-      // const wrapper : React.SFC<{}> = () => (
-      return <Drawer />
-      // );
-      //
-      // const MainScreenNavigator = createNavigationContainer(createNavigator(wrapper)(Drawer));
-      // return <MainScreenNavigator />;
-    } else {
-      return <Text>Loading</Text>
-    }
-  }
+//       return <CustomTabNavigator />
+//     } else {
+//       return <Text>Loading</Text>
+//     }
+//   }
 
 
-}
+// }
 
-export default MainSideBarNavigator;
+// export default MainSideBarNavigator;

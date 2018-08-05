@@ -13,11 +13,8 @@ import {
 } from 'react-native';
 
 import RatingStar from '../RatingStar';
-
-//import {StackNavigator} from 'react-navigation';
 import { List, ListItem } from "react-native-elements";
 import Button from 'apsl-react-native-button';
-//import CircleButton from 'react-native-circle-button';
 
 const styles = StyleSheet.create({
 	container: {
@@ -108,7 +105,6 @@ class UserProfile extends React.Component {
   	}
 
   	componentDidMount() {
-    //this.fetchUser();
     this.makeRemoteRequest();
   	}
 
@@ -116,25 +112,8 @@ class UserProfile extends React.Component {
     	Alert.alert('You tapped the button!')
   	}
 
-    // _onPressesButton() {
-    //   fetch ('https://corgoapi-v2.azurewebsites.net/logout/', {
-    //     method: 'POST',
-    //   })
-    //}
-
-    // fetchUser = () => {
-    //   const userUrl = 'https://corgoapi-v2.azurewebsites.net/api/' + global.id + '/user?userId=' + global.id;
-    //   fetch(userUrl)
-    //     .then((response) => response.json())
-    //   	.then((responseData) => {
-    //   	  global.user = responseData;
-    //   	  console.log(global.user);
-    //   	})
-    //     .done();
-    // }
     static navigationOptions = ({navigation}) => ({
-      //title: navigation.state.params.name,
-      //PostView.setPostInfo(navigation.state.params.name);
+
     });
 
   	makeRemoteRequest = () => {

@@ -86,11 +86,6 @@ class AcceptPaymentView extends Component {
         error: null,
         refreshing: false,
         post : props.navigation.state.params.item,
-      //   name: props.navigation.state.params.name,
-      //   starCount: props.navigation.state.params.starCount,
-      //   price: props.navigation.state.params.price,
-      //   postTitle: props.navigation.state.params.postTitle,
-      //   postInfo: props.navigation.state.params.postDescription,
       };
   }
 
@@ -102,19 +97,13 @@ class AcceptPaymentView extends Component {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        //make sure to serialize your JSON body
       })
       .then( (response) => {
         console.log(response);
-        //this.fetchData();
-        //navigate('Home');
-         //do something awesome that makes the world a better place
       });
   }
 
   static navigationOptions = ({navigation}) => ({
-    //title: navigation.state.params.name,
-    //PostView.setPostInfo(navigation.state.params.name);
     headerLeft: <Icon name="md-arrow-back" size={35} style={{padding: 20, color: '#9FDDED'}} onPress= {() => {navigation.navigate('Home');}}/>,
   });
 

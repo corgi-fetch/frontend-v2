@@ -15,7 +15,6 @@ const styles = StyleSheet.create ({
   rowContainer: {
     flex: 1,
 		flexDirection: 'row',
-		//paddingBottom: 15,
   },
 	text: {
     	fontSize: 20,
@@ -26,7 +25,6 @@ const styles = StyleSheet.create ({
   		height: 40,
   		borderColor: 'gray',
   		borderWidth: 1,
-      //justifyContent : 'flex-start',
   	},
     RightTextInput: {
 			width:200,
@@ -48,9 +46,7 @@ const styles = StyleSheet.create ({
 		},
 		button: {
 			height: 70,
-			//width: 120,
 	    backgroundColor:'#9FDDED',
-	    //borderWidth: 1,
 	    borderColor: '#fff',
 			alignSelf: 'center',
 			flex: 1,
@@ -64,7 +60,7 @@ const styles = StyleSheet.create ({
 	  },
 });
 
-class CreateUser extends Component {
+class CreateUserScreen extends Component {
 
   constructor(props) {
     super(props);
@@ -80,14 +76,11 @@ class CreateUser extends Component {
   }
 
   fetchData = () => {
-    //const urlBase = "https://corgoapi-v2.azurewebsites.net";
-
     const url = global.urlBase + '/api/master/principal';
 
     fetch(url)
       .then((response) => response.json())
       .then((responseData) => {
-        //console.log('hello we are here');
         global.id = responseData;
       })
       .done();
@@ -139,10 +132,9 @@ class CreateUser extends Component {
         <View style={{backgroundColor: 'white', flex: 4, flexDirection: 'column', borderBottomColor: 'lightgray', borderBottomWidth: 1,}}>
         </View>
 				<ActionButton buttonColor='#9FDDED'
-						icon={<Icon name="md-checkmark" style={styles.actionButtonIcon} />}
+						renderIcon={() => <Icon name="md-checkmark" style={styles.actionButtonIcon} />}
 						fixNativeFeedbackRadius={true}
 						onPress = {() => {
-							//const urlBase = "http://corgoapi-v2.azurewebsites.net";
 							fetch(global.urlBase + '/api/' + global.id + '/user', {
 						  method: "post",
 							credentials: 'include',
@@ -151,23 +143,16 @@ class CreateUser extends Component {
 						    'Content-Type': 'application/json'
 						  },
 
-						  //make sure to serialize your JSON body
 						  body: JSON.stringify({
 						    userId: global.id,
 								rating: 5,
 						    name: this.state.name,
 								email: this.state.email,
-								//payment: this.state.priceText,
 								bankAccount: this.state.venmo,
-								//set group to the group currently on? or add group field
 						  })
 						})
 						.then( (response) => {
-							console.log(response);
-							//console.log('this is response group id ' + this.state.groupId);
-							//this.fetchData();
-							navigate('MainSideBarNavigator');
-						   //do something awesome that makes the world a better place
+							navigate('GroupTimeline');
 						});
 					}}
 				/>
@@ -177,4 +162,4 @@ class CreateUser extends Component {
   }
 }
 
-export default CreateUser
+export default CreateUserScreen

@@ -15,7 +15,6 @@ const styles = StyleSheet.create ({
   rowContainer: {
     flex: 1,
 		flexDirection: 'row',
-		//paddingBottom: 15,
   },
 	text: {
     	fontSize: 20,
@@ -26,7 +25,6 @@ const styles = StyleSheet.create ({
   		height: 40,
   		borderColor: 'gray',
   		borderWidth: 1,
-      //justifyContent : 'flex-start',
   	},
     RightTextInput: {
 			width:200,
@@ -48,9 +46,7 @@ const styles = StyleSheet.create ({
 		},
 		button: {
 			height: 70,
-			//width: 120,
 	    backgroundColor:'#9FDDED',
-	    //borderWidth: 1,
 	    borderColor: '#fff',
 			alignSelf: 'center',
 			flex: 1,
@@ -67,57 +63,49 @@ const styles = StyleSheet.create ({
 class AddPostView extends Component {
   static navigationOptions = ({navigation}) => ({
     title: 'NEW POST',
-		headerLeft: <Icon name="md-arrow-back" size={35} style={{padding: 20, color: '#9FDDED'}} onPress= {() => {navigation.navigate('Home');}}/>,
+		headerLeft: <Icon name="md-arrow-back" size={35} style={{padding: 20, color: '#9FDDED'}} onPress= {() => {navigation.goBack();}}/>,
 
   });
 
 	constructor(props) {
-    	super(props);
-    	this.state = {
-        titleText: '',
-        postText: '',
-        priceText: '',
-				height: 40,
-				groupId: ''
-      };
+		super(props);
+		this.state = {
+			titleText: '',
+			postText: '',
+			priceText: '',
+			height: 40,
+		};
+	}
 
-			//console.log("we're in add new post " + JSON.stringify(this.props.screenProps.groups['id']));
-			//console.log("new post group id " + JSON.parse(this.props.screenProps.groups).id);
-  	}
+componentWillMount() {
+	console.log("this is what we need to know" + JSON.stringify(this.props));
+	this.setState({'groupId' : this.props.navigation.state.params.groupId});
+}
 
-		// fetchData = () => {
-		// 	//const urlBase = "https://corgoapi-v2.azurewebsites.net";
-	  //   const url = global.urlBase + '/api/' + global.id + '/user?userId=' + global.id;
-	  //   fetch(url)
-	  //     .then((response) => response.json())
-	  //     .then((responseData) => {
-	  //       global.user = responseData;
-	  //       //console.log(global.user);
-	  //     })
-	  //     .done();
-	  // }
+updateSize = (height) => {
+	
+	this.state.height = height;
+}
 
-		updateSize = (height) => {
-			console.log('this is the height ' + height);
-			this.state.height = height;
-		}
 
 	render() {
 		const { navigate } = this.props.navigation;
 		const { height } = this.state.height;
-		console.log("this is the navigation " + navigate);
+		console.log("props " + JSON.stringify(this.props));
+		console.log("navigate " + navigate);
+		
 		var groupId = "";
 		if (this.props.screenProps) {
 			groupId = JSON.parse(this.props.screenProps.groups).id.toString();
 		}
-		console.log('this is the height in render ' + this.state.height);
+		
 		let newStyle = {
       height: this.state.height,
 			paddingLeft: 20,
 			paddingRight: 20,
 			paddingTop: 20
     }
-		//this.fetchData();
+
 		return (
 			<View style={{backgroundColor: 'white', flex: 1, flexDirection: 'column'}}>
 				<View style={{backgroundColor: 'white', flex: 1, flexDirection: 'column', borderBottomColor: 'lightgray', borderBottomWidth: 1,}}>
@@ -153,142 +141,62 @@ class AddPostView extends Component {
 							underlineColorAndroid="transparent"
 							editable={true}
 							multiline={true}
-							//value={value}
 							onContentSizeChange={(e) => this.updateSize(e.nativeEvent.contentSize.height)}
 						/>
 						</View>
 					</View>
 				</View>
 				<ActionButton buttonColor='#9FDDED'
-						icon={<Icon name="md-checkmark" style={styles.actionButtonIcon} />}
+						renderIcon={() => {<Icon name="md-checkmark" style={styles.actionButtonIcon} />}}
 						fixNativeFeedbackRadius={true}
 						onPress = {() => {
-							//const urlBase = "http://corgoapi-v2.azurewebsites.net";
 							fetch(global.urlBase + '/api/' + global.id + '/post', {
-						  method: "post",
-							credentials: 'include',
-						  headers: {
-						    'Accept': 'application/json',
-						    'Content-Type': 'application/json'
-						  },
-
-						  //make sure to serialize your JSON body
-						  body: JSON.stringify({
-						    date: 7,
-								owner: global.id,
-						    title: this.state.titleText,
-								description: this.state.postText,
-								payment: this.state.priceText,
-								interestedQueue: [],
-								//set group to the group currently on? or add group field
-								serviceGiven: false,
-								serviceReceived: false,
-								groupId: groupId,
-						  })
-						})
-						.then( (response) => {
-							console.log(response);
-							console.log('this is response group id ' + this.state.groupId);
-							//this.fetchData();
-							navigate('Home');
-						   //do something awesome that makes the world a better place
-						});
+								method: "post",
+								credentials: 'include',
+								headers: {
+									'Accept': 'application/json',
+									'Content-Type': 'application/json'
+								},
+							
+								body: JSON.stringify({
+									date: 7,
+									owner: global.id,
+									title: this.state.titleText,
+									description: this.state.postText,
+									payment: this.state.priceText,
+									interestedQueue: [],
+									serviceGiven: false,
+									serviceReceived: false,
+									groupId: this.state.groupId,
+								})
+							})
+							.then( (response) => {
+								// console.log(response);
+								console.log("this is navigate in the thing " + JSON.stringify(navigate));
+								this.props.navigation.state.params.refresh();
+								this.props.navigation.goBack();
+							});
 					}}
 				/>
 			</View>
 		);
-    // return (
-    //   <View style={styles.container}>
-    //   	<Text style = {styles.text}>Add New Post</Text>
-    //     <View style = {styles.rowContainer}>
-    //       <TextInput style={styles.RightTextInput}
-    //         value={this.state.titleText}
-    //         onChangeText={(titleText) => this.setState({titleText})}
-    //       />
-		// 			<TextInput style={styles.LeftTextInput}
-    //         value={this.state.priceText}
-    //         onChangeText={(priceText) => this.setState({priceText})}
-    //       />
-    //     </View>
-    //     <TextInput style={styles.PostTextInput}
-    //       multiline = {true}
-    //       numberOfLines = {4}
-    //       value={this.state.postText}
-    //       onChangeText={(postText) => this.setState({postText})}
-    //     />
-		// 		<View style = {styles.buttonContainer}>
-		// 			<Button style={styles.button} textStyle={{fontSize: 16}}
-		// 					onPress = {() => {
-		// 						//const urlBase = "http://corgoapi-v2.azurewebsites.net";
-		// 						fetch(global.urlBase + '/api/' + global.id + '/post', {
-		// 					  method: "post",
-		// 						credentials: 'include',
-		// 					  headers: {
-		// 					    'Accept': 'application/json',
-		// 					    'Content-Type': 'application/json'
-		// 					  },
-    //
-		// 					  //make sure to serialize your JSON body
-		// 					  body: JSON.stringify({
-		// 					    date: 7,
-		// 							owner: global.user,
-		// 					    title: this.state.titleText,
-		// 							description: this.state.postText,
-		// 							payment: this.state.priceText,
-		// 							interestedQueue: [],
-		// 							serviceGiven: false,
-		// 							serviceReceived: false,
-		// 					  })
-		// 					})
-		// 					.then( (response) => {
-		// 						console.log(response);
-		// 						this.fetchData();
-		// 						navigate('Home');
-		// 					   //do something awesome that makes the world a better place
-		// 					});
-		// 				}}>
-		// 				Create Post
-		// 			</Button>
-		// 		</View>
-    //   </View>
-    // );
+		
   }
 }
 
 export default AddPostView;
 
-// <KeyboardAvoidingView behavior="height" style = {styles.rowContainer}>
-// 		<TouchableHighlight style={styles.button} textStyle={{	fontSize: 36, fontFamily: 'Roboto', fontWeight: 'normal', color: '#4f4e4e'}}
-// 				onPress = {() => {
-// 					//const urlBase = "http://corgoapi-v2.azurewebsites.net";
-// 					fetch(global.urlBase + '/api/' + global.id + '/post', {
-// 				  method: "post",
-// 					credentials: 'include',
-// 				  headers: {
-// 				    'Accept': 'application/json',
-// 				    'Content-Type': 'application/json'
-// 				  },
-//
-// 				  //make sure to serialize your JSON body
-// 				  body: JSON.stringify({
-// 				    date: 7,
-// 						owner: global.user,
-// 				    title: this.state.titleText,
-// 						description: this.state.postText,
-// 						payment: this.state.priceText,
-// 						interestedQueue: [],
-// 						//set group to the group currently on? or add group field
-// 						serviceGiven: false,
-// 						serviceReceived: false,
-// 				  })
-// 				})
-// 				.then( (response) => {
-// 					console.log(response);
-// 					this.fetchData();
-// 					navigate('Home');
-// 				   //do something awesome that makes the world a better place
-// 				});
-// 			}}>
-// 			<Text style={{	fontSize: 36, fontFamily: 'Roboto', fontWeight: 'normal', color: 'white'}}>Create Post</Text>
-// 		</TouchableHighlight>
-// </KeyboardAvoidingView>
+
+
+// console.log(JSON.stringify({
+// 	date: 7,
+// 	owner: global.id,
+// 	title: this.state.titleText,
+// 	description: this.state.postText,
+// 	payment: this.state.priceText,
+// 	interestedQueue: [],
+// 	serviceGiven: false,
+// 	serviceReceived: false,
+// 	groupId: this.state.groupId,
+// }));
+// lmao u a nerd who even writes code

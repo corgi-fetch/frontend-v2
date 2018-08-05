@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, Image, Alert, TouchableOpacity, FlatList} from 'react-native';
-//import { StackNavigator } from 'react-navigation';
-
 import RatingStar from '../RatingStar';
 
 
@@ -22,14 +20,11 @@ const styles = StyleSheet.create ({
 	contentContainer: {
 		padding: 10,
 		width: 335,
-		//borderColor: 'black',
-		//borderWidth: 2,
 	},
   updateContainer: {
     marginLeft: 15,
     width: 320,
     height: 23,
-    //backgroundColor: 'blue',
   },
   rowContainer: {
     flexDirection: 'row',
@@ -75,8 +70,6 @@ const styles = StyleSheet.create ({
 		height: 30,
 		width: 120,
     backgroundColor:'#00BCD4',
-    //borderWidth: 1,
-    //borderColor: '#fff'
 	},
 });
 class PostInterested extends Component {
@@ -91,11 +84,6 @@ class PostInterested extends Component {
         error: null,
         refreshing: false,
         post: props.navigation.state.params.item,
-      //   name: props.navigation.state.params.name,
-      //   starCount: props.navigation.state.params.starCount,
-      //   price: props.navigation.state.params.price,
-      //   postTitle: props.navigation.state.params.postTitle,
-      //   postInfo: props.navigation.state.params.postDescription,
       };
   }
 
@@ -108,8 +96,6 @@ class PostInterested extends Component {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-
-        //make sure to serialize your JSON body
         body: JSON.stringify({
           id: item.id,
           rating: item.rating,
@@ -125,16 +111,10 @@ class PostInterested extends Component {
         })
       })
       .then( (response) => {
-        console.log(response);
-        //this.fetchData();
-        //navigate('Home');
-         //do something awesome that makes the world a better place
       });
   }
 
   static navigationOptions = ({navigation}) => ({
-    //title: navigation.state.params.name,
-    //PostView.setPostInfo(navigation.state.params.name);
     headerLeft: <Icon name="md-arrow-back" size={35} style={{padding: 20, color: '#9FDDED'}} onPress= {() => {navigation.navigate('Home');}}/>,
   });
 
@@ -195,21 +175,4 @@ class PostInterested extends Component {
 
 export default PostInterested;
 
-// <View>
-//   <List>
-//     <FlatList
-//         data={this.state.post.interestedQueue}
-//         renderItem={({ item }) =>
-//           <View style = {styles.listContainer}>
-//             <Text style = {styles.listElem}>{item.name}</Text>
-//             <View style = {styles.buttonContainer}>
-//               <TouchableOpacity onPress = this._onPressButton(item)>
-//                 <Text style = {{paddingRight: 35}}>Yes</Text>
-//               </TouchableOpacity>
-//               <Text>No</Text>
-//             </View>
-//           </View>
-//         }
-//     />
-//   </List>
-// </View>
+

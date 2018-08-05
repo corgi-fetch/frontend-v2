@@ -80,11 +80,6 @@ class ConfirmJobView extends Component {
         error: null,
         refreshing: false,
         post: props.navigation.state.params.item,
-      //   name: props.navigation.state.params.name,
-      //   starCount: props.navigation.state.params.starCount,
-      //   price: props.navigation.state.params.price,
-      //   postTitle: props.navigation.state.params.postTitle,
-      //   postInfo: props.navigation.state.params.postDescription,
       };
   }
 
@@ -104,7 +99,6 @@ class ConfirmJobView extends Component {
           'Content-Type': 'application/json'
         },
 
-        //make sure to serialize your JSON body
         body: JSON.stringify({
           id: global.user.id,
           rating: global.user.rating,
@@ -121,9 +115,6 @@ class ConfirmJobView extends Component {
       })
       .then( (response) => {
         console.log(response);
-        //this.fetchData();
-        //navigate('Home');
-         //do something awesome that makes the world a better place
       });
   }
 

@@ -13,10 +13,12 @@ import ConfirmJobView from './screens/ConfirmJobView';
 import ConfirmPaymentView from './screens/ConfirmPaymentView';
 import AcceptPaymentView from './screens/AcceptPaymentView';
 
+import Navigator from './navigation/Navigator'
 
-import TimelineNavigator from './navigation/TimelineNavigator'
-import SideBar from './navigation/SideBarNavigator';
-import AppNavigator from './navigation/AppNavigator'
+
+// import TimelineNavigator from './navigation/TimelineNavigator';
+// import SideBar from './navigation/SideBarNavigator';
+import AppNavigator from './navigation/AppNavigator';
 //import SideBar from './Timeline';
 //import SimpleApp from './Timeline';
 
@@ -71,7 +73,7 @@ import AppNavigator from './navigation/AppNavigator'
 
 export default class App extends React.Component {
   render() {
-    return <AppNavigator />;
+    return <Navigator />;
     //return <DrawerStack />;
   }
 }
