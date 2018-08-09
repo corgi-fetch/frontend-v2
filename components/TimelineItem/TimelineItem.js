@@ -38,9 +38,15 @@ function TimelineItem({
         </View>
     )
 
+    var ownerId = owner
+
+    if (owner) {
+        ownerId = owner.userId
+    }
+
     var PostListAvatarField = (
         <Image 
-            source={{ uri: 'http://graph.facebook.com/' + owner + '/picture?type=square' }}
+            source={{ uri: 'http://graph.facebook.com/' + ownerId + '/picture?type=square' }}
             style={{borderRadius:25, height:50, width:50 }}
         />
     )
@@ -57,6 +63,8 @@ function TimelineItem({
     } else if (listOfPosts == true) {
         AvatarField = PostListAvatarField
     } 
+
+    console.log(JSON.stringify(owner))
 
     return (
         <TouchableOpacity

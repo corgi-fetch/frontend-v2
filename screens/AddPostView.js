@@ -160,7 +160,7 @@ updateSize = (height) => {
 							
 								body: JSON.stringify({
 									date: 7,
-									owner: global.id,
+									owner: global.userStub,
 									title: this.state.titleText,
 									description: this.state.postText,
 									payment: this.state.priceText,
@@ -171,10 +171,12 @@ updateSize = (height) => {
 								})
 							})
 							.then( (response) => {
-								// console.log(response);
-								console.log("this is navigate in the thing " + JSON.stringify(navigate));
-								this.props.navigation.state.params.refresh();
-								this.props.navigation.goBack();
+								console.log(response);
+								var retrievePostsUrl = global.urlBase + '/api/' + global.id + '/group/' + this.props.navigation.state.params.groupId
+								this.props.navigation.navigate('PostTimeline', {
+									groupId: this.props.navigation.state.params.groupId,
+									url: retrievePostsUrl
+								})
 							});
 					}}
 				/>

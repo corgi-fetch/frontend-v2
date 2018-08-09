@@ -74,21 +74,20 @@ const styles = StyleSheet.create({
       height: 22,
       color: 'white',
     },
-    
   
   });
 
-class GroupTimeline extends Component {
 
-
+class UserListScreen extends Component {
     static navigationOptions = ({ navigation, screenProps }) => {
-      return {
-        title: "GROUPS"
-      }
+        return {
+          title: "LIST OF USERS"
+        }
     }
+
     
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
             data: []
@@ -96,50 +95,15 @@ class GroupTimeline extends Component {
     }
 
     componentDidMount() {
-        
-        fetch(this.props.navigation.state.params.url)
-            .then(res => res.json())
-            .then(res => {
-                this.setState({
-                    data: []
-                })
-                this.setState({
-                    data: [...this.state.data, ...res]
-                })
 
-            })
     }
 
-    handleClick = (id) => {
-      var retrievePostsUrl = global.urlBase + '/api/' + global.id + '/group/' + id
-      this.props.navigation.navigate('PostTimeline', {
-        url: retrievePostsUrl,
-        groupId: id
-      })
-    }
-
-    actionButtonOnClick = () => {
-      this.props.navigation.navigate('TempCreateGroupScreen')
-    }
-
-    render() {
-        // console.log(this.state.data)
-        console.log(this.props)
-        // urlParam = this.props.navigation.state.params.url
-        var GroupIcon = <Icon 
-                          name="md-people" 
-                          style={styles.actionButtonIcon} 
-                        />
-        
+    render () {
         return (
-            <TimelineComponent
-                data={this.state.data}
-                listOfGroups
-                onClick={this.handleClick}
-                actionButtonIcon={GroupIcon}
-                actionButtonOnClick={this.actionButtonOnClick}
-            />
+            <Text>This is a list of users</Text>
         )
     }
+
 }
-export default GroupTimeline
+
+export default UserListScreen

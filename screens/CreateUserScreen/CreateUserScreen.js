@@ -152,7 +152,7 @@ class CreateUserScreen extends Component {
 						  })
 						})
 						.then( (response) => {
-							navigate('GroupTimeline');
+							navigate('UserFetchScreen')
 						});
 					}}
 				/>

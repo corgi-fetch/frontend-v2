@@ -44,7 +44,8 @@ class StartScreen extends React.Component {
     // global.urlBase = "http://192.168.0.18:8080";
     // global.urlBase = "http://192.168.1.2:8080"
     // global.urlBase = "http://192.168.1.25:8080"
-    global.urlBase = "http://172.16.0.130:8080"
+    // global.urlBase = "http://172.16.0.130:8080"
+    global.urlBase = "http://192.168.1.15:8080"
     const { navigate } = this.props.navigation;
     return (
       <WebView
@@ -54,7 +55,7 @@ class StartScreen extends React.Component {
           const end_url = global.urlBase + '/success';
           const other_url = global.urlBase + '/newuser';
            if(e.url.indexOf("success") > -1) {
-             this.existingUser()
+             navigate('UserFetchScreen')
            } else if (e.url.indexOf("newuser") > -1) {
              navigate('CreateUser');
            }

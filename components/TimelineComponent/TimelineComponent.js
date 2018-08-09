@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { ListItem } from 'react-native-elements'
 import { View, Text, FlatList, StyleSheet, Image, AppRegistry, Button, TouchableOpacity, Alert, Platform, StatusBar } from 'react-native'
 import CustomActionButton from '../CustomActionButton'
+import ActionButtonComponent from '../ActionButtonComponent/ActionButtonComponent'
 
 import TimelineItem from '../TimelineItem/TimelineItem.js'
 
@@ -70,7 +71,9 @@ function TimelineComponent ({
 	data,
 	listOfGroups,
 	listOfPosts,
-	onClick
+	onClick,
+	actionButtonIcon,
+	actionButtonOnClick
 }) {
 
 	timelineItemRenderer = ({item}) => {
@@ -122,7 +125,9 @@ function TimelineComponent ({
 				}
 				keyExtractor={item => item.id}
 			/>
-			<CustomActionButton
+			<ActionButtonComponent
+				onClick={actionButtonOnClick}
+				icon={actionButtonIcon}
 			/>
 		</View>
 	)

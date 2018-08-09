@@ -89,7 +89,8 @@ class PostTimeline extends Component {
         super(props);
 
         this.state = {
-            data: []
+            data: [],
+            userStub: null
         }
     }
 
@@ -116,13 +117,27 @@ class PostTimeline extends Component {
       })
     }
 
+    actionButtonOnClick = () => {
+      this.props.navigation.navigate('TempCreatePostScreen', {
+        groupId: this.props.navigation.state.params.groupId
+      })
+      // console.log("hello")
+    }
+
     render() {
+
+      var CreateIcon = <Icon 
+                          name="md-create" 
+                          style={styles.actionButtonIcon} 
+                        />
         
         return (
             <TimelineComponent
                 data={this.state.data}
                 listOfPosts={true}
                 onClick={this.handleClick}
+                actionButtonIcon={CreateIcon}
+                actionButtonOnClick={this.actionButtonOnClick}
             />
         )
     }
