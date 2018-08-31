@@ -10,15 +10,34 @@ const styles = StyleSheet.create({
 
 function ActionButtonComponent ({
     onClick,
-    icon
+    icon,
+    position,
+    offsetX,
+    offsetY,
+    size,
+    buttonColor,
+    hideShadow
 }) {
+    if (!position) {
+        position = 'right'
+    }
+
+    if (!buttonColor) {
+        buttonColor = '#9FDDED'
+    }
 
     return (
         <ActionButton
             fixNativeFeedbackRadius={true}
-            buttonColor='#9FDDED'
+            // useNativeFeedback={false}
+            buttonColor={buttonColor}
             renderIcon={() => icon}
             onPress={onClick}
+            position={position}
+            offsetX={offsetX}
+            offsetY={offsetY}
+            size={size}
+            hideShadow={hideShadow}
         />
     )
 }

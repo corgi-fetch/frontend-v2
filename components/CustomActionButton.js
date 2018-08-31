@@ -33,12 +33,12 @@ class CustomActionButton extends Component {
 
     render() {
         // console.log("this is cab " + JSON.stringify(this));
-        console.log("cab props " + JSON.stringify(this.props));
+        // console.log("cab props " + JSON.stringify(this.props));
 
         if (this.state.groupBoolean) {
             return (
                 <ActionButton fixNativeFeedbackRadius={true} buttonColor='#9FDDED' onPress={() => {
-                    console.log(this.state.groupId);
+                    // console.log(this.state.groupId);
                     this.props.navigation.navigate('AddPost', {groupId: this.state.groupId, refresh: this.state.refreshFunction});
                 }} degrees={0}
                     renderIcon={() => <Icon name="md-create" style={styles.actionButtonIcon} />} >

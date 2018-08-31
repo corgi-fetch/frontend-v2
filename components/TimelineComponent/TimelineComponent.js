@@ -71,6 +71,7 @@ function TimelineComponent ({
 	data,
 	listOfGroups,
 	listOfPosts,
+	listOfUsers,
 	onClick,
 	actionButtonIcon,
 	actionButtonOnClick
@@ -84,9 +85,12 @@ function TimelineComponent ({
 			payment={item.payment}
 			listOfGroups
 			listOfPosts
+			listOfUsers
 			onClick={onClick}
 		/>
 	}
+
+
 
 	RenderSeparator = () => {
 		return (
@@ -100,37 +104,66 @@ function TimelineComponent ({
 			/>
 		)
 	}
-	console.log('listOfGroups ' + listOfGroups)
-	console.log('listOfPosts ' + listOfPosts)
-
-	return (
-		<View style={{flex: 1, flexDirection: 'column', backgroundColor: 'white'}}>
-			<FlatList
-				style={styles.FlatList}
-				data={data}
-				ItemSeparatorComponent={RenderSeparator}
-				renderItem={({ item }) => {
-					return(
-						<TimelineItem
-							title={item.title}
-							description={item.description}
-							owner={item.owner}
-							payment={item.payment}
-							listOfGroups={listOfGroups}
-							listOfPosts={listOfPosts}
-							onClick={onClick}
-							id={item.id}
-						/>
-					)}
-				}
-				keyExtractor={item => item.id}
-			/>
-			<ActionButtonComponent
-				onClick={actionButtonOnClick}
-				icon={actionButtonIcon}
-			/>
-		</View>
-	)
+	if (!listOfUsers) {
+		return (
+			<View style={{flex: 1, flexDirection: 'column', backgroundColor: 'white'}}>
+				<FlatList
+					style={styles.FlatList}
+					data={data}
+					ItemSeparatorComponent={RenderSeparator}
+					renderItem={({ item }) => {
+						console.log("this is in the timeline component " + JSON.stringify(item))
+						return(
+							<TimelineItem
+								title={item.title}
+								description={item.description}
+								owner={item.owner}
+								payment={item.payment}
+								listOfGroups={listOfGroups}
+								listOfUsers={listOfUsers}
+								listOfPosts={listOfPosts}
+								onClick={onClick}
+								id={item.id}
+								state={item.state}
+							/>
+						)}
+					}
+					keyExtractor={item => item.id}
+				/>
+				<ActionButtonComponent
+					onClick={actionButtonOnClick}
+					icon={actionButtonIcon}
+				/>
+			</View>
+		)
+	} else {
+		return (
+			<View style={{flex: 1, flexDirection: 'column', backgroundColor: 'white'}}>
+				<FlatList
+					style={styles.FlatList}
+					data={data}
+					ItemSeparatorComponent={RenderSeparator}
+					renderItem={({ item }) => {
+						console.log("We are getting here " + JSON.stringify(item))
+						return(
+							<TimelineItem
+								title={item.name}
+								owner={item}
+								payment={item.rating}
+								listOfGroups={listOfGroups}
+								listOfUsers={listOfUsers}
+								listOfPosts={listOfPosts}
+								onClick={onClick}
+								id={item.userId}
+								state={-1}
+							/>
+						)}
+					}
+					keyExtractor={item => item.userId}
+				/>
+			</View>
+		)
+	}
 }
 
 TimelineComponent.PropTypes = {

@@ -194,7 +194,7 @@ class Timeline extends Component {
   };
 
   _onPressItem(item) {
-    console.log("this is the item being pressed " + JSON.stringify(item));
+    //console.log("this is the item being pressed " + JSON.stringify(item));
     if (this.state.groupBoolean) {
       this.props.navigation.navigate('Post', {post: item});
     } else {

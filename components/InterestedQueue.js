@@ -72,7 +72,7 @@ class InterestedQueue extends Component {
     }
 
     render() {
-        console.log("this is the queue in this.state.data " + JSON.stringify(this.state.data));
+        // console.log("this is the queue in this.state.data " + JSON.stringify(this.state.data));
         
         return(
             <View>
@@ -81,7 +81,7 @@ class InterestedQueue extends Component {
                     data={this.state.data}
                     ItemSeparatorComponent={this.renderSeparator}
                     renderItem={({item}) => {
-                        console.log("this is the item " + JSON.stringify(item));
+                        // console.log("this is the item " + JSON.stringify(item));
                         return (
                             <View>
                                 <ListItem

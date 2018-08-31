@@ -78,7 +78,7 @@ class AddPostView extends Component {
 	}
 
 componentWillMount() {
-	console.log("this is what we need to know" + JSON.stringify(this.props));
+	//console.log("this is what we need to know" + JSON.stringify(this.props));
 	this.setState({'groupId' : this.props.navigation.state.params.groupId});
 }
 
@@ -91,8 +91,8 @@ updateSize = (height) => {
 	render() {
 		const { navigate } = this.props.navigation;
 		const { height } = this.state.height;
-		console.log("props " + JSON.stringify(this.props));
-		console.log("navigate " + navigate);
+		//console.log("props " + JSON.stringify(this.props));
+		//console.log("navigate " + navigate);
 		
 		var groupId = "";
 		if (this.props.screenProps) {
@@ -171,7 +171,7 @@ updateSize = (height) => {
 								})
 							})
 							.then( (response) => {
-								console.log(response);
+								//console.log(response);
 								var retrievePostsUrl = global.urlBase + '/api/' + global.id + '/group/' + this.props.navigation.state.params.groupId
 								this.props.navigation.navigate('PostTimeline', {
 									groupId: this.props.navigation.state.params.groupId,

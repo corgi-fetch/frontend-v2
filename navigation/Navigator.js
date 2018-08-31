@@ -8,16 +8,18 @@ import StartScreen from '../screens/StartScreen/StartScreen';
 // import SideBar from './SideBarNavigator';
 import CreateUser from '../screens/CreateUserScreen/CreateUserScreen';
 //import TimelineNavigator from './TimelineNavigator'
-import MainSideBarNavigator from './MainSideBarNavigator';
-import CustomTabNavigator from './CustomTabNavigator';
 import GroupTimeline from "../screens/GroupTimeline/GroupTimeline";
 import PostTimeline from "../screens/PostTimeline/PostTimeline";
 import PostScreen from "../screens/PostScreen/PostScreen"
-import Icon from 'react-native-vector-icons/Ionicons';
 import CreateGroupScreen from '../screens/CreateGroupScreen/CreateGroupScreen'
 import UserFetchScreen from '../screens/UserFetchScreen/UserFetchScreen'
 import AddGroupView from '../screens/AddGroupView'
 import AddPostView from '../screens/AddPostView'
+import InterestedQueueScreen from '../screens/InterestedQueueScreen/InterestedQueueScreen'
+
+import InterestedPostStateOne from '../screens/PostScreen/InterestedPostStates/InterestedPostStateOne'
+import InterestedPostStateTwo from '../screens/PostScreen/InterestedPostStates/InterestedPostStateTwo'
+import InterestedPostStateThree from '../screens/PostScreen/InterestedPostStates/InterestedPostStateThree'
 
 const Navigator = StackNavigator({
     StartScreen: {screen: StartScreen},
@@ -28,16 +30,19 @@ const Navigator = StackNavigator({
     CreateGroupScreen: {screen: CreateGroupScreen},
     TempCreateGroupScreen: {screen: AddGroupView},
     TempCreatePostScreen: {screen: AddPostView},
-    UserFetchScreen: {screen: UserFetchScreen}
+    UserFetchScreen: {screen: UserFetchScreen},
+    InterestedQueueScreen: {screen: InterestedQueueScreen},
+    InterestedPostStateOne: {screen: InterestedPostStateOne},
+    InterestedPostStateTwo: {screen: InterestedPostStateTwo},
+    InterestedPostStateThree: {screen: InterestedPostStateThree}
 }, {
     navigationOptions: ({navigation}) => ({
         headerStyle: {
             paddingTop: StatusBar.currentHeight,
-            height: 85,
+            height: 60,
             borderBottomWidth: 0,
             backgroundColor: '#fff',
             elevation: 0,
-            justifyContent: 'center'
         },
         headerTitleStyle: {
             fontWeight: 'normal',

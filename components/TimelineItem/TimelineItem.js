@@ -14,7 +14,9 @@ function TimelineItem({
     id,
     listOfGroups,
     listOfPosts,
-    onClick
+    listOfUsers,
+    onClick,
+    state
 }) {
     var TitleField = (
         <View style={{ flexDirection: 'row', flex: 1}}>
@@ -62,13 +64,21 @@ function TimelineItem({
         AvatarField = GroupListAvatarField
     } else if (listOfPosts == true) {
         AvatarField = PostListAvatarField
-    } 
+    } else if (listOfUsers == true) {
+        AvatarField = PostListAvatarField
+        console.log("In timeline item " + title)
+    }
 
-    console.log(JSON.stringify(owner))
+    var ownerClick = ownerId;
 
+    if (listOfUsers) {
+        ownerClick = owner
+    }
+
+    
     return (
         <TouchableOpacity
-            onPress={() => onClick(id)}
+            onPress={() => onClick(id, state, ownerClick)}
             underlayColor='black'
         >
             <ListItem
@@ -80,6 +90,7 @@ function TimelineItem({
         </TouchableOpacity>
 
     )
+    
 }
 
 TimelineItem.PropTypes = {

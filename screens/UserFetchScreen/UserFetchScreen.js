@@ -11,7 +11,7 @@ class UserFetchScreen extends Component {
     existingUser = () => {
         const url = global.urlBase + '/api/master/principal';
 
-        console.log("we are in existing user")
+        //console.log("we are in existing user")
     
         fetch(url)
           .then((response) => response.json())

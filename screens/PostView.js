@@ -120,7 +120,7 @@ class PostView extends Component {
                   })
                 })
                 .then( (response) => {
-                  console.log(response);
+                  //console.log(response);
                   navigate('Home');
                 });
               }}>

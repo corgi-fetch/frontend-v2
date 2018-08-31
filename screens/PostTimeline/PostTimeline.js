@@ -98,9 +98,11 @@ class PostTimeline extends Component {
         fetch(this.props.navigation.state.params.url)
             .then((res) => res.json())
             .then((res) => {
+                console.log(JSON.stringify(res))
                 this.setState({
                     data: [...this.state.data, ...res.posts]
                 })
+
             })
             .catch(error => {
                 console.log('this is an error ' + error)
@@ -110,11 +112,24 @@ class PostTimeline extends Component {
         
     }
 
-    handleClick = (id) => {
+    handleClick = (id, state, ownerId) => {
       var retrievePostsUrl = global.urlBase + '/api/' + global.id + '/post/' + id
-      this.props.navigation.navigate('PostScreen', {
-        url: retrievePostsUrl
-      })
+
+      //console.log("where is this happening " + " id " + id + " state " + state)
+
+      if (state == 1 /*&& ownerId != global.id*/) {
+        this.props.navigation.navigate('InterestedPostStateOne', {
+          url: retrievePostsUrl
+        })
+      } else if (state == 2) {
+        this.props.navigation.navigate('InterestedPostStateTwo', {
+          url: retrievePostsUrl
+        })
+      } else {
+        this.props.navigation.navigate('PostScreen', {
+          url: retrievePostsUrl
+        })
+      }
     }
 
     actionButtonOnClick = () => {

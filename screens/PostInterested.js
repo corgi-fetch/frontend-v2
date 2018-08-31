@@ -88,7 +88,7 @@ class PostInterested extends Component {
   }
 
   _onPressButton(item) {
-    console.log('pressed yes');
+    //console.log('pressed yes');
     fetch(global.urlBase + '/api/' + global.id + '/interestedpost/' + this.state.post.id, {
         method: "put",
         credentials: 'include',

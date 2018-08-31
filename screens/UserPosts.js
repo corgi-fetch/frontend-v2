@@ -138,7 +138,7 @@ class UserPosts extends React.Component {
 
 	render() {
     const { navigate } = this.props.navigation;
-    console.log(global.user.currentPosts);
+    //console.log(global.user.currentPosts);
 		return (
       <FlatList
           style={{ margin: 0 }}

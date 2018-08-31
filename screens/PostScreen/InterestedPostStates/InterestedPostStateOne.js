@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, Image, Alert, TouchableOpacity, StatusBar} from 'react-native';
 import {StackNavigator, DrawerNavigator, HeaderBackButton } from 'react-navigation';
 
-import OverlappingAvatars from '../../components/OverlappingAvatars/OverlappingAvatars'
+import OverlappingAvatars from '../../../components/OverlappingAvatars/OverlappingAvatars'
+
+import ActionButtonComponent from '../../../components/ActionButtonComponent/ActionButtonComponent'
+import Icon from 'react-native-vector-icons/Ionicons';
+
+
 
 
 const styles = StyleSheet.create({
@@ -49,11 +54,27 @@ const styles = StyleSheet.create({
   },
   postImage: {
     paddingLeft: 5, 
-  }
+  },
+  actionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: 'white',
+  },
   
 });
 
-class PostScreen extends Component {
+function containsObject(obj, list) {
+  var i;
+  for (i = 0; i < list.length; i++) {
+      if (list[i].userId === obj.userId) {
+          return true;
+      }
+  }
+
+  return false;
+}
+
+class InterestedPostStateOne extends Component {
 
   static navigationOptions = ({ navigation, screenProps }) => {
     
@@ -102,11 +123,50 @@ class PostScreen extends Component {
     this.fetchPost();
   }
 
-  handleClick = () => {
-    //console.log("hello " + JSON.stringify(this.state.post))
-    this.props.navigation.navigate('InterestedQueueScreen', 
-      {data: this.state.post.interestedQueue, postId: this.state.post.id})
+  addInterestedQueueOnClick = () => {
+    //console.log("hello there")
+    this.state.post.interestedQueue.push(global.userStub)
+    fetch(global.urlBase + '/api/' + global.id + '/post/' + this.state.post.id, {
+      method: "put",
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    
+      body: JSON.stringify(global.userStub)
+    })
+    .then((response) => response.json())
+    .then( (responseData) => {
+      console.log(JSON.stringify(responseData))
+      this.setState({
+        post: responseData
+      })
+    });
   }
+
+  removeInterestedQueueOnClick = () => {
+    this.state.post.interestedQueue.push(global.userStub)
+    fetch(global.urlBase + '/api/' + global.id + '/post/' + this.state.post.id, {
+      method: "delete",
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    
+      body: JSON.stringify(global.userStub)
+    })
+    .then((response) => response.json())
+    .then( (responseData) => {
+      console.log(JSON.stringify(responseData))
+      this.setState({
+        post: responseData
+      })
+    });
+  }
+
+  
 
   
 
@@ -115,6 +175,61 @@ class PostScreen extends Component {
     post = this.state.post;
 
     var interestedQueueText = "";
+
+    var CreateIconCheck = <Icon 
+      name="md-checkmark-circle-outline" 
+      style={styles.actionButtonIcon} 
+    />
+
+    var CreateIconX = <Icon 
+      name="md-close-circle" 
+      style={styles.actionButtonIcon} 
+    />
+
+    var actionButton = <ActionButtonComponent
+      position='center'
+      offsetX={0}
+      offsetY={130}
+      size={84}
+      buttonColor='#42f4ad'
+      icon={CreateIconCheck}
+      onClick={this.addInterestedQueueOnClick}
+    />
+
+    var actionButtons = [] 
+    actionButtons.push(<ActionButtonComponent
+      position='center'
+      offsetX={-50}
+      offsetY={130}
+      size={84}
+      buttonColor='lightgrey'
+      icon={CreateIconCheck}
+      hideShadow={true}
+      key={2}
+    />)
+    actionButtons.push(<ActionButtonComponent
+      position='center'
+      offsetX={50}
+      offsetY={130}
+      size={84}
+      buttonColor='#f44259'
+      icon={CreateIconX}
+      key={1}
+      onClick={this.removeInterestedQueueOnClick}
+    />)
+
+    var button;
+    if (post) {
+      console.log("here is after we retrieve post " + JSON.stringify(post))
+      if (containsObject(global.userStub, post.interestedQueue)) {
+        button = actionButtons; 
+        console.log("we here or nah") 
+      } else {
+        button = actionButton;
+        console.log("are we here")
+      }
+    }
+
     
     if (post) {
       interestedQueueText = post.interestedQueue.length.toString() + " users interested"
@@ -157,10 +272,15 @@ class PostScreen extends Component {
                 avatar_one={post.owner.userId}
                 avatar_two={post.owner.userId}
                 avatar_three={post.owner.userId}
-                handleClick={this.handleClick}
-                clickable
+                //handleClick={this.handleClick}
               />
               <Text>{interestedQueueText}</Text>
+              {button}
+              {/* <ActionButtonComponent
+                position='center'
+                offsetX={-40}
+                offsetY={150}
+              /> */}
             </View>
         </View>
         );
@@ -180,5 +300,5 @@ class PostScreen extends Component {
   }
 }
   
-export default PostScreen
+export default InterestedPostStateOne
   

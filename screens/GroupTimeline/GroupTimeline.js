@@ -124,7 +124,6 @@ class GroupTimeline extends Component {
 
     render() {
         // console.log(this.state.data)
-        console.log(this.props)
         // urlParam = this.props.navigation.state.params.url
         var GroupIcon = <Icon 
                           name="md-people" 
