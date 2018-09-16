@@ -75,7 +75,7 @@ function containsObject(obj, list) {
   return false;
 }
 
-class InterestedPostStateTwo extends Component {
+class OwnerPostStateTwo extends Component {
 
   static navigationOptions = ({ navigation, screenProps }) => {
     
@@ -124,10 +124,52 @@ class InterestedPostStateTwo extends Component {
     this.fetchPost();
   }
 
+//   addInterestedQueueOnClick = () => {
+//     //console.log("hello there")
+//     this.state.post.interestedQueue.push(global.userStub)
+//     fetch(global.urlBase + '/api/' + global.id + '/post/' + this.state.post.id, {
+//       method: "put",
+//       credentials: 'include',
+//       headers: {
+//         'Accept': 'application/json',
+//         'Content-Type': 'application/json'
+//       },
+    
+//       body: JSON.stringify(global.userStub)
+//     })
+//     .then((response) => response.json())
+//     .then( (responseData) => {
+//       console.log(JSON.stringify(responseData))
+//       this.setState({
+//         post: responseData
+//       })
+//     });
+//   }
 
-  serviceGivenPress = () => {
+//   removeInterestedQueueOnClick = () => {
+//     this.state.post.interestedQueue.push(global.userStub)
+//     fetch(global.urlBase + '/api/' + global.id + '/post/' + this.state.post.id, {
+//       method: "delete",
+//       credentials: 'include',
+//       headers: {
+//         'Accept': 'application/json',
+//         'Content-Type': 'application/json'
+//       },
+    
+//       body: JSON.stringify(global.userStub)
+//     })
+//     .then((response) => response.json())
+//     .then( (responseData) => {
+//       console.log(JSON.stringify(responseData))
+//       this.setState({
+//         post: responseData
+//       })
+//     });
+//   }
+
+  serviceReceivedPress = () => {
     fetch(global.urlBase + '/api/' + global.id + '/confirmation/' + this.state.post.id, {
-      method: "put",
+      method: "post",
       credentials: 'include',
       headers: {
         'Accept': 'application/json',
@@ -169,9 +211,9 @@ class InterestedPostStateTwo extends Component {
                         }}
                         >
                             <Button
-                                title="JOB COMPLETED"
+                                title="CONFIRM COMPLETION"
                                 color="white"
-                                onPress={this.serviceGivenPress}
+                                onPress={this.serviceReceivedPress}
                                 buttonStyle={{
                                     backgroundColor: "green",
                                 }}
@@ -184,7 +226,7 @@ class InterestedPostStateTwo extends Component {
                                 }}
                                 >
                                     <Button
-                                        title="AWAITING CONFIRMATION"
+                                        title="AWAITING COMPLETION"
                                         color="white"
                                         //onPress
                                         disabled
@@ -222,11 +264,11 @@ class InterestedPostStateTwo extends Component {
     if (post) {
       console.log("here is after we retrieve post " + JSON.stringify(post))
       if (post.serviceGiven) {
-        button = waitingConfirmationButton; 
+        button = completeButton; 
         console.log("we here or nah") 
       } else {
         //button = completeButton;
-        button = completeButton;
+        button = waitingConfirmationButton;
         console.log("are we here")
       }
     }
@@ -294,5 +336,5 @@ class InterestedPostStateTwo extends Component {
   }
 }
   
-export default InterestedPostStateTwo
+export default OwnerPostStateTwo
   

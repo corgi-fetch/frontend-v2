@@ -20,6 +20,9 @@ import InterestedQueueScreen from '../screens/InterestedQueueScreen/InterestedQu
 import InterestedPostStateOne from '../screens/PostScreen/InterestedPostStates/InterestedPostStateOne'
 import InterestedPostStateTwo from '../screens/PostScreen/InterestedPostStates/InterestedPostStateTwo'
 import InterestedPostStateThree from '../screens/PostScreen/InterestedPostStates/InterestedPostStateThree'
+import OwnerPostStateTwo from '../screens/PostScreen/OwnerPostStates/OwnerPostStateTwo'
+
+import OwnerPaymentScreen from '../screens/PostScreen/OwnerPaymentScreen/OwnerPaymentScreen'
 
 const Navigator = StackNavigator({
     StartScreen: {screen: StartScreen},
@@ -34,7 +37,9 @@ const Navigator = StackNavigator({
     InterestedQueueScreen: {screen: InterestedQueueScreen},
     InterestedPostStateOne: {screen: InterestedPostStateOne},
     InterestedPostStateTwo: {screen: InterestedPostStateTwo},
-    InterestedPostStateThree: {screen: InterestedPostStateThree}
+    InterestedPostStateThree: {screen: InterestedPostStateThree},
+    OwnerPostStateTwo: {screen: OwnerPostStateTwo},
+    OwnerPaymentScreen: {screen: OwnerPaymentScreen}
 }, {
     navigationOptions: ({navigation}) => ({
         headerStyle: {

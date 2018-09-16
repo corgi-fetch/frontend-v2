@@ -116,21 +116,36 @@ class PostTimeline extends Component {
       var retrievePostsUrl = global.urlBase + '/api/' + global.id + '/post/' + id
 
       //console.log("where is this happening " + " id " + id + " state " + state)
-
-      if (state == 1 /*&& ownerId != global.id*/) {
-        this.props.navigation.navigate('InterestedPostStateOne', {
-          url: retrievePostsUrl
-        })
-      } else if (state == 2) {
-        this.props.navigation.navigate('InterestedPostStateTwo', {
-          url: retrievePostsUrl
-        })
+      if (ownerId == global.id) {
+          if (state == 1) {
+            this.props.navigation.navigate('PostScreen', {
+              url: retrievePostsUrl
+            })
+          } else if (state == 2) {
+            this.props.navigation.navigate('OwnerPostStateTwo', {
+              url: retrievePostsUrl
+            })
+          } else if (state == 3) {
+            console.log("we are here")
+            this.props.navigation.navigate('OwnerPaymentScreen', {
+              url: retrievePostsUrl
+            })
+          }
       } else {
-        this.props.navigation.navigate('PostScreen', {
-          url: retrievePostsUrl
-        })
+          if (state == 1) {
+            this.props.navigation.navigate('InterestedPostStateOne', {
+              url: retrievePostsUrl
+          })
+        } else if (state == 2) {
+            this.props.navigation.navigate('InterestedPostStateTwo', {
+              url: retrievePostsUrl
+            })
+        } else if (state == 3) {
+
+        }
       }
     }
+      
 
     actionButtonOnClick = () => {
       this.props.navigation.navigate('TempCreatePostScreen', {
