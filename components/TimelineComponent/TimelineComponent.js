@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
 import { ListItem } from 'react-native-elements'
 import { View, Text, FlatList, StyleSheet, Image, AppRegistry, Button, TouchableOpacity, Alert, Platform, StatusBar } from 'react-native'
@@ -166,20 +166,20 @@ function TimelineComponent ({
 	}
 }
 
-TimelineComponent.PropTypes = {
-		dataUrl: PropTypes.string,
+// TimelineComponent.PropTypes = {
+// 		dataUrl: PropTypes.string,
 
-		listOfGroups: PropTypes.bool,
+// 		listOfGroups: PropTypes.bool,
 
-		listOfPosts: PropTypes.bool
-}
+// 		listOfPosts: PropTypes.bool
+// }
 
-TimelineComponent.defaultProps = {
-		dataUrl: null,
+// TimelineComponent.defaultProps = {
+// 		dataUrl: null,
 
-		listOfGroups: false,
+// 		listOfGroups: false,
 
-		listOfPosts: false
-}
+// 		listOfPosts: false
+// }
 
 export default TimelineComponent

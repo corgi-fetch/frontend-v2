@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types'
-
 import { View, Text, FlatList, StyleSheet, Image, AppRegistry, Button, TouchableOpacity, Alert, Platform, StatusBar } from "react-native";
 import {StackNavigator, DrawerNavigator, HeaderBackButton } from 'react-navigation';
 

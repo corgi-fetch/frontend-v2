@@ -5,6 +5,8 @@ import { FormLabel, FormInput } from 'react-native-elements';
 import Button from 'apsl-react-native-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ActionButton from 'react-native-action-button';
+import { Permissions, Notifications } from 'expo';
+
 
 const styles = StyleSheet.create ({
 	container: {
@@ -60,6 +62,31 @@ const styles = StyleSheet.create ({
 	  },
 });
 
+async function registerForPushNotificationsAsync() {
+  const { status: existingStatus } = await Permissions.getAsync(
+    Permissions.NOTIFICATIONS
+  );
+  let finalStatus = existingStatus;
+
+  // only ask if permissions have not already been determined, because
+  // iOS won't necessarily prompt the user a second time.
+  if (existingStatus !== 'granted') {
+    // Android remote notification permissions are granted during the app
+    // install, so this will only ask on iOS
+    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    finalStatus = status;
+  }
+
+  // Stop here if the user did not grant permissions
+  if (finalStatus !== 'granted') {
+    return;
+	}
+	
+	let token = await Notifications.getExpoPushTokenAsync();
+
+	return token;
+}
+
 class CreateUserScreen extends Component {
 
   constructor(props) {
@@ -71,7 +98,7 @@ class CreateUserScreen extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.fetchData();
   }
 
@@ -81,13 +108,21 @@ class CreateUserScreen extends Component {
     fetch(url)
       .then((response) => response.json())
       .then((responseData) => {
-        global.id = responseData;
+				global.id = responseData;
+				console.log(responseData);
       })
       .done();
-  }
+	}
+	
+	
+	
 
   render() {
-    const { navigate } = this.props.navigation;
+		const { navigate } = this.props.navigation;
+		let token = registerForPushNotificationsAsync();
+		console.log("This is the global id " + global.id);
+		console.log(token);
+
     return (
       <View style={{backgroundColor: 'white', flex: 1, flexDirection: 'column', paddingTop: 40}}>
 				<View style={{backgroundColor: 'white', flex: 1, flexDirection: 'column', borderBottomColor: 'lightgray', borderBottomWidth: 1,}}>
@@ -136,7 +171,7 @@ class CreateUserScreen extends Component {
 						fixNativeFeedbackRadius={true}
 						onPress = {() => {
 							fetch(global.urlBase + '/api/' + global.id + '/user', {
-						  method: "post",
+						  method: "put",
 							credentials: 'include',
 						  headers: {
 						    'Accept': 'application/json',
@@ -149,9 +184,11 @@ class CreateUserScreen extends Component {
 						    name: this.state.name,
 								email: this.state.email,
 								bankAccount: this.state.venmo,
+								pushToken: token,
 						  })
 						})
 						.then( (response) => {
+							console.log(response);
 							navigate('UserFetchScreen')
 						});
 					}}
