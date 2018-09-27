@@ -42,9 +42,9 @@ function ActionButtonComponent ({
     )
 }
 
-ActionButtonComponent.PropTypes = {
+// ActionButtonComponent.PropTypes = {
 
-}
+// }
 
 ActionButtonComponent.defaultProps = {
 

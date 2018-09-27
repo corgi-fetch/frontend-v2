@@ -1,11 +1,11 @@
 import React from 'react';
-import { WebView, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Button, WebView, Platform, StatusBar } from 'react-native';
 //import { StackNavigator } from 'react-navigation';
-//import { WebView } from 'react-native-webview';
+
 //import RatingStar from './RatingStar';
 
 
-class StartScreen extends React.Component {
+class LoginScreen extends React.Component {
   static navigationOptions = {
     //title: 'Login',
     headerStyle: {
@@ -22,13 +22,8 @@ class StartScreen extends React.Component {
     // global.urlBase = "http://192.168.0.12:8080";
     // global.urlBase = "http://192.168.1.4:8080";
     // global.urlBase = "http://127.0.0.1:8080";
-<<<<<<< HEAD
-    // global.urlBase = "http://192.168.1.20:8080/";
-    global.urlBase = "https://corgoapi-v2.azurewebsites.net";
-=======
     global.urlBase = "http://192.168.1.20:8080";
     // global.urlBase = "https://corgoapi-v2.azurewebsites.net";
->>>>>>> 5619fd5de33e823fa7bfe120f134b7391346c415
     // global.urlBase = "http://192.168.110.2:8080/";
     // global.urlBase = "http://192.168.0.14:8080";
     // global.urlBase = "http://10.103.31.141:8080";
@@ -47,32 +42,17 @@ class StartScreen extends React.Component {
     // global.urlBase = "http://10.142.46.143:8080/"
     // global.urlBase = "http://10.142.45.183:8080/"
     // global.urlBase = "http://10.142.46.75:8080/"
-<<<<<<< HEAD
-
-=======
     // global.urlBase = "http://10.142.93.164:8080/"
     // global.urlBase = "http://10.142.92.186:8080"
     
->>>>>>> 5619fd5de33e823fa7bfe120f134b7391346c415
     const { navigate } = this.props.navigation;
     return (
-      <WebView
-        source={{uri: global.urlBase + '/login/facebook'}}
-        //style={{marginTop: 20}}
-        onNavigationStateChange={(e) => {
-           console.log(e);
-        //   const end_url = global.urlBase + '/success';
-        //   const other_url = global.urlBase + '/newuser';
-           if(e.url.indexOf("success") > -1) {
-             navigate('UserFetchScreen')
-           } else if (e.url.indexOf("newuser") > -1) {
-             console.log(e.url);
-             navigate('CreateUser');
-           }
-        }}
-      />
+        <View>
+            
+        </View>
+          
     );
   }
 }
 
-export default StartScreen;
+export default LoginScreen;

@@ -13,20 +13,25 @@ class UserFetchScreen extends Component {
 
         //console.log("we are in existing user")
     
-        fetch(url)
+        fetch(url, {
+            credentials: "same-origin"
+        })
           .then((response) => response.json())
           .then((responseData) => {
             global.id = responseData
+            console.log(global.id);
 
             
             var userStubUrl = global.urlBase + '/api/' + global.id + '/user/' + global.id
             // this.fetchUser()
 
-            fetch(userStubUrl)
+            fetch(userStubUrl, {
+                credentials: "same-origin"
+            })
                 .then((response) => response.json())
                 .then((responseData) => {
                     global.userStub = responseData
-                    var retrieveGroupsUrl = global.urlBase + '/api/' + global.id + '/group/'
+                    var retrieveGroupsUrl = global.urlBase + '/api/' + global.id + '/user/'
                     this.props.navigation.navigate('GroupTimeline', {
                         url: retrieveGroupsUrl
                     })

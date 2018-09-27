@@ -31,7 +31,9 @@ class SampleApp extends Component {
     const url = global.urlBase + '/api/master/user';
     //const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;
     this.setState({ loading: true });
-    fetch(url)
+    fetch(url, {
+      credentials: "same-origin"
+    })
       .then(res => res.json())
       .then(res => {
         //console.log(res);

@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
 import { ListItem } from 'react-native-elements'
 import { View, Text, FlatList, StyleSheet, Image, AppRegistry, Button, TouchableOpacity, Alert, Platform, StatusBar } from 'react-native'
@@ -93,36 +93,36 @@ function TimelineItem({
     
 }
 
-TimelineItem.PropTypes = {
-    title: PropTypes.string,
+// TimelineItem.PropTypes = {
+//     title: PropTypes.string,
 
-    description: PropTypes.string,
+//     description: PropTypes.string,
 
-    owner: PropTypes.string,
+//     owner: PropTypes.string,
 
-    payment: PropTypes.number,
+//     payment: PropTypes.number,
 
-    id: PropTypes.string,
+//     id: PropTypes.string,
 
-    listOfGroups: PropTypes.bool,
+//     listOfGroups: PropTypes.bool,
 
-    listOfPosts: PropTypes.bool
-}
+//     listOfPosts: PropTypes.bool
+// }
 
-TimelineItem.defaultProps = {
-    title: '',
+// TimelineItem.defaultProps = {
+//     title: '',
 
-    description: '',
+//     description: '',
 
-    owner: null,
+//     owner: null,
 
-    payment: '',
+//     payment: '',
 
-    id: null,
+//     id: null,
 
-    listOfGroups: false,
+//     listOfGroups: false,
 
-    listOfPosts: false
-}
+//     listOfPosts: false
+// }
 
 export default TimelineItem

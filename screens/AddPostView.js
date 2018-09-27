@@ -152,7 +152,7 @@ updateSize = (height) => {
 						onPress = {() => {
 							fetch(global.urlBase + '/api/' + global.id + '/post', {
 								method: "post",
-								credentials: 'include',
+								credentials: "same-origin",
 								headers: {
 									'Accept': 'application/json',
 									'Content-Type': 'application/json'

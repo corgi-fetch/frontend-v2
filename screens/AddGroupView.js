@@ -79,7 +79,9 @@ class AddGroupView extends Component {
 
         for (let x = 0; x < this.state.selectedUsers.length; x++) {
           fetches.push(
-            fetch(url + this.state.selectedUsers[x])
+            fetch(url + this.state.selectedUsers[x], {
+              credentials: "same-origin"
+            })
               .then((response) => response.json())
               .then((responseData) => {
                 arr[x] = responseData;
@@ -110,7 +112,9 @@ class AddGroupView extends Component {
     const url = global.urlBase + '/api/master/user';
 
     this.setState({ loading: true });
-    fetch(url)
+    fetch(url, {
+      credentials: "same-origin"
+    })
       .then(res => res.json())
       .then(res => {
         this.setState({
@@ -280,7 +284,7 @@ class AddGroupView extends Component {
               this.getFullUsers().then((data) => {
                 fetch(global.urlBase + '/api/' + global.id + '/group', {
     						  method: "post",
-    							credentials: 'include',
+    							credentials: "same-origin",
     						  headers: {
     						    'Accept': 'application/json',
     						    'Content-Type': 'application/json'
@@ -295,7 +299,10 @@ class AddGroupView extends Component {
     						  })
     						})
     						.then( (response) => {    							
-    							navigate('Home');
+    							var retrieveGroupsUrl = global.urlBase + '/api/' + global.id + '/user/'
+                  this.props.navigation.navigate('GroupTimeline', {
+                      url: retrieveGroupsUrl
+                  })
     						});
               })
 					}}

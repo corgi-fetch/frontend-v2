@@ -85,7 +85,7 @@ class InterestedQueueScreen extends Component {
     handleClick = (id, state, userStub) => {
       fetch(global.urlBase + '/api/' + global.id + '/post/' + this.state.postId, {
         method: "post",
-        credentials: 'include',
+        credentials: "same-origin",
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'

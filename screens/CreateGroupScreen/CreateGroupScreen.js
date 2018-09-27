@@ -46,7 +46,9 @@ class CreateGroupScreen extends Component {
 
     componentDidMount() {
         var retrieveUsersUrl = global.urlBase + '/api/master/user' 
-        fetch(retrieveUsersUrl)
+        fetch(retrieveUsersUrl, {
+            credentials: "same-origin"
+        })
             .then(res => res.json())
             .then(res => {
                 

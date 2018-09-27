@@ -120,7 +120,9 @@ class UserProfile extends React.Component {
     const { page, seed } = this.state;
     const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;
     this.setState({ loading: true });
-    fetch(url)
+    fetch(url, {
+      credentials: "same-origin"
+    })
       .then(res => res.json())
       .then(res => {
         this.setState({

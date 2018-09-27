@@ -15,6 +15,12 @@ import AcceptPaymentView from './screens/AcceptPaymentView';
 
 import Navigator from './navigation/Navigator'
 
+import {
+  Notifications,
+} from 'expo';
+
+import registerForPushNotificationsAsync from './utilities/registerForPushNotificationsAsync'
+
 
 // import TimelineNavigator from './navigation/TimelineNavigator';
 // import SideBar from './navigation/SideBarNavigator';
@@ -72,6 +78,35 @@ import AppNavigator from './navigation/AppNavigator';
 // });
 
 export default class App extends React.Component {
+
+  state = {
+    notification: {},
+  };
+
+  componentDidMount() {
+    //registerForPushNotificationsAsync();
+    if (Platform.OS === 'android') {
+      console.log("we have set all this stuff");
+      Notifications.createChannelAndroidAsync('corgo-notifications', {
+        name: 'Corgo Notifications',
+        sound: true,
+        priority: 'high'
+      });
+    }
+
+    // Handle notifications that are received or selected while the app
+    // is open. If the app was closed and then opened by tapping the
+    // notification (rather than just tapping the app icon to open it),
+    // this function will fire on the next tick after the app starts
+    // with the notification data.
+    this._notificationSubscription = Notifications.addListener(this._handleNotification);
+  }
+
+  _handleNotification = (notification) => {
+    this.setState({notification: notification});
+  };
+
+
   render() {
     return <Navigator />;
     //return <DrawerStack />;
