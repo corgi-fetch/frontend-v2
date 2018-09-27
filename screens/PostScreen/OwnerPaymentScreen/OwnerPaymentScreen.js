@@ -97,7 +97,9 @@ const styles = StyleSheet.create({
       const url = this.props.navigation.state.params.url;
   
       
-      fetch(url)
+      fetch(url, {
+        credentials: "same-origin"
+      })
         .then((response) => response.json())
         .then((responseData) => {
           //console.log("testing" + JSON.stringify(responseData))
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
     serviceGivenPress = () => {
       fetch(global.urlBase + '/api/' + global.id + '/confirmation/' + this.state.post.id, {
         method: "put",
-        credentials: 'include',
+        credentials: "same-origin",
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'

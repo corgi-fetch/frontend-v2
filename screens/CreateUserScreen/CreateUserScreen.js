@@ -6,6 +6,7 @@ import Button from 'apsl-react-native-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ActionButton from 'react-native-action-button';
 import { Permissions, Notifications } from 'expo';
+import registerForPushNotificationsAsync from '../../utilities/registerForPushNotificationsAsync'
 
 
 const styles = StyleSheet.create ({
@@ -62,30 +63,6 @@ const styles = StyleSheet.create ({
 	  },
 });
 
-async function registerForPushNotificationsAsync() {
-  const { status: existingStatus } = await Permissions.getAsync(
-    Permissions.NOTIFICATIONS
-  );
-  let finalStatus = existingStatus;
-
-  // only ask if permissions have not already been determined, because
-  // iOS won't necessarily prompt the user a second time.
-  if (existingStatus !== 'granted') {
-    // Android remote notification permissions are granted during the app
-    // install, so this will only ask on iOS
-    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-    finalStatus = status;
-  }
-
-  // Stop here if the user did not grant permissions
-  if (finalStatus !== 'granted') {
-    return;
-	}
-	
-	let token = await Notifications.getExpoPushTokenAsync();
-
-	return token;
-}
 
 class CreateUserScreen extends Component {
 
@@ -99,13 +76,16 @@ class CreateUserScreen extends Component {
   }
 
   componentDidMount() {
-    this.fetchData();
+		this.fetchData();
+		registerForPushNotificationsAsync();
   }
 
   fetchData = () => {
     const url = global.urlBase + '/api/master/principal';
 
-    fetch(url)
+    fetch(url, {
+			credentials: "same-origin"
+		})
       .then((response) => response.json())
       .then((responseData) => {
 				global.id = responseData;
@@ -119,9 +99,9 @@ class CreateUserScreen extends Component {
 
   render() {
 		const { navigate } = this.props.navigation;
-		let token = registerForPushNotificationsAsync();
-		console.log("This is the global id " + global.id);
-		console.log(token);
+		// let token = JSON.stringify(Promise.resolve(registerForPushNotificationsAsync()));
+		// console.log("This is the global id " + global.id);
+		// console.log(token);
 
     return (
       <View style={{backgroundColor: 'white', flex: 1, flexDirection: 'column', paddingTop: 40}}>
@@ -171,11 +151,11 @@ class CreateUserScreen extends Component {
 						fixNativeFeedbackRadius={true}
 						onPress = {() => {
 							fetch(global.urlBase + '/api/' + global.id + '/user', {
-						  method: "put",
-							credentials: 'include',
-						  headers: {
-						    'Accept': 'application/json',
-						    'Content-Type': 'application/json'
+								method: "put",
+								credentials: "same-origin",
+								headers: {
+									'Accept': 'application/json',
+									'Content-Type': 'application/json'
 						  },
 
 						  body: JSON.stringify({
@@ -184,7 +164,7 @@ class CreateUserScreen extends Component {
 						    name: this.state.name,
 								email: this.state.email,
 								bankAccount: this.state.venmo,
-								pushToken: token,
+								//pushToken: token,
 						  })
 						})
 						.then( (response) => {

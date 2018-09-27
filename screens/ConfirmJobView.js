@@ -93,7 +93,7 @@ class ConfirmJobView extends Component {
     console.log("look it worked!");
     fetch(global.urlBase + '/api/' + global.id + '/interestedpost/' + this.state.post.id, {
         method: "post",
-        credentials: 'include',
+        credentials: "same-origin",
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'

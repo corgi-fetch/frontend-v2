@@ -94,7 +94,9 @@ class PostTimeline extends Component {
     }
 
     componentDidMount() {
-        fetch(this.props.navigation.state.params.url)
+        fetch(this.props.navigation.state.params.url, {
+          credentials: "same-origin"
+        })
             .then((res) => res.json())
             .then((res) => {
                 console.log(JSON.stringify(res))

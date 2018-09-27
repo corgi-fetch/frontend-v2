@@ -91,7 +91,7 @@ class PostInterested extends Component {
     //console.log('pressed yes');
     fetch(global.urlBase + '/api/' + global.id + '/interestedpost/' + this.state.post.id, {
         method: "put",
-        credentials: 'include',
+        credentials: "same-origin",
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'

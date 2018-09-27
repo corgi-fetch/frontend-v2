@@ -34,6 +34,7 @@
     "react-native-hamburger": "0.0.2",
     "react-native-star-rating": "^1.0.7",
     "react-native-vector-icons": "^4.2.0",
+    "react-native-webview": "git+https://github.com/react-native-community/react-native-webview.git",
     "react-navigation": "^1.0.0-beta.19"
   }
 }

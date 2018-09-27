@@ -128,7 +128,9 @@ class Timeline extends Component {
 
   fetchUser = () => {
     const url = global.urlBase + '/api/' + global.id + '/user?userId=' + global.id;
-    fetch(url)
+    fetch(url, {
+      credentials: "same-origin"
+    })
       .then((response) => response.json())
       .then((responseData) => {
         global.user = responseData;
@@ -139,7 +141,9 @@ class Timeline extends Component {
   fetchData = () => {
     const url = global.urlBase + '/api/master/principal';
 
-    fetch(url)
+    fetch(url, {
+      credentials: "same-origin"
+    })
       .then((response) => response.json())
       .then((responseData) => {
         global.id = responseData;
@@ -151,7 +155,9 @@ class Timeline extends Component {
   makeNewURLRemoteRequest = (urlParam) => {
     url = urlParam;
     this.setState({ loading: true });
-    fetch(url)
+    fetch(url, {
+      credentials: "same-origin"
+    })
       .then(res => res.json())
       .then(res => {
         this.setState({
@@ -175,7 +181,9 @@ class Timeline extends Component {
       url = global.urlBase + '/api/' + global.id + '/group/' + group;
     }
     this.setState({ loading: true });
-    fetch(url)
+    fetch(url, {
+      credentials: "same-origin"
+    })
       .then(res => res.json())
       .then(res => {
         this.setState({
