@@ -75,70 +75,78 @@ const styles = StyleSheet.create({
       color: 'white',
     },
 
-
   });
 
-class GroupTimeline extends Component {
-
+class PostScreenTimeline extends Component {
 
     static navigationOptions = ({ navigation, screenProps }) => {
-      return {
-        title: "GROUPS"
+        return {
+          title: "POSTS"
+        }
       }
-    }
 
     constructor(props) {
         super(props);
 
         this.state = {
-            data: []
+            data: [],
+            userStub: null
         }
     }
 
     componentDidMount() {
-
         fetch(this.props.navigation.state.params.url)
-            .then(res => res.json())
-            .then(res => {
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(JSON.stringify(res))
                 this.setState({
-                    data: []
-                })
-                this.setState({
-                    data: [...this.state.data, ...res]
+                    data: [...this.state.data, ...res.posts]
                 })
 
             })
+            .catch(error => {
+                console.log('this is an error ' + error)
+            })
+
+
+
     }
 
-    handleClick = (id) => {
-      var retrievePostsUrl = global.urlBase + '/api/' + global.id + '/group/' + id
-      this.props.navigation.navigate('PostTimeline', {
-        url: retrievePostsUrl,
-        groupId: id
+    handleClick = (id, state, ownerId) => {
+      var retrievePostsUrl = global.urlBase + '/api/' + global.id + '/post/' + id
+
+      //console.log("where is this happening " + " id " + id + " state " + state)
+      this.props.navigation.navigate('PostHandlerScreen', {
+          owner: ownerId,
+          state: state,
+          url: retrievePostsUrl
       })
     }
 
+
     actionButtonOnClick = () => {
-      this.props.navigation.navigate('TempCreateGroupScreen')
+      this.props.navigation.navigate('TempCreatePostScreen', {
+        groupId: this.props.navigation.state.params.groupId
+      })
+      // console.log("hello")
     }
 
     render() {
-        // console.log(this.state.data)
-        // urlParam = this.props.navigation.state.params.url
-        var GroupIcon = <Icon
-                          name="md-people"
+
+      var CreateIcon = <Icon
+                          name="md-create"
                           style={styles.actionButtonIcon}
                         />
 
         return (
             <TimelineComponent
                 data={this.state.data}
-                listOfGroups
+                listOfPosts={true}
                 onClick={this.handleClick}
-                actionButtonIcon={GroupIcon}
+                actionButtonIcon={CreateIcon}
                 actionButtonOnClick={this.actionButtonOnClick}
             />
         )
     }
 }
-export default GroupTimeline
+export default PostScreenTimeline

@@ -55,25 +55,25 @@ const styles = StyleSheet.create({
     item: {
       backgroundColor: '#ffffff'
     },
-  
+
     FlatList: {
       backgroundColor: '#ffffff',
       borderTopWidth: 0,
       borderBottomWidth: 0
     },
-  
+
     actionButtonIcon: {
       fontSize: 20,
       height: 22,
       color: 'white',
     },
-  
+
 });
 
   class OwnerPaymentScreen extends Component {
 
     static navigationOptions = ({ navigation, screenProps }) => {
-      
+
       const {params = {}} = navigation.state;
       //console.log("this is params " + JSON.stringify(params))
       var title = "Loading"
@@ -82,22 +82,22 @@ const styles = StyleSheet.create({
       }
       return {
         title: title,
-        headerLeft: (<HeaderBackButton tintColor='#9FDDED' onPress={() => navigation.goBack(null) } />) 
+        headerLeft: (<HeaderBackButton tintColor='#9FDDED' onPress={() => navigation.goBack(null) } />)
       };
-      
+
     };
-  
+
     constructor(props) {
         super(props);
         this.state = {
           post: props.navigation.state.params.post,
         };
     }
-  
+
     fetchPost = () => {
       const url = this.props.navigation.state.params.url;
-  
-      
+
+
       fetch(url)
         .then((response) => response.json())
         .then((responseData) => {
@@ -108,18 +108,18 @@ const styles = StyleSheet.create({
           this.setState({
             post: responseData
           })
-  
-          
+
+
         })
         .done()
-      
+
     }
-  
+
     componentDidMount() {
       this.fetchPost();
     }
-  
-  
+
+
     serviceGivenPress = () => {
       fetch(global.urlBase + '/api/' + global.id + '/confirmation/' + this.state.post.id, {
         method: "put",
@@ -137,28 +137,28 @@ const styles = StyleSheet.create({
         })
       });
     }
-  
-    
-  
-    
-  
+
+
+
+
+
     render() {
       const { navigate } = this.props.navigation;
       post = this.state.post;
-  
+
       var interestedQueueText = "";
-  
-      var CreateIconCheck = <Icon 
-        name="md-checkmark-circle-outline" 
-        style={styles.actionButtonIcon} 
+
+      var CreateIconCheck = <Icon
+        name="md-checkmark-circle-outline"
+        style={styles.actionButtonIcon}
       />
-  
-      var CreateIconX = <Icon 
-        name="md-close-circle" 
-        style={styles.actionButtonIcon} 
+
+      var CreateIconX = <Icon
+        name="md-close-circle"
+        style={styles.actionButtonIcon}
       />
-  
-      var completeButton = <View 
+
+      var completeButton = <View
                           style={{
                               padding: 20
                           }}
@@ -172,8 +172,8 @@ const styles = StyleSheet.create({
                                   }}
                               />
                           </View>
-  
-      var waitingConfirmationButton = <View 
+
+      var waitingConfirmationButton = <View
                                   style={{
                                       padding: 20
                                   }}
@@ -188,8 +188,8 @@ const styles = StyleSheet.create({
                                           }}
                                       />
                                   </View>
-  
-      // var actionButtons = [] 
+
+      // var actionButtons = []
       // actionButtons.push(<ActionButtonComponent
       //   position='center'
       //   offsetX={-50}
@@ -210,31 +210,31 @@ const styles = StyleSheet.create({
       //   key={1}
       //   onClick={this.removeInterestedQueueOnClick}
       // />)
-  
-  
-  
+
+
+
       var button;
       if (post) {
         console.log("here is after we retrieve post " + JSON.stringify(post))
         if (post.serviceGiven) {
-          button = waitingConfirmationButton; 
-          console.log("we here or nah") 
+          button = waitingConfirmationButton;
+          console.log("we here or nah")
         } else {
           //button = completeButton;
           button = completeButton;
           console.log("are we here")
         }
       }
-  
-      
+
+
       if (post) {
         interestedQueueText = post.interestedQueue.length.toString() + " users interested"
       }
-  
+
       //console.log("this is post " + JSON.stringify(post))
-  
-      
-  
+
+
+
       //console.log("are we here " + post)
       if (post) {
           return (
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
                     </Text>
                   </View>
                 </View>
-                <View style={ styles.textContainer }> 
+                <View style={ styles.textContainer }>
                   <Text style={ styles.textPriceBox }>
                     ${post.payment}
                   </Text>
@@ -276,17 +276,17 @@ const styles = StyleSheet.create({
       } else {
           return (
               <View>
-                  <Text 
+                  <Text
                     style={{
                       fontStyle: "italic"
                     }}
                   >
-                    We're still loading!
+                    We are still loading!
                   </Text>
               </View>
           )
       }
     }
   }
-    
+
   export default OwnerPaymentScreen

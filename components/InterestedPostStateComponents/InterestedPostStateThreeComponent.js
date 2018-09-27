@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { Button } from 'react-native-elements';
 import { StyleSheet, View, Text, TextInput, Image, Alert, TouchableOpacity, StatusBar} from 'react-native';
 import {StackNavigator, DrawerNavigator, HeaderBackButton } from 'react-navigation';
 
-import OverlappingAvatars from '../../components/OverlappingAvatars/OverlappingAvatars';
+import OverlappingAvatars from '../../components/OverlappingAvatars/OverlappingAvatars'
+
+import ActionButtonComponent from '../../components/ActionButtonComponent/ActionButtonComponent'
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -48,83 +52,69 @@ const styles = StyleSheet.create({
   },
   postImage: {
     paddingLeft: 5,
-  }
+  },
+  actionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: 'white',
+  },
 
 });
 
-class PostScreen extends Component {
-
-  static navigationOptions = ({ navigation, screenProps }) => {
-
-    const {params = {}} = navigation.state;
-    //console.log("this is params " + JSON.stringify(params))
-    var title = "Loading"
-    if (params.userStub) {
-      var title = params.userStub.name + "'s Post"
-    }
-    return {
-      title: title,
-      headerLeft: (<HeaderBackButton tintColor='#9FDDED' onPress={() => navigation.goBack(null) } />)
-    };
-
-  };
-
-  constructor(props) {
-      super(props);
-      this.state = {
-        post: props.navigation.state.params.post,
-      };
+function containsObject(obj, list) {
+  var i;
+  for (i = 0; i < list.length; i++) {
+      if (list[i].userId === obj.userId) {
+          return true;
+      }
   }
 
-  fetchPost = () => {
-    const url = this.props.navigation.state.params.url;
+  return false;
+}
 
-
-    fetch(url)
-      .then((response) => response.json())
-      .then((responseData) => {
-        //console.log("testing" + JSON.stringify(responseData))
-        this.props.navigation.setParams({
-          userStub: responseData.owner,
-        })
-        this.setState({
-          post: responseData
-        })
-
-
-      })
-      .done()
-
-  }
-
-  componentDidMount() {
-    this.fetchPost();
-  }
-
-  handleClick = () => {
-    //console.log("hello " + JSON.stringify(this.state.post))
-    this.props.navigation.navigate('InterestedQueueScreen',
-      {data: this.state.post.interestedQueue, postId: this.state.post.id})
-  }
-
-
-
-  render() {
-    const { navigate } = this.props.navigation;
-    post = this.state.post;
-
+function InterestedPostStateThreeComponent ({
+  post,
+  addInterestedQueueOnClick,
+  removeInterestedQueueOnClick
+}) {
+  if(post) {
     var interestedQueueText = "";
 
+    var CreateIconCheck = <Icon
+      name="md-checkmark-circle-outline"
+      style={styles.actionButtonIcon}
+    />
+
+    var CreateIconX = <Icon
+      name="md-close-circle"
+      style={styles.actionButtonIcon}
+    />
+
+    var actionButton = <ActionButtonComponent
+      position='center'
+      offsetX={0}
+      offsetY={130}
+      size={84}
+      buttonColor='#42f4ad'
+      icon={CreateIconCheck}
+      onClick={addInterestedQueueOnClick}
+    />
+
+    var button;
+
     if (post) {
+
+      console.log("here is after we retrieve post " + JSON.stringify(post))
+      if (post.serviceGiven) {
+        button = actionButtons;
+        console.log("we here or nah")
+      } else {
+        button = actionButton;
+        console.log("are we here")
+      }
+
       interestedQueueText = post.interestedQueue.length.toString() + " users interested"
-    }
 
-    //console.log("this is post " + JSON.stringify(post))
-
-
-
-    //console.log("are we here " + post)
-    if (post) {
         return (
         <View style={ styles.mainContainer }>
             <View style={ styles.topContainer }>
@@ -156,10 +146,15 @@ class PostScreen extends Component {
                 avatar_one={post.owner.userId}
                 avatar_two={post.owner.userId}
                 avatar_three={post.owner.userId}
-                handleClick={this.handleClick}
-                clickable
+                //handleClick={this.handleClick}
               />
               <Text>{interestedQueueText}</Text>
+              {button}
+              {/* <ActionButtonComponent
+                position='center'
+                offsetX={-40}
+                offsetY={150}
+              /> */}
             </View>
         </View>
         );
@@ -179,4 +174,4 @@ class PostScreen extends Component {
   }
 }
 
-export default PostScreen
+export default InterestedPostStateThreeComponent
