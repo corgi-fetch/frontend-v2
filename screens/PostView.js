@@ -100,7 +100,7 @@ class PostView extends Component {
               }
               fetch(global.urlBase + '/api/' + global.id + '/post/' + this.state.post.id, {
                   method: "put",
-                  credentials: 'include',
+                  credentials: "same-origin",
                   headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'

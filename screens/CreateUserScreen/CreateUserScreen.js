@@ -5,6 +5,9 @@ import { FormLabel, FormInput } from 'react-native-elements';
 import Button from 'apsl-react-native-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ActionButton from 'react-native-action-button';
+import { Permissions, Notifications } from 'expo';
+import registerForPushNotificationsAsync from '../../utilities/registerForPushNotificationsAsync'
+
 
 const styles = StyleSheet.create ({
 	container: {
@@ -60,6 +63,7 @@ const styles = StyleSheet.create ({
 	  },
 });
 
+
 class CreateUserScreen extends Component {
 
   constructor(props) {
@@ -71,23 +75,34 @@ class CreateUserScreen extends Component {
     }
   }
 
-  componentWillMount() {
-    this.fetchData();
+  componentDidMount() {
+		this.fetchData();
+		registerForPushNotificationsAsync();
   }
 
   fetchData = () => {
     const url = global.urlBase + '/api/master/principal';
 
-    fetch(url)
+    fetch(url, {
+			credentials: "same-origin"
+		})
       .then((response) => response.json())
       .then((responseData) => {
-        global.id = responseData;
+				global.id = responseData;
+				console.log(responseData);
       })
       .done();
-  }
+	}
+	
+	
+	
 
   render() {
-    const { navigate } = this.props.navigation;
+		const { navigate } = this.props.navigation;
+		// let token = JSON.stringify(Promise.resolve(registerForPushNotificationsAsync()));
+		// console.log("This is the global id " + global.id);
+		// console.log(token);
+
     return (
       <View style={{backgroundColor: 'white', flex: 1, flexDirection: 'column', paddingTop: 40}}>
 				<View style={{backgroundColor: 'white', flex: 1, flexDirection: 'column', borderBottomColor: 'lightgray', borderBottomWidth: 1,}}>
@@ -136,11 +151,11 @@ class CreateUserScreen extends Component {
 						fixNativeFeedbackRadius={true}
 						onPress = {() => {
 							fetch(global.urlBase + '/api/' + global.id + '/user', {
-						  method: "post",
-							credentials: 'include',
-						  headers: {
-						    'Accept': 'application/json',
-						    'Content-Type': 'application/json'
+								method: "put",
+								credentials: "same-origin",
+								headers: {
+									'Accept': 'application/json',
+									'Content-Type': 'application/json'
 						  },
 
 						  body: JSON.stringify({
@@ -149,9 +164,11 @@ class CreateUserScreen extends Component {
 						    name: this.state.name,
 								email: this.state.email,
 								bankAccount: this.state.venmo,
+								//pushToken: token,
 						  })
 						})
 						.then( (response) => {
+							console.log(response);
 							navigate('UserFetchScreen')
 						});
 					}}

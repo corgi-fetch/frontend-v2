@@ -103,7 +103,9 @@ class InterestedPostStateThree extends Component {
     const url = this.props.navigation.state.params.url;
 
     
-    fetch(url)
+    fetch(url, {
+      credentials: "same-origin"
+    })
       .then((response) => response.json())
       .then((responseData) => {
         //console.log("testing" + JSON.stringify(responseData))
@@ -129,7 +131,7 @@ class InterestedPostStateThree extends Component {
     this.state.post.interestedQueue.push(global.userStub)
     fetch(global.urlBase + '/api/' + global.id + '/post/' + this.state.post.id, {
       method: "put",
-      credentials: 'include',
+      credentials: "same-origin",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -150,7 +152,7 @@ class InterestedPostStateThree extends Component {
     this.state.post.interestedQueue.push(global.userStub)
     fetch(global.urlBase + '/api/' + global.id + '/post/' + this.state.post.id, {
       method: "delete",
-      credentials: 'include',
+      credentials: "same-origin",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

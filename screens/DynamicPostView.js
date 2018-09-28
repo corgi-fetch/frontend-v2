@@ -77,7 +77,9 @@ class DynamicPostView extends Component {
   fetchPost = () => {
     const url = global.urlBase + '/api/' + global.id + '/post/' + this.props.navigation.state.params.post.id;
 
-    fetch(url)
+    fetch(url, {
+      credentials: "same-origin"
+    })
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({

@@ -103,7 +103,9 @@ class OwnerPostStateTwo extends Component {
     const url = this.props.navigation.state.params.url;
 
     
-    fetch(url)
+    fetch(url, {
+      credentials: "same-origin"
+    })
       .then((response) => response.json())
       .then((responseData) => {
         //console.log("testing" + JSON.stringify(responseData))

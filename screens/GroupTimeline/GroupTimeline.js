@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types'
-
 import { View, Text, FlatList, StyleSheet, Image, AppRegistry, Button, TouchableOpacity, Alert, Platform, StatusBar } from "react-native";
 import {StackNavigator, DrawerNavigator, HeaderBackButton } from 'react-navigation';
 
@@ -97,14 +95,18 @@ class GroupTimeline extends Component {
 
     componentDidMount() {
         
-        fetch(this.props.navigation.state.params.url)
+        fetch(this.props.navigation.state.params.url, {
+          credentials: "same-origin"
+        })
             .then(res => res.json())
             .then(res => {
+              console.log("this is the res in GROUP TIMELINE")
+              console.log(res);
                 this.setState({
                     data: []
                 })
                 this.setState({
-                    data: [...this.state.data, ...res]
+                    data: [...this.state.data, ...res.groups]
                 })
 
             })

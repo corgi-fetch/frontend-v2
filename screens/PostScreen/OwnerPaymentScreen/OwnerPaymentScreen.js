@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types'
 
 import { View, Text, FlatList, StyleSheet, Image, AppRegistry, Button, TouchableOpacity, Alert, Platform, StatusBar } from "react-native";
 import {StackNavigator, DrawerNavigator, HeaderBackButton } from 'react-navigation';
@@ -98,7 +97,9 @@ const styles = StyleSheet.create({
       const url = this.props.navigation.state.params.url;
   
       
-      fetch(url)
+      fetch(url, {
+        credentials: "same-origin"
+      })
         .then((response) => response.json())
         .then((responseData) => {
           //console.log("testing" + JSON.stringify(responseData))
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
     serviceGivenPress = () => {
       fetch(global.urlBase + '/api/' + global.id + '/confirmation/' + this.state.post.id, {
         method: "put",
-        credentials: 'include',
+        credentials: "same-origin",
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'

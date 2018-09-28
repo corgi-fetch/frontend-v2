@@ -1,11 +1,11 @@
 import React from 'react';
-import { WebView, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Button, WebView, Platform, StatusBar } from 'react-native';
 //import { StackNavigator } from 'react-navigation';
-//import { WebView } from 'react-native-webview';
+
 //import RatingStar from './RatingStar';
 
 
-class StartScreen extends React.Component {
+class LoginScreen extends React.Component {
   static navigationOptions = {
     //title: 'Login',
     headerStyle: {
@@ -47,23 +47,12 @@ class StartScreen extends React.Component {
     
     const { navigate } = this.props.navigation;
     return (
-      <WebView
-        source={{uri: global.urlBase + '/login/facebook'}}
-        //style={{marginTop: 20}}
-        onNavigationStateChange={(e) => {
-           console.log(e);
-        //   const end_url = global.urlBase + '/success';
-        //   const other_url = global.urlBase + '/newuser';
-           if(e.url.indexOf("success") > -1) {
-             navigate('UserFetchScreen')
-           } else if (e.url.indexOf("newuser") > -1) {
-             console.log(e.url);
-             navigate('CreateUser');
-           }
-        }}
-      />
+        <View>
+            
+        </View>
+          
     );
   }
 }
 
-export default StartScreen;
+export default LoginScreen;
