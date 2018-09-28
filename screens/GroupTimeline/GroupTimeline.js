@@ -114,7 +114,7 @@ class GroupTimeline extends Component {
 
     handleClick = (id) => {
       var retrievePostsUrl = global.urlBase + '/api/' + global.id + '/group/' + id
-      this.props.navigation.navigate('PostTimeline', {
+      this.props.navigation.navigate('PostScreenTimeline', {
         url: retrievePostsUrl,
         groupId: id
       })
