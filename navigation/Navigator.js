@@ -24,6 +24,9 @@ import OwnerPostStateTwo from '../screens/PostScreen/OwnerPostStates/OwnerPostSt
 
 import OwnerPaymentScreen from '../screens/PostScreen/OwnerPaymentScreen/OwnerPaymentScreen'
 
+import PostScreenTimeline from '../screens/PostTimeline/PostScreenTimeline'
+import PostHandlerScreen from '../screens/PostHandlerScreen/PostHandlerScreen'
+
 const Navigator = StackNavigator({
     StartScreen: {screen: StartScreen},
     CreateUser: {screen: CreateUser},
@@ -39,7 +42,9 @@ const Navigator = StackNavigator({
     InterestedPostStateTwo: {screen: InterestedPostStateTwo},
     InterestedPostStateThree: {screen: InterestedPostStateThree},
     OwnerPostStateTwo: {screen: OwnerPostStateTwo},
-    OwnerPaymentScreen: {screen: OwnerPaymentScreen}
+    OwnerPaymentScreen: {screen: OwnerPaymentScreen},
+    PostScreenTimeline: {screen: PostScreenTimeline},
+    PostHandlerScreen: {screen: PostHandlerScreen}
 }, {
     navigationOptions: ({navigation}) => ({
         headerStyle: {

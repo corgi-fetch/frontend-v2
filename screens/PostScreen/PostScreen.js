@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, Image, Alert, TouchableOpacity, StatusBar} from 'react-native';
 import {StackNavigator, DrawerNavigator, HeaderBackButton } from 'react-navigation';
 
-import OverlappingAvatars from '../../components/OverlappingAvatars/OverlappingAvatars'
-
+import OverlappingAvatars from '../../components/OverlappingAvatars/OverlappingAvatars';
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -12,20 +11,20 @@ const styles = StyleSheet.create({
     padding: 3
   },
   topContainer: {
-    flex: 4, 
+    flex: 4,
   },
   bottomContainer: {
-    flex: 6, 
+    flex: 6,
     padding: 5,
     alignItems: 'center'
   },
   textContainer: {
     paddingLeft: 10,
     flexDirection: 'row',
-    
+
   },
   postHeaderContainer: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     padding: 5,
     paddingBottom: 12.5,
     // justifyContent: 'center',
@@ -48,15 +47,15 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   postImage: {
-    paddingLeft: 5, 
+    paddingLeft: 5,
   }
-  
+
 });
 
 class PostScreen extends Component {
 
   static navigationOptions = ({ navigation, screenProps }) => {
-    
+
     const {params = {}} = navigation.state;
     //console.log("this is params " + JSON.stringify(params))
     var title = "Loading"
@@ -65,9 +64,9 @@ class PostScreen extends Component {
     }
     return {
       title: title,
-      headerLeft: (<HeaderBackButton tintColor='#9FDDED' onPress={() => navigation.goBack(null) } />) 
+      headerLeft: (<HeaderBackButton tintColor='#9FDDED' onPress={() => navigation.goBack(null) } />)
     };
-    
+
   };
 
   constructor(props) {
@@ -80,7 +79,7 @@ class PostScreen extends Component {
   fetchPost = () => {
     const url = this.props.navigation.state.params.url;
 
-    
+
     fetch(url, {
       credentials: "same-origin"
     })
@@ -94,10 +93,10 @@ class PostScreen extends Component {
           post: responseData
         })
 
-        
+
       })
       .done()
-    
+
   }
 
   componentDidMount() {
@@ -106,25 +105,25 @@ class PostScreen extends Component {
 
   handleClick = () => {
     //console.log("hello " + JSON.stringify(this.state.post))
-    this.props.navigation.navigate('InterestedQueueScreen', 
+    this.props.navigation.navigate('InterestedQueueScreen',
       {data: this.state.post.interestedQueue, postId: this.state.post.id})
   }
 
-  
+
 
   render() {
     const { navigate } = this.props.navigation;
     post = this.state.post;
 
     var interestedQueueText = "";
-    
+
     if (post) {
       interestedQueueText = post.interestedQueue.length.toString() + " users interested"
     }
 
     //console.log("this is post " + JSON.stringify(post))
 
-    
+
 
     //console.log("are we here " + post)
     if (post) {
@@ -143,7 +142,7 @@ class PostScreen extends Component {
                   </Text>
                 </View>
               </View>
-              <View style={ styles.textContainer }> 
+              <View style={ styles.textContainer }>
                 <Text style={ styles.textPriceBox }>
                   ${post.payment}
                 </Text>
@@ -169,18 +168,17 @@ class PostScreen extends Component {
     } else {
         return (
             <View>
-                <Text 
+                <Text
                   style={{
                     fontStyle: "italic"
                   }}
                 >
-                  We're still loading!
+                  We are still loading!
                 </Text>
             </View>
         )
     }
   }
 }
-  
+
 export default PostScreen
-  

@@ -18,20 +18,20 @@ const styles = StyleSheet.create({
     padding: 3
   },
   topContainer: {
-    flex: 4, 
+    flex: 4,
   },
   bottomContainer: {
-    flex: 6, 
+    flex: 6,
     padding: 5,
     alignItems: 'center'
   },
   textContainer: {
     paddingLeft: 10,
     flexDirection: 'row',
-    
+
   },
   postHeaderContainer: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     padding: 5,
     paddingBottom: 12.5,
     // justifyContent: 'center',
@@ -54,14 +54,14 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   postImage: {
-    paddingLeft: 5, 
+    paddingLeft: 5,
   },
   actionButtonIcon: {
     fontSize: 20,
     height: 22,
     color: 'white',
   },
-  
+
 });
 
 function containsObject(obj, list) {
@@ -78,7 +78,7 @@ function containsObject(obj, list) {
 class InterestedPostStateTwo extends Component {
 
   static navigationOptions = ({ navigation, screenProps }) => {
-    
+
     const {params = {}} = navigation.state;
     //console.log("this is params " + JSON.stringify(params))
     var title = "Loading"
@@ -87,9 +87,9 @@ class InterestedPostStateTwo extends Component {
     }
     return {
       title: title,
-      headerLeft: (<HeaderBackButton tintColor='#9FDDED' onPress={() => navigation.goBack(null) } />) 
+      headerLeft: (<HeaderBackButton tintColor='#9FDDED' onPress={() => navigation.goBack(null) } />)
     };
-    
+
   };
 
   constructor(props) {
@@ -102,7 +102,6 @@ class InterestedPostStateTwo extends Component {
   fetchPost = () => {
     const url = this.props.navigation.state.params.url;
 
-    
     fetch(url, {
       credentials: "same-origin"
     })
@@ -116,10 +115,10 @@ class InterestedPostStateTwo extends Component {
           post: responseData
         })
 
-        
+
       })
       .done()
-    
+
   }
 
   componentDidMount() {
@@ -145,9 +144,9 @@ class InterestedPostStateTwo extends Component {
     });
   }
 
-  
 
-  
+
+
 
   render() {
     const { navigate } = this.props.navigation;
@@ -155,17 +154,17 @@ class InterestedPostStateTwo extends Component {
 
     var interestedQueueText = "";
 
-    var CreateIconCheck = <Icon 
-      name="md-checkmark-circle-outline" 
-      style={styles.actionButtonIcon} 
+    var CreateIconCheck = <Icon
+      name="md-checkmark-circle-outline"
+      style={styles.actionButtonIcon}
     />
 
-    var CreateIconX = <Icon 
-      name="md-close-circle" 
-      style={styles.actionButtonIcon} 
+    var CreateIconX = <Icon
+      name="md-close-circle"
+      style={styles.actionButtonIcon}
     />
 
-    var completeButton = <View 
+    var completeButton = <View
                         style={{
                             padding: 20
                         }}
@@ -180,7 +179,7 @@ class InterestedPostStateTwo extends Component {
                             />
                         </View>
 
-    var waitingConfirmationButton = <View 
+    var waitingConfirmationButton = <View
                                 style={{
                                     padding: 20
                                 }}
@@ -196,7 +195,7 @@ class InterestedPostStateTwo extends Component {
                                     />
                                 </View>
 
-    // var actionButtons = [] 
+    // var actionButtons = []
     // actionButtons.push(<ActionButtonComponent
     //   position='center'
     //   offsetX={-50}
@@ -224,8 +223,8 @@ class InterestedPostStateTwo extends Component {
     if (post) {
       console.log("here is after we retrieve post " + JSON.stringify(post))
       if (post.serviceGiven) {
-        button = waitingConfirmationButton; 
-        console.log("we here or nah") 
+        button = waitingConfirmationButton;
+        console.log("we here or nah")
       } else {
         //button = completeButton;
         button = completeButton;
@@ -233,14 +232,14 @@ class InterestedPostStateTwo extends Component {
       }
     }
 
-    
+
     if (post) {
       interestedQueueText = post.interestedQueue.length.toString() + " users interested"
     }
 
     //console.log("this is post " + JSON.stringify(post))
 
-    
+
 
     //console.log("are we here " + post)
     if (post) {
@@ -259,7 +258,7 @@ class InterestedPostStateTwo extends Component {
                   </Text>
                 </View>
               </View>
-              <View style={ styles.textContainer }> 
+              <View style={ styles.textContainer }>
                 <Text style={ styles.textPriceBox }>
                   ${post.payment}
                 </Text>
@@ -283,18 +282,17 @@ class InterestedPostStateTwo extends Component {
     } else {
         return (
             <View>
-                <Text 
+                <Text
                   style={{
                     fontStyle: "italic"
                   }}
                 >
-                  We're still loading!
+                  We are still loading!
                 </Text>
             </View>
         )
     }
   }
 }
-  
+
 export default InterestedPostStateTwo
-  

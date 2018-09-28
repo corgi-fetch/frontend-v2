@@ -60,20 +60,20 @@ const styles = StyleSheet.create({
     item: {
       backgroundColor: '#ffffff'
     },
-  
+
     FlatList: {
       backgroundColor: '#ffffff',
       borderTopWidth: 0,
       borderBottomWidth: 0
     },
-  
+
     actionButtonIcon: {
       fontSize: 20,
       height: 22,
       color: 'white',
     },
-    
-  
+
+
   });
 
 class GroupTimeline extends Component {
@@ -84,7 +84,7 @@ class GroupTimeline extends Component {
         title: "GROUPS"
       }
     }
-    
+
     constructor(props) {
         super(props);
 
@@ -94,7 +94,7 @@ class GroupTimeline extends Component {
     }
 
     componentDidMount() {
-        
+
         fetch(this.props.navigation.state.params.url, {
           credentials: "same-origin"
         })
@@ -114,7 +114,7 @@ class GroupTimeline extends Component {
 
     handleClick = (id) => {
       var retrievePostsUrl = global.urlBase + '/api/' + global.id + '/group/' + id
-      this.props.navigation.navigate('PostTimeline', {
+      this.props.navigation.navigate('PostScreenTimeline', {
         url: retrievePostsUrl,
         groupId: id
       })
@@ -127,11 +127,11 @@ class GroupTimeline extends Component {
     render() {
         // console.log(this.state.data)
         // urlParam = this.props.navigation.state.params.url
-        var GroupIcon = <Icon 
-                          name="md-people" 
-                          style={styles.actionButtonIcon} 
+        var GroupIcon = <Icon
+                          name="md-people"
+                          style={styles.actionButtonIcon}
                         />
-        
+
         return (
             <TimelineComponent
                 data={this.state.data}
