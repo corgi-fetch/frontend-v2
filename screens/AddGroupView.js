@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, ListView, StyleSheet, View, Text, Image, TextInput, StatusBar, KeyboardAvoidingView, TouchableHighlight, Button, TouchableOpacity  } from 'react-native';
+import { FlatList, ListView, StyleSheet, View, Text, Image, TextInput, StatusBar, KeyboardAvoidingView, TouchableHighlight, Button, TouchableOpacity, Platform  } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ActionButton from 'react-native-action-button';
 import { FormLabel, FormInput, SearchBar, List, ListItem } from 'react-native-elements';
@@ -181,12 +181,25 @@ class AddGroupView extends Component {
   }
 
   static navigationOptions = ({navigation}) => ({
-    title: 'NEW GROUP',
-		headerLeft: <Icon name="md-arrow-back" size={35} style={{padding: 20, color: '#9FDDED'}} onPress= {() => {navigation.navigate('Home');}}/>,
+    title: 'NEW GROUP'
 
   });
 
+  
+
   renderResults = () => {
+
+    var avatar = (item) => <Image source={{ uri: 'http://graph.facebook.com/' + item.userId + '/picture?type=square' }}
+                    style={{ borderRadius: 25, height:50, width:50 }}
+                  />
+    if (Platform.OS === 'android') {
+      avatar = (item) => <Image source={{ uri: 'http://graph.facebook.com/' + item.userId + '/picture?type=square' }}
+                  style={{borderRadius:25, height:50, width:50 }}
+                />
+    }
+    
+    
+
     if (this.state.searchResults.size != 0) {
       return (
         <FlatList
@@ -204,11 +217,7 @@ class AddGroupView extends Component {
                         <Text style={{paddingLeft: 10}}>{item.name}</Text>
                       </View>
                     }
-                    avatar = {
-                      <Image source={{ uri: 'http://graph.facebook.com/' + item.userId + '/picture?type=square' }}
-                        style={{borderRadius:25, height:50, width:50 }}
-                      />
-                    }
+                    avatar = {avatar(item)}
                   />
                 </TouchableOpacity>
               );
@@ -220,15 +229,22 @@ class AddGroupView extends Component {
   }
 
   renderSelected() {
+    var avatarSelected = (data) => <Image source={{ uri: 'http://graph.facebook.com/' + data + '/picture?type=square' }}
+                                      style={{ borderRadius: 37.5/2, height:37.5, width:37.5 }}
+                                    />
+    if (Platform.OS === 'android') {
+      avatarSelected = (data) => <Image source={{ uri: 'http://graph.facebook.com/' + data + '/picture?type=square' }}
+                                      style={{ borderRadius:25, height:37.5, width:37.5 }}
+                                    />
+    }
+
     return this.state.selectedUsers.map((data) => {
 
         return (
           <View style={{backgroundColor: 'white', height: 50, width: 112.5, borderRadius: 20, justifyContent: 'center', padding: 5, margin: 5, borderWidth: 2, borderColor: '#9FDDED'}} key={data}>
             <View style={{paddingLeft: 3, alignSelf: 'flex-start', flexDirection: 'row', flex: 1, justifyContent: 'center'}}>
               <View style={{flex: 3}}>
-                <Image source={{ uri: 'http://graph.facebook.com/' + data + '/picture?type=square' }}
-                  style={{ borderRadius:50, height:37.5, width:37.5 }}
-                />
+                {avatarSelected(data)}
               </View>
               <View style={{flex: 1, paddingTop: 5}}>
                 <TouchableHighlight onPress={() => this.remove(data)}>
@@ -277,7 +293,7 @@ class AddGroupView extends Component {
           }
         </View>
         <ActionButton buttonColor='#9FDDED'
-						renderIcon={() => {<Icon name="md-checkmark" style={styles.actionButtonIcon} />}}
+						renderIcon={() => <Icon name="md-checkmark" style={styles.actionButtonIcon} />}
 						fixNativeFeedbackRadius={true}
             onPress = {() => {
 							

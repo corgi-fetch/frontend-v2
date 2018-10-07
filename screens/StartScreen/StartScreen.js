@@ -22,8 +22,8 @@ class StartScreen extends React.Component {
     // global.urlBase = "http://192.168.0.12:8080";
     // global.urlBase = "http://192.168.1.4:8080";
     // global.urlBase = "http://127.0.0.1:8080";
-    // global.urlBase = "http://192.168.1.20:8080";
-    global.urlBase = "https://corgoapi-v2.azurewebsites.net";
+    global.urlBase = "http://192.168.1.20:8080";
+    // global.urlBase = "https://corgoapi-v2.azurewebsites.net";
     // global.urlBase = "http://192.168.110.2:8080/";
     // global.urlBase = "http://192.168.0.14:8080";
     // global.urlBase = "http://10.103.31.141:8080";

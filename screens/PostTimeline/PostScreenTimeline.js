@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types'
 
-import { View, Text, FlatList, StyleSheet, Image, AppRegistry, Button, TouchableOpacity, Alert, Platform, StatusBar } from "react-native";
+import { View, Text, FlatList, StyleSheet, Image, AppRegistry, Button, TouchableOpacity, Alert, Platform, StatusBar, RefreshControl } from "react-native";
 import {StackNavigator, DrawerNavigator, HeaderBackButton } from 'react-navigation';
 
 import { List, ListItem } from "react-native-elements";
@@ -90,32 +90,42 @@ class PostScreenTimeline extends Component {
 
         this.state = {
             data: [],
-            userStub: null
+            userStub: null,
+            refreshing: false
         }
     }
 
     componentDidMount() {
-        fetch(this.props.navigation.state.params.url)
-            .then((res) => res.json())
-            .then((res) => {
-                console.log(JSON.stringify(res))
-                this.setState({
-                    data: [...this.state.data, ...res.posts]
-                })
+        this.fetchData();
+    }
 
-            })
-            .catch(error => {
-                console.log('this is an error ' + error)
-            })
+    fetchData = () => {
+      fetch(this.props.navigation.state.params.url, {
+        credentials: "same-origin"
+      })
+          .then((res) => res.json())
+          .then((res) => {
+              console.log(JSON.stringify(res))
+              this.setState({
+                  data: [...res.posts],
+                  refreshing: false
+              })
 
+          })
+          .catch(error => {
+              console.log('this is an error ' + error)
+          })
+    }
 
-
+    _onRefresh = () => {
+      this.setState({refreshing: true});
+      this.fetchData();
     }
 
     handleClick = (id, state, ownerId) => {
       var retrievePostsUrl = global.urlBase + '/api/' + global.id + '/post/' + id
 
-      //console.log("where is this happening " + " id " + id + " state " + state)
+      console.log("This is owner in PostScreenTimeline " + ownerId);
       this.props.navigation.navigate('PostHandlerScreen', {
           owner: ownerId,
           state: state,
@@ -145,6 +155,12 @@ class PostScreenTimeline extends Component {
                 onClick={this.handleClick}
                 actionButtonIcon={CreateIcon}
                 actionButtonOnClick={this.actionButtonOnClick}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={this.state.refreshing}
+                    onRefresh={this._onRefresh}
+                  />
+                }
             />
         )
     }

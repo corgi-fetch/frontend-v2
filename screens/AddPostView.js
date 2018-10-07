@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, StatusBar, KeyboardAvoidingView, TouchableHighlight  } from 'react-native';
+import { StyleSheet, View, Text, TextInput, StatusBar, KeyboardAvoidingView, TouchableHighlight, Platform  } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { FormLabel, FormInput } from 'react-native-elements';
 import Button from 'apsl-react-native-button';
@@ -83,8 +83,11 @@ componentWillMount() {
 }
 
 updateSize = (height) => {
-	
-	this.state.height = height;
+	if (Platform.OS === 'android') {
+		this.state.height = height;
+	} else {
+		this.state.height = height + 40;
+	}
 }
 
 
@@ -141,13 +144,14 @@ updateSize = (height) => {
 							underlineColorAndroid="transparent"
 							editable={true}
 							multiline={true}
+							blurOnSubmit={true}
 							onContentSizeChange={(e) => this.updateSize(e.nativeEvent.contentSize.height)}
 						/>
 						</View>
 					</View>
 				</View>
 				<ActionButton buttonColor='#9FDDED'
-						renderIcon={() => {<Icon name="md-checkmark" style={styles.actionButtonIcon} />}}
+						renderIcon={() => <Icon name="md-checkmark" style={styles.actionButtonIcon} />}
 						fixNativeFeedbackRadius={true}
 						onPress = {() => {
 							fetch(global.urlBase + '/api/' + global.id + '/post', {

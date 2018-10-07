@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, FlatList, StyleSheet, Image, AppRegistry, Button, TouchableOpacity, Alert, Platform, StatusBar } from "react-native";
+import { View, Text, FlatList, StyleSheet, Image, AppRegistry, Button, TouchableOpacity, Alert, Platform, StatusBar, RefreshControl } from "react-native";
 import {StackNavigator, DrawerNavigator, HeaderBackButton } from 'react-navigation';
 
 import { List, ListItem } from "react-native-elements";
@@ -89,27 +89,64 @@ class GroupTimeline extends Component {
         super(props);
 
         this.state = {
-            data: []
+            data: [],
+            refreshing: false
         }
     }
 
     componentDidMount() {
 
-        fetch(this.props.navigation.state.params.url, {
-          credentials: "same-origin"
-        })
-            .then(res => res.json())
-            .then(res => {
-              console.log("this is the res in GROUP TIMELINE")
-              console.log(res);
-                this.setState({
-                    data: []
-                })
-                this.setState({
-                    data: [...this.state.data, ...res.groups]
-                })
+        // fetch(this.props.navigation.state.params.url, {
+        //   credentials: "same-origin"
+        // })
+        //     .then(res => res.json())
+        //     .then(res => {
+        //       console.log("this is the res in GROUP TIMELINE")
+        //       console.log(res);
+        //         this.setState({
+        //             data: []
+        //         })
+        //         this.setState({
+        //             data: [...this.state.data, ...res.groups]
+        //         })
 
-            })
+        //     })
+        this.fetchData()
+    }
+
+    fetchData = () => {
+      fetch(this.props.navigation.state.params.url, {
+        credentials: "same-origin"
+      })
+          .then((res) => res.json())
+          .then((res) => {
+              console.log(JSON.stringify(res))
+              this.setState({
+                  data: [...res.groups],
+                  refreshing: false
+              })
+
+          })
+          .catch(error => {
+              console.log('this is an error ' + error)
+          })
+    }
+
+
+    _onRefresh = () => {
+      this.setState({refreshing: true});
+      this.fetchData();
+    }
+
+    handleClick = (id, state, ownerId) => {
+      var retrievePostsUrl = global.urlBase + '/api/' + global.id + '/post/' + id
+
+      console.log("This is owner in PostScreenTimeline " + ownerId);
+      this.props.navigation.navigate('PostHandlerScreen', {
+          owner: ownerId,
+          state: state,
+          url: retrievePostsUrl
+      })
     }
 
     handleClick = (id) => {
@@ -139,6 +176,12 @@ class GroupTimeline extends Component {
                 onClick={this.handleClick}
                 actionButtonIcon={GroupIcon}
                 actionButtonOnClick={this.actionButtonOnClick}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={this.state.refreshing}
+                    onRefresh={this._onRefresh}
+                  />
+                }
             />
         )
     }

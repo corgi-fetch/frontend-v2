@@ -74,7 +74,8 @@ function TimelineComponent ({
 	listOfUsers,
 	onClick,
 	actionButtonIcon,
-	actionButtonOnClick
+	actionButtonOnClick,
+	refreshControl
 }) {
 
 	timelineItemRenderer = ({item}) => {
@@ -111,6 +112,7 @@ function TimelineComponent ({
 					style={styles.FlatList}
 					data={data}
 					ItemSeparatorComponent={RenderSeparator}
+					refreshControl={refreshControl}
 					renderItem={({ item }) => {
 						console.log("this is in the timeline component " + JSON.stringify(item))
 						return(

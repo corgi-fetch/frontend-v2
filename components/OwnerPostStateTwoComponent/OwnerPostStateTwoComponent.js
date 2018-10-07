@@ -100,7 +100,7 @@ function OwnerPostStateTwoComponent ({
                                   <Button
                                       title="AWAITING COMPLETION"
                                       color="white"
-                                      //onPress
+                                      onPress={() => {console.log("printing stuff")}}
                                       disabled
                                       buttonStyle={{
                                           backgroundColor: "lightgray",
